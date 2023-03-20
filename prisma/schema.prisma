@@ -79,12 +79,12 @@ model Products {
 }
 
 model Carts {
-  id          Int          @id @default(autoincrement())
-  student     Users?       @relation(fields: [student_id], references: [id])
-  student_id  Int?         @unique
-  created_at  DateTime     @default(now()) @db.Timestamptz(3)
-  updated_at  DateTime     @updatedAt @db.Timestamptz(3)
-  cart_detail CartDetails?
+  id          Int           @id @default(autoincrement())
+  student     Users?        @relation(fields: [student_id], references: [id])
+  student_id  Int?          @unique
+  created_at  DateTime      @default(now()) @db.Timestamptz(3)
+  updated_at  DateTime      @updatedAt @db.Timestamptz(3)
+  cart_detail CartDetails[]
 }
 
 model CartDetails {
@@ -103,10 +103,11 @@ model ProductRatings {
   product_id Int?
   student    Users?    @relation(fields: [student_id], references: [id])
   student_id Int?
-  Subjects   Subjects? @relation(fields: [subjectsId], references: [id])
-  subjectsId Int?
+  rating     Int       @unique @db.Integer
   created_at DateTime  @default(now()) @db.Timestamptz(3)
   updated_at DateTime  @updatedAt @db.Timestamptz(3)
+  Subjects   Subjects? @relation(fields: [subjectsId], references: [id])
+  subjectsId Int?
 }
 
 model PurchaseHistorys {

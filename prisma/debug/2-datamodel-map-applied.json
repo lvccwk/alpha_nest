@@ -886,8 +886,8 @@
         {
           "name": "cart_detail",
           "kind": "object",
-          "isList": false,
-          "isRequired": false,
+          "isList": true,
+          "isRequired": true,
           "isUnique": false,
           "isId": false,
           "isReadOnly": false,
@@ -1116,33 +1116,13 @@
           "isUpdatedAt": false
         },
         {
-          "name": "Subjects",
-          "kind": "object",
-          "isList": false,
-          "isRequired": false,
-          "isUnique": false,
-          "isId": false,
-          "isReadOnly": false,
-          "hasDefaultValue": false,
-          "type": "Subjects",
-          "relationName": "ProductRatingsToSubjects",
-          "relationFromFields": [
-            "subjectsId"
-          ],
-          "relationToFields": [
-            "id"
-          ],
-          "isGenerated": false,
-          "isUpdatedAt": false
-        },
-        {
-          "name": "subjectsId",
+          "name": "rating",
           "kind": "scalar",
           "isList": false,
-          "isRequired": false,
-          "isUnique": false,
+          "isRequired": true,
+          "isUnique": true,
           "isId": false,
-          "isReadOnly": true,
+          "isReadOnly": false,
           "hasDefaultValue": false,
           "type": "Int",
           "isGenerated": false,
@@ -1177,6 +1157,39 @@
           "type": "DateTime",
           "isGenerated": false,
           "isUpdatedAt": true
+        },
+        {
+          "name": "Subjects",
+          "kind": "object",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "Subjects",
+          "relationName": "ProductRatingsToSubjects",
+          "relationFromFields": [
+            "subjectsId"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "subjectsId",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": true,
+          "hasDefaultValue": false,
+          "type": "Int",
+          "isGenerated": false,
+          "isUpdatedAt": false
         }
       ],
       "primaryKey": null,

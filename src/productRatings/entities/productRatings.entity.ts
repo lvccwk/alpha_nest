@@ -15,5 +15,10 @@ export class ProductRating {
 	@ApiProperty({ default: 1 })
 	@IsInt()
 	@IsNotEmpty()
-	cart_id: number;
+	student_id: number;
+
+	@ApiProperty({ default: 1 })
+	@IsInt()
+	@IsNotEmpty()
+	rating: number;
 }

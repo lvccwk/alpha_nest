@@ -58,6 +58,7 @@ erDiagram
 
   ProductRatings {
     Int id PK 
+    Int rating  
     DateTime created_at  
     DateTime updated_at  
     }
@@ -114,7 +115,7 @@ erDiagram
     Products o{--|o Subjects : "subject"
     Carts o{--|o Users : "student"
     CartDetails o{--|o Products : "product"
-    CartDetails o|--|o Carts : "cart"
+    CartDetails o{--|o Carts : "cart"
     ProductRatings o{--|o Products : "product"
     ProductRatings o{--|o Users : "student"
     ProductRatings o{--|o Subjects : "Subjects"
