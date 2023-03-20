@@ -1,0 +1,129 @@
+erDiagram
+
+  Users {
+    Int id PK 
+    String user_type  
+    String username  "nullable"
+    String email  
+    String password  
+    String image  
+    DateTime created_at  
+    DateTime updated_at  
+    }
+  
+
+  Subjects {
+    Int id PK 
+    String name  
+    String chinese_name  
+    DateTime created_at  
+    DateTime updated_at  
+    }
+  
+
+  Teachers {
+    Int id PK 
+    String info  
+    Int rating  
+    DateTime created_at  
+    DateTime updated_at  
+    }
+  
+
+  Products {
+    Int id PK 
+    String name  "nullable"
+    Int price  
+    String product_type  
+    Int avg_rating  
+    String file_url  
+    DateTime created_at  
+    DateTime updated_at  
+    }
+  
+
+  Carts {
+    Int id PK 
+    DateTime created_at  
+    DateTime updated_at  
+    }
+  
+
+  CartDetails {
+    Int id PK 
+    DateTime created_at  
+    DateTime updated_at  
+    }
+  
+
+  ProductRatings {
+    Int id PK 
+    DateTime created_at  
+    DateTime updated_at  
+    }
+  
+
+  PurchaseHistorys {
+    Int id PK 
+    DateTime created_at  
+    DateTime updated_at  
+    }
+  
+
+  Timetables {
+    Int id PK 
+    String time_slot  
+    DateTime created_at  
+    DateTime updated_at  
+    }
+  
+
+  Chatrooms {
+    Int id PK 
+    String name  
+    DateTime created_at  
+    DateTime updated_at  
+    }
+  
+
+  ChatroomHistorys {
+    Int id PK 
+    String content  
+    DateTime created_at  
+    DateTime updated_at  
+    }
+  
+
+  ChatoomParticipants {
+    Int id PK 
+    DateTime created_at  
+    DateTime updated_at  
+    }
+  
+
+  PrivateMessages {
+    Int id PK 
+    String content  
+    DateTime created_at  
+    DateTime updated_at  
+    }
+  
+    Subjects o{--|o Users : "user"
+    Teachers o{--|o Users : "user"
+    Products o{--|o Users : "user"
+    Products o{--|o Subjects : "subject"
+    Carts o|--|o Users : "student"
+    CartDetails o{--|o Products : "product"
+    CartDetails o|--|o Carts : "cart"
+    ProductRatings o{--|o Products : "product"
+    ProductRatings o{--|o Users : "student"
+    ProductRatings o{--|o Subjects : "Subjects"
+    PurchaseHistorys o{--|o Products : "product"
+    PurchaseHistorys o{--|o Users : "student"
+    Timetables o{--|o Users : "user"
+    Timetables o{--|o Subjects : "subject"
+    Chatrooms o{--|o Users : "user"
+    ChatroomHistorys o{--|o Chatrooms : "chatroom"
+    ChatoomParticipants o{--|o Chatrooms : "chatroom"
+    ChatoomParticipants o{--|o Users : "user"
+    PrivateMessages o{--|o Users : "from"

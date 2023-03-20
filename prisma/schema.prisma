@@ -1,0 +1,172 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "./ERD.svg"
+  erdDebug = true
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Users {
+  id                  Int                   @id @default(autoincrement())
+  user_type           String                @db.VarChar(255)
+  username            String?               @db.VarChar(255)
+  email               String                @unique @db.VarChar(255)
+  password            String                @db.VarChar(255)
+  image               String                @db.Text
+  created_at          DateTime              @default(now()) @db.Timestamptz(3)
+  updated_at          DateTime              @updatedAt @db.Timestamptz(3)
+  subject             Subjects[]
+  product             Products[]
+  purchaseHistory     PurchaseHistorys[]
+  cart                Carts?
+  teachers            Teachers[]
+  timetables          Timetables[]
+  productRatings      ProductRatings[]
+  chartooms           Chatrooms[]
+  chatoomParticipants ChatoomParticipants[]
+  privateMessages     PrivateMessages[]
+}
+
+model Subjects {
+  id              Int              @id @default(autoincrement())
+  name            String           @db.VarChar(255)
+  chinese_name    String           @db.VarChar(255)
+  user            Users?           @relation(fields: [user_id], references: [id])
+  user_id         Int?
+  created_at      DateTime         @default(now()) @db.Timestamptz(3)
+  updated_at      DateTime         @updatedAt @db.Timestamptz(3)
+  product         Products[]
+  timetables      Timetables[]
+  Product_ratings ProductRatings[]
+}
+
+model Teachers {
+  id         Int      @id @default(autoincrement())
+  user       Users?   @relation(fields: [user_id], references: [id])
+  user_id    Int?
+  info       String   @db.Text
+  rating     Int      @db.Integer
+  created_at DateTime @default(now()) @db.Timestamptz(3)
+  updated_at DateTime @updatedAt @db.Timestamptz(3)
+}
+
+model Products {
+  id               Int                @id @default(autoincrement())
+  name             String?            @db.VarChar(255)
+  price            Int                @db.Integer
+  product_type     String             @db.VarChar(255)
+  avg_rating       Int                @db.Integer
+  file_url         String             @db.Text
+  user             Users?             @relation(fields: [user_id], references: [id])
+  user_id          Int?
+  subject          Subjects?          @relation(fields: [subject_id], references: [id])
+  subject_id       Int?
+  created_at       DateTime           @default(now()) @db.Timestamptz(3)
+  updated_at       DateTime           @updatedAt @db.Timestamptz(3)
+  productRatings   ProductRatings[]
+  purchaseHistorys PurchaseHistorys[]
+  cartDetails      CartDetails[]
+}
+
+model Carts {
+  id           Int          @id @default(autoincrement())
+  student      Users?       @relation(fields: [student_id], references: [id])
+  student_id   Int?         @unique
+  created_at   DateTime     @default(now()) @db.Timestamptz(3)
+  updated_at   DateTime     @updatedAt @db.Timestamptz(3)
+  cart_details CartDetails?
+}
+
+model CartDetails {
+  id         Int       @id @default(autoincrement())
+  product    Products? @relation(fields: [product_id], references: [id])
+  product_id Int?
+  cart       Carts?    @relation(fields: [cart_id], references: [id])
+  cart_id    Int?      @unique
+  created_at DateTime  @default(now()) @db.Timestamptz(3)
+  updated_at DateTime  @updatedAt @db.Timestamptz(3)
+}
+
+model ProductRatings {
+  id         Int       @id @default(autoincrement())
+  product    Products? @relation(fields: [product_id], references: [id])
+  product_id Int?
+  student    Users?    @relation(fields: [student_id], references: [id])
+  student_id Int?
+  Subjects   Subjects? @relation(fields: [subjectsId], references: [id])
+  subjectsId Int?
+  created_at DateTime  @default(now()) @db.Timestamptz(3)
+  updated_at DateTime  @updatedAt @db.Timestamptz(3)
+}
+
+model PurchaseHistorys {
+  id         Int       @id @default(autoincrement())
+  product    Products? @relation(fields: [product_id], references: [id])
+  product_id Int?
+  student    Users?    @relation(fields: [student_id], references: [id])
+  student_id Int?
+  created_at DateTime  @default(now()) @db.Timestamptz(3)
+  updated_at DateTime  @updatedAt @db.Timestamptz(3)
+}
+
+model Timetables {
+  id         Int       @id @default(autoincrement())
+  time_slot  String    @db.VarChar(255)
+  user       Users?    @relation(fields: [user_id], references: [id])
+  user_id    Int?
+  subject    Subjects? @relation(fields: [subject_id], references: [id])
+  subject_id Int?
+  created_at DateTime  @default(now()) @db.Timestamptz(3)
+  updated_at DateTime  @updatedAt @db.Timestamptz(3)
+}
+
+model Chatrooms {
+  id                   Int                   @id @default(autoincrement())
+  name                 String                @db.VarChar(255)
+  user                 Users?                @relation(fields: [user_id], references: [id])
+  user_id              Int?
+  created_at           DateTime              @default(now()) @db.Timestamptz(3)
+  updated_at           DateTime              @updatedAt @db.Timestamptz(3)
+  Chatroom_historys    ChatroomHistorys[]
+  Chatoom_participants ChatoomParticipants[]
+}
+
+model ChatroomHistorys {
+  id          Int        @id @default(autoincrement())
+  content     String     @db.VarChar(255)
+  chatroom    Chatrooms? @relation(fields: [chatroom_id], references: [id])
+  chatroom_id Int?
+  created_at  DateTime   @default(now()) @db.Timestamptz(3)
+  updated_at  DateTime   @updatedAt @db.Timestamptz(3)
+}
+
+model ChatoomParticipants {
+  id          Int        @id @default(autoincrement())
+  chatroom    Chatrooms? @relation(fields: [chatroom_id], references: [id])
+  chatroom_id Int?
+  user        Users?     @relation(fields: [user_id], references: [id])
+  user_id     Int?
+  created_at  DateTime   @default(now()) @db.Timestamptz(3)
+  updated_at  DateTime   @updatedAt @db.Timestamptz
+}
+
+model PrivateMessages {
+  id         Int      @id @default(autoincrement())
+  from       Users?   @relation(fields: [from_id], references: [id])
+  from_id    Int?
+  // to         Users?   @relation(fields: [to_id], references: [id])
+  // to_id      Int?
+  content    String   @db.Text
+  created_at DateTime @default(now()) @db.Timestamptz(3)
+  updated_at DateTime @updatedAt @db.Timestamptz(3)
+}
