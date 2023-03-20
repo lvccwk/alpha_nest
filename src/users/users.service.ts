@@ -43,7 +43,7 @@ export class UsersService {
 				cart: true,
 				teacher: true,
 				timetable: true,
-				product_rating: true,
+				// product_rating: true,
 				chartoom: true,
 				chatoom_participant: true,
 				private_message: true
