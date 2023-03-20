@@ -424,22 +424,6 @@
             "relationToFields": [],
             "isGenerated": false,
             "isUpdatedAt": false
-          },
-          {
-            "name": "product_rating",
-            "kind": "object",
-            "isList": true,
-            "isRequired": true,
-            "isUnique": false,
-            "isId": false,
-            "isReadOnly": false,
-            "hasDefaultValue": false,
-            "type": "ProductRatings",
-            "relationName": "ProductRatingsToSubjects",
-            "relationFromFields": [],
-            "relationToFields": [],
-            "isGenerated": false,
-            "isUpdatedAt": false
           }
         ],
         "primaryKey": null,
@@ -1157,39 +1141,6 @@
             "type": "DateTime",
             "isGenerated": false,
             "isUpdatedAt": true
-          },
-          {
-            "name": "Subjects",
-            "kind": "object",
-            "isList": false,
-            "isRequired": false,
-            "isUnique": false,
-            "isId": false,
-            "isReadOnly": false,
-            "hasDefaultValue": false,
-            "type": "Subjects",
-            "relationName": "ProductRatingsToSubjects",
-            "relationFromFields": [
-              "subjectsId"
-            ],
-            "relationToFields": [
-              "id"
-            ],
-            "isGenerated": false,
-            "isUpdatedAt": false
-          },
-          {
-            "name": "subjectsId",
-            "kind": "scalar",
-            "isList": false,
-            "isRequired": false,
-            "isUnique": false,
-            "isId": false,
-            "isReadOnly": true,
-            "hasDefaultValue": false,
-            "type": "Int",
-            "isGenerated": false,
-            "isUpdatedAt": false
           }
         ],
         "primaryKey": null,

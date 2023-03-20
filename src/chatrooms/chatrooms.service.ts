@@ -29,7 +29,11 @@ export class ChatroomsService {
 
 	async findOne(id: number) {
 		let foundCartDetail = await this.prisma.chatrooms.findUnique({
-			where: { id }
+			where: { id },
+			include: {
+				chatroom_history: true,
+				chatoom_participant: true
+			}
 		});
 		if (!foundCartDetail) throw new NotFoundException('Cart not found!');
 		return foundCartDetail;

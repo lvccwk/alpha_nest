@@ -9,7 +9,6 @@ export class UsersService {
 	constructor(private prisma: PrismaService) {}
 
 	async create(createUserDto: CreateUserDto): Promise<string> {
-		// try {
 		let foundUser = await this.prisma.users.create({
 			data: {
 				user_type: createUserDto.user_type,
@@ -20,16 +19,8 @@ export class UsersService {
 			}
 		});
 		console.log(foundUser);
-		if (foundUser) {
-			throw new NotFoundException('Email is existing!');
-		}
 
 		return 'ok';
-		// } catch (error) {
-
-		// throw new NotFoundException('Create account fail, Try again!');
-		// return `#${id} user info has been updated`;
-		// }
 	}
 
 	async findAll(): Promise<User[]> {
@@ -53,7 +44,19 @@ export class UsersService {
 
 	async findOne(id: number) {
 		let foundUser = await this.prisma.users.findUnique({
-			where: { id }
+			where: { id },
+			include: {
+				subject: true,
+				product: true,
+				purchase_history: true,
+				cart: true,
+				teacher: true,
+				timetable: true,
+				product_rating: true,
+				chartoom: true,
+				chatoom_participant: true,
+				private_message: true
+			}
 		});
 		if (!foundUser) throw new NotFoundException('User not found!');
 		return foundUser;

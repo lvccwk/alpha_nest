@@ -26,15 +26,18 @@ export class SubjectsService {
 		return await this.prisma.subjects.findMany({
 			include: {
 				product: true,
-				timetable: true,
-				product_rating: true
+				timetable: true
 			}
 		});
 	}
 
 	async findOne(id: number) {
 		let foundSubject = await this.prisma.subjects.findUnique({
-			where: { id }
+			where: { id },
+			include: {
+				product: true,
+				timetable: true
+			}
 		});
 		if (!foundSubject) throw new NotFoundException('Subject not found!');
 		return foundSubject;
