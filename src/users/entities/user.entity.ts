@@ -58,7 +58,7 @@ export class User {
 	cart: Cart[];
 	teacher: Teacher[];
 	timetable: Timetable[];
-	// product_rating: ProductRating[];
+	product_rating: ProductRating[];
 	chartoom: Chatroom[];
 	chatoom_participant: ChatoomParticipant[];
 	private_message: PrivateMessage[];
