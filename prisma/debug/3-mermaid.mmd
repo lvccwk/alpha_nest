@@ -112,7 +112,7 @@ erDiagram
     Teachers o{--|o Users : "user"
     Products o{--|o Users : "user"
     Products o{--|o Subjects : "subject"
-    Carts o|--|o Users : "student"
+    Carts o{--|o Users : "student"
     CartDetails o{--|o Products : "product"
     CartDetails o|--|o Carts : "cart"
     ProductRatings o{--|o Products : "product"

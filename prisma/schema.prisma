@@ -27,27 +27,27 @@ model Users {
   updated_at          DateTime              @updatedAt @db.Timestamptz(3)
   subject             Subjects[]
   product             Products[]
-  purchaseHistory     PurchaseHistorys[]
-  cart                Carts?
-  teachers            Teachers[]
-  timetables          Timetables[]
-  productRatings      ProductRatings[]
-  chartooms           Chatrooms[]
-  chatoomParticipants ChatoomParticipants[]
-  privateMessages     PrivateMessages[]
+  purchase_history    PurchaseHistorys[]
+  cart                Carts[]
+  teacher             Teachers[]
+  timetable           Timetables[]
+  product_rating      ProductRatings[]
+  chartoom            Chatrooms[]
+  chatoom_participant ChatoomParticipants[]
+  private_message     PrivateMessages[]
 }
 
 model Subjects {
-  id              Int              @id @default(autoincrement())
-  name            String           @db.VarChar(255)
-  chinese_name    String           @db.VarChar(255)
-  user            Users?           @relation(fields: [user_id], references: [id])
-  user_id         Int?
-  created_at      DateTime         @default(now()) @db.Timestamptz(3)
-  updated_at      DateTime         @updatedAt @db.Timestamptz(3)
-  product         Products[]
-  timetables      Timetables[]
-  Product_ratings ProductRatings[]
+  id             Int              @id @default(autoincrement())
+  name           String           @db.VarChar(255)
+  chinese_name   String           @db.VarChar(255)
+  user           Users?           @relation(fields: [user_id], references: [id])
+  user_id        Int?
+  created_at     DateTime         @default(now()) @db.Timestamptz(3)
+  updated_at     DateTime         @updatedAt @db.Timestamptz(3)
+  product        Products[]
+  timetable      Timetables[]
+  product_rating ProductRatings[]
 }
 
 model Teachers {
@@ -73,18 +73,18 @@ model Products {
   subject_id       Int?
   created_at       DateTime           @default(now()) @db.Timestamptz(3)
   updated_at       DateTime           @updatedAt @db.Timestamptz(3)
-  productRatings   ProductRatings[]
-  purchaseHistorys PurchaseHistorys[]
-  cartDetails      CartDetails[]
+  product_rating   ProductRatings[]
+  purchase_history PurchaseHistorys[]
+  cart_detail      CartDetails[]
 }
 
 model Carts {
-  id           Int          @id @default(autoincrement())
-  student      Users?       @relation(fields: [student_id], references: [id])
-  student_id   Int?         @unique
-  created_at   DateTime     @default(now()) @db.Timestamptz(3)
-  updated_at   DateTime     @updatedAt @db.Timestamptz(3)
-  cart_details CartDetails?
+  id          Int          @id @default(autoincrement())
+  student     Users?       @relation(fields: [student_id], references: [id])
+  student_id  Int?         @unique
+  created_at  DateTime     @default(now()) @db.Timestamptz(3)
+  updated_at  DateTime     @updatedAt @db.Timestamptz(3)
+  cart_detail CartDetails?
 }
 
 model CartDetails {
@@ -131,14 +131,14 @@ model Timetables {
 }
 
 model Chatrooms {
-  id                   Int                   @id @default(autoincrement())
-  name                 String                @db.VarChar(255)
-  user                 Users?                @relation(fields: [user_id], references: [id])
-  user_id              Int?
-  created_at           DateTime              @default(now()) @db.Timestamptz(3)
-  updated_at           DateTime              @updatedAt @db.Timestamptz(3)
-  Chatroom_historys    ChatroomHistorys[]
-  Chatoom_participants ChatoomParticipants[]
+  id                  Int                   @id @default(autoincrement())
+  name                String                @db.VarChar(255)
+  user                Users?                @relation(fields: [user_id], references: [id])
+  user_id             Int?
+  created_at          DateTime              @default(now()) @db.Timestamptz(3)
+  updated_at          DateTime              @updatedAt @db.Timestamptz(3)
+  chatroom_history    ChatroomHistorys[]
+  chatoom_participant ChatoomParticipants[]
 }
 
 model ChatroomHistorys {

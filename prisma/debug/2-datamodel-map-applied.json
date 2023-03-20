@@ -150,7 +150,7 @@
           "isUpdatedAt": false
         },
         {
-          "name": "purchaseHistory",
+          "name": "purchase_history",
           "kind": "object",
           "isList": true,
           "isRequired": true,
@@ -168,8 +168,8 @@
         {
           "name": "cart",
           "kind": "object",
-          "isList": false,
-          "isRequired": false,
+          "isList": true,
+          "isRequired": true,
           "isUnique": false,
           "isId": false,
           "isReadOnly": false,
@@ -182,7 +182,7 @@
           "isUpdatedAt": false
         },
         {
-          "name": "teachers",
+          "name": "teacher",
           "kind": "object",
           "isList": true,
           "isRequired": true,
@@ -198,7 +198,7 @@
           "isUpdatedAt": false
         },
         {
-          "name": "timetables",
+          "name": "timetable",
           "kind": "object",
           "isList": true,
           "isRequired": true,
@@ -214,7 +214,7 @@
           "isUpdatedAt": false
         },
         {
-          "name": "productRatings",
+          "name": "product_rating",
           "kind": "object",
           "isList": true,
           "isRequired": true,
@@ -230,7 +230,7 @@
           "isUpdatedAt": false
         },
         {
-          "name": "chartooms",
+          "name": "chartoom",
           "kind": "object",
           "isList": true,
           "isRequired": true,
@@ -246,7 +246,7 @@
           "isUpdatedAt": false
         },
         {
-          "name": "chatoomParticipants",
+          "name": "chatoom_participant",
           "kind": "object",
           "isList": true,
           "isRequired": true,
@@ -262,7 +262,7 @@
           "isUpdatedAt": false
         },
         {
-          "name": "privateMessages",
+          "name": "private_message",
           "kind": "object",
           "isList": true,
           "isRequired": true,
@@ -410,7 +410,7 @@
           "isUpdatedAt": false
         },
         {
-          "name": "timetables",
+          "name": "timetable",
           "kind": "object",
           "isList": true,
           "isRequired": true,
@@ -426,7 +426,7 @@
           "isUpdatedAt": false
         },
         {
-          "name": "Product_ratings",
+          "name": "product_rating",
           "kind": "object",
           "isList": true,
           "isRequired": true,
@@ -746,7 +746,7 @@
           "isUpdatedAt": true
         },
         {
-          "name": "productRatings",
+          "name": "product_rating",
           "kind": "object",
           "isList": true,
           "isRequired": true,
@@ -762,7 +762,7 @@
           "isUpdatedAt": false
         },
         {
-          "name": "purchaseHistorys",
+          "name": "purchase_history",
           "kind": "object",
           "isList": true,
           "isRequired": true,
@@ -778,7 +778,7 @@
           "isUpdatedAt": false
         },
         {
-          "name": "cartDetails",
+          "name": "cart_detail",
           "kind": "object",
           "isList": true,
           "isRequired": true,
@@ -884,7 +884,7 @@
           "isUpdatedAt": true
         },
         {
-          "name": "cart_details",
+          "name": "cart_detail",
           "kind": "object",
           "isList": false,
           "isRequired": false,
@@ -1541,7 +1541,7 @@
           "isUpdatedAt": true
         },
         {
-          "name": "Chatroom_historys",
+          "name": "chatroom_history",
           "kind": "object",
           "isList": true,
           "isRequired": true,
@@ -1557,7 +1557,7 @@
           "isUpdatedAt": false
         },
         {
-          "name": "Chatoom_participants",
+          "name": "chatoom_participant",
           "kind": "object",
           "isList": true,
           "isRequired": true,
