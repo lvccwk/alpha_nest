@@ -12,10 +12,11 @@ import { PurchaseHistorysModule } from './purchaseHistorys/purchaseHistorys.modu
 import { TimetablesModule } from './timetable/timetable.module';
 import { CartsModule } from './carts/carts.module';
 import { ChatroomsModule } from './chatrooms/chatrooms.module';
-import { ChatroomParticipantsModule } from './chatroomParticipants/chatroomParticipants.module';
+
 import { ChatroomHistorysModule } from './chatroomHistorys/chatroomHistorys.module';
 import { ProductRatingsModule } from './productRatings/productRatings.module';
 import { PrivateMessagesModule } from './privateMessages/privateMessages.module';
+import { ChatroomParticipantsModule } from './chatoomParticipants/chatoomParticipants.module';
 
 @Module({
 	imports: [

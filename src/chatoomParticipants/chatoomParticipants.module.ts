@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ChatroomParticipantsService } from './chatroomParticipants.service';
-import { ChatroomParticipantsController } from './chatroomParticipants.controller';
+
 import { PrismaService } from 'nestjs-prisma';
+import { ChatroomParticipantsController } from './chatoomParticipants.controller';
+import { ChatroomParticipantsService } from './chatoomParticipants.service';
 
 @Module({
 	controllers: [ChatroomParticipantsController],

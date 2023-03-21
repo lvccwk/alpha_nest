@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
-import { CreateChatroomParticipantDto } from './dto/create-chatroomParticipants.dto';
-import { UpdateChatroomParticipantDto } from './dto/update-chatroomParticipants.dto';
-import { ChatroomParticipant } from './entities/chatroomParticipants.entity';
+import { CreateChatroomParticipantDto } from './dto/create-chatoomParticipants.dto';
+import { UpdateChatroomParticipantDto } from './dto/update-chatoomParticipants.dto';
+import { ChatroomParticipant } from './entities/chatoomParticipants.entity';
 
 @Injectable()
 export class ChatroomParticipantsService {

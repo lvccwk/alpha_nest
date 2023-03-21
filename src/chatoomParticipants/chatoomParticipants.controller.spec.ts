@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ChatroomParticipantsController } from './chatroomParticipants.controller';
-import { ChatroomParticipantsService } from './chatroomParticipants.service';
+import { ChatroomParticipantsController } from './chatoomParticipants.controller';
+import { ChatroomParticipantsService } from './chatoomParticipants.service';
 
 describe('TeachersController', () => {
 	let controller: ChatroomParticipantsController;

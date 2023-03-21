@@ -1,9 +1,10 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
-import { ChatroomParticipantsService } from './chatroomParticipants.service';
-import { CreateChatroomParticipantDto } from './dto/create-chatroomParticipants.dto';
-import { UpdateChatroomParticipantDto } from './dto/update-chatroomParticipants.dto';
-import { ChatroomParticipant } from './entities/chatroomParticipants.entity';
+
 import { ApiTags } from '@nestjs/swagger';
+import { ChatroomParticipantsService } from './chatoomParticipants.service';
+import { CreateChatroomParticipantDto } from './dto/create-chatoomParticipants.dto';
+import { UpdateChatroomParticipantDto } from './dto/update-chatoomParticipants.dto';
+import { ChatroomParticipant } from './entities/chatoomParticipants.entity';
 
 @ApiTags('chatroomParticipants')
 @Controller('chatroomParticipants')

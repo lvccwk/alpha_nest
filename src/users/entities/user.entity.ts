@@ -10,7 +10,8 @@ import {
 	MinLength
 } from 'class-validator';
 import { Cart } from 'src/carts/entities/carts.entity';
-import { ChatroomParticipant } from 'src/chatroomParticipants/entities/chatroomParticipants.entity';
+import { ChatroomParticipant } from 'src/chatoomParticipants/entities/chatoomParticipants.entity';
+
 import { Chatroom } from 'src/chatrooms/entities/chatrooms.entity';
 import { PrivateMessage } from 'src/privateMessages/entities/privateMessages.entity';
 import { ProductRating } from 'src/productRatings/entities/productRatings.entity';

@@ -37,41 +37,83 @@ async function main() {
 					time_slot: '2023-03-18 16:00:00'
 				}
 			},
-			// chatroom: {
-			// 	create: {
-			// 		name: '牙遠補習房'
-			// 	}
-			// },
-
+			chatroom: {
+				create: {
+					name: '牙遠補習房'
+				}
+			},
+			chatroom_history: {
+				create: {
+					content: '中大第一'
+				}
+			},
 			private_message_from_user: {
 				create: {
+					to_id: 2,
+					content: 'HI, 中大「箭無不勝」 機械人賽三料冠軍 將再代表香港 出戰青島國際賽 '
+				}
+			},
+			private_message_to_user: {
+				create: {
+					from_id: 1,
 					content: 'HI, 中大「箭無不勝」 機械人賽三料冠軍 將再代表香港 出戰青島國際賽 '
 				}
 			}
 		}
 	});
-	// const bob = await prisma.user.upsert({
-	// 	where: { email: 'bob@prisma.io' },
-	// 	update: {},
-	// 	create: {
-	// 		email: 'bob@prisma.io',
-	// 		name: 'Bob',
-	// 		posts: {
-	// 			create: [
-	// 				{
-	// 					title: 'Follow Prisma on Twitter',
-	// 					content: 'https://twitter.com/prisma',
-	// 					published: true
-	// 				},
-	// 				{
-	// 					title: 'Follow Nexus on Twitter',
-	// 					content: 'https://twitter.com/nexusgql',
-	// 					published: true
-	// 				}
-	// 			]
-	// 		}
-	// 	}
-	// });
+	const bob = await prisma.users.upsert({
+		where: { email: 'arfar@gmail.com' },
+		update: {},
+		create: {
+			user_type: 'student',
+			username: 'arfarstudent',
+			email: 'arfarstudent@gmail.com',
+			password: 'adminadmin',
+			image: 'admin.png',
+			subject: {
+				create: {
+					name: 'chinese',
+					chinese_name: '中文'
+				}
+			},
+			product: {
+				create: {
+					name: '中文精讀班',
+					price: 38,
+					product_type: 'course',
+					avg_rating: 10,
+					file_url: 'http://download.pdf'
+				}
+			},
+			timetable: {
+				create: {
+					time_slot: '2023-03-18 16:00:00'
+				}
+			},
+			chatroom: {
+				create: {
+					name: '牙遠補習房'
+				}
+			},
+			chatroom_history: {
+				create: {
+					content: '中大第一'
+				}
+			},
+			private_message_from_user: {
+				create: {
+					to_id: 2,
+					content: 'HI, 中大「箭無不勝」 機械人賽三料冠軍 將再代表香港 出戰青島國際賽 '
+				}
+			},
+			private_message_to_user: {
+				create: {
+					from_id: 1,
+					content: 'HI, 中大「箭無不勝」 機械人賽三料冠軍 將再代表香港 出戰青島國際賽 '
+				}
+			}
+		}
+	});
 	console.log({ arfar });
 }
 main()
