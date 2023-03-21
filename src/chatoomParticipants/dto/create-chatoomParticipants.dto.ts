@@ -1,6 +1,4 @@
 import { OmitType, PartialType } from '@nestjs/swagger';
-import { ChatoomParticipant } from '../entities/chatoomParticipants.entity';
+import { ChatroomParticipant } from '../entities/chatroomParticipants.entity';
 
-export class CreateChatoomParticipantDto extends OmitType(ChatoomParticipant, [
-  'id',
-] as const) {}
+export class CreateChatroomParticipantDto extends OmitType(ChatroomParticipant, ['id'] as const) {}

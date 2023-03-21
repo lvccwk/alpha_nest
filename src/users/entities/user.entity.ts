@@ -10,7 +10,7 @@ import {
 	MinLength
 } from 'class-validator';
 import { Cart } from 'src/carts/entities/carts.entity';
-import { ChatoomParticipant } from 'src/chatoomParticipants/entities/chatoomParticipants.entity';
+import { ChatroomParticipant } from 'src/chatroomParticipants/entities/chatroomParticipants.entity';
 import { Chatroom } from 'src/chatrooms/entities/chatrooms.entity';
 import { PrivateMessage } from 'src/privateMessages/entities/privateMessages.entity';
 import { ProductRating } from 'src/productRatings/entities/productRatings.entity';
@@ -59,8 +59,8 @@ export class User {
 	teacher: Teacher[];
 	timetable: Timetable[];
 	product_rating: ProductRating[];
-	chartoom: Chatroom[];
-	chatoom_participant: ChatoomParticipant[];
+	chatroom: Chatroom[];
+	chatroom_participant: ChatroomParticipant[];
 	private_message_from_user: PrivateMessage[];
 	private_message_to_user: PrivateMessage[];
 }

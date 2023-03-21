@@ -112,14 +112,10 @@
           "isUnique": false,
           "isId": false,
           "isReadOnly": false,
-          "hasDefaultValue": true,
+          "hasDefaultValue": false,
           "type": "DateTime",
-          "default": {
-            "name": "now",
-            "args": []
-          },
           "isGenerated": false,
-          "isUpdatedAt": false
+          "isUpdatedAt": true
         },
         {
           "name": "subject",
@@ -234,7 +230,7 @@
           "isUpdatedAt": false
         },
         {
-          "name": "chartoom",
+          "name": "chatroom",
           "kind": "object",
           "isList": true,
           "isRequired": true,
@@ -250,7 +246,7 @@
           "isUpdatedAt": false
         },
         {
-          "name": "chatoom_participant",
+          "name": "chatroom_history",
           "kind": "object",
           "isList": true,
           "isRequired": true,
@@ -258,8 +254,24 @@
           "isId": false,
           "isReadOnly": false,
           "hasDefaultValue": false,
-          "type": "ChatoomParticipants",
-          "relationName": "ChatoomParticipantsToUsers",
+          "type": "ChatroomHistorys",
+          "relationName": "ChatroomHistorysToUsers",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "chatroom_participant",
+          "kind": "object",
+          "isList": true,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "ChatroomParticipants",
+          "relationName": "ChatroomParticipantsToUsers",
           "relationFromFields": [],
           "relationToFields": [],
           "isGenerated": false,
@@ -1541,7 +1553,7 @@
           "isUpdatedAt": false
         },
         {
-          "name": "chatoom_participant",
+          "name": "chatroom_participant",
           "kind": "object",
           "isList": true,
           "isRequired": true,
@@ -1549,8 +1561,8 @@
           "isId": false,
           "isReadOnly": false,
           "hasDefaultValue": false,
-          "type": "ChatoomParticipants",
-          "relationName": "ChatoomParticipantsToChatrooms",
+          "type": "ChatroomParticipants",
+          "relationName": "ChatroomParticipantsToChatrooms",
           "relationFromFields": [],
           "relationToFields": [],
           "isGenerated": false,
@@ -1630,6 +1642,39 @@
           "isUpdatedAt": false
         },
         {
+          "name": "user",
+          "kind": "object",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "Users",
+          "relationName": "ChatroomHistorysToUsers",
+          "relationFromFields": [
+            "user_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "user_id",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": true,
+          "hasDefaultValue": false,
+          "type": "Int",
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
           "name": "created_at",
           "kind": "scalar",
           "isList": false,
@@ -1666,7 +1711,7 @@
       "isGenerated": false
     },
     {
-      "name": "ChatoomParticipants",
+      "name": "ChatroomParticipants",
       "dbName": null,
       "fields": [
         {
@@ -1696,7 +1741,7 @@
           "isReadOnly": false,
           "hasDefaultValue": false,
           "type": "Chatrooms",
-          "relationName": "ChatoomParticipantsToChatrooms",
+          "relationName": "ChatroomParticipantsToChatrooms",
           "relationFromFields": [
             "chatroom_id"
           ],
@@ -1729,7 +1774,7 @@
           "isReadOnly": false,
           "hasDefaultValue": false,
           "type": "Users",
-          "relationName": "ChatoomParticipantsToUsers",
+          "relationName": "ChatroomParticipantsToUsers",
           "relationFromFields": [
             "user_id"
           ],

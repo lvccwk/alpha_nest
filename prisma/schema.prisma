@@ -17,14 +17,14 @@ generator client {
 }
 
 model Users {
-  id                        Int                   @id @default(autoincrement())
-  user_type                 String                @db.VarChar(255)
-  username                  String?               @db.VarChar(255)
-  email                     String                @unique @db.VarChar(255)
-  password                  String                @db.VarChar(255)
-  image                     String                @db.Text
-  created_at                DateTime              @default(now()) @db.Timestamp
-  updated_at                DateTime              @updatedAt @db.Timestamp
+  id                        Int                    @id @default(autoincrement())
+  user_type                 String                 @db.VarChar(255)
+  username                  String?                @db.VarChar(255)
+  email                     String                 @unique @db.VarChar(255)
+  password                  String                 @db.VarChar(255)
+  image                     String                 @db.Text
+  created_at                DateTime               @default(now()) @db.Timestamptz
+  updated_at                DateTime               @updatedAt @db.Timestamptz
   subject                   Subjects[]
   product                   Products[]
   purchase_history          PurchaseHistorys[]
@@ -32,10 +32,11 @@ model Users {
   teacher                   Teachers[]
   timetable                 Timetables[]
   product_rating            ProductRatings[]
-  chartoom                  Chatrooms[]
-  chatoom_participant       ChatoomParticipants[]
-  private_message_from_user PrivateMessages[]     @relation("from_user")
-  private_message_to_user   PrivateMessages[]     @relation("to_user")
+  chatroom                  Chatrooms[]
+  chatroom_history          ChatroomHistorys[]
+  chatroom_participant      ChatroomParticipants[]
+  private_message_from_user PrivateMessages[]      @relation("from_user")
+  private_message_to_user   PrivateMessages[]      @relation("to_user")
 }
 
 model Subjects {
@@ -130,14 +131,14 @@ model Timetables {
 }
 
 model Chatrooms {
-  id                  Int                   @id @default(autoincrement())
-  name                String                @db.VarChar(255)
-  user                Users?                @relation(fields: [user_id], references: [id])
-  user_id             Int?
-  created_at          DateTime              @default(now()) @db.Timestamp
-  updated_at          DateTime              @updatedAt @db.Timestamp
-  chatroom_history    ChatroomHistorys[]
-  chatoom_participant ChatoomParticipants[]
+  id                   Int                    @id @default(autoincrement())
+  name                 String                 @db.VarChar(255)
+  user                 Users?                 @relation(fields: [user_id], references: [id])
+  user_id              Int?
+  created_at           DateTime               @default(now()) @db.Timestamp
+  updated_at           DateTime               @updatedAt @db.Timestamp
+  chatroom_history     ChatroomHistorys[]
+  chatroom_participant ChatroomParticipants[]
 }
 
 model ChatroomHistorys {
@@ -145,11 +146,13 @@ model ChatroomHistorys {
   content     String     @db.VarChar(255)
   chatroom    Chatrooms? @relation(fields: [chatroom_id], references: [id])
   chatroom_id Int?
+  user        Users?     @relation(fields: [user_id], references: [id])
+  user_id     Int?
   created_at  DateTime   @default(now()) @db.Timestamp
   updated_at  DateTime   @updatedAt @db.Timestamp
 }
 
-model ChatoomParticipants {
+model ChatroomParticipants {
   id          Int        @id @default(autoincrement())
   chatroom    Chatrooms? @relation(fields: [chatroom_id], references: [id])
   chatroom_id Int?

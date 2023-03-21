@@ -1,6 +1,4 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateChatoomParticipantDto } from './create-chatoomParticipants.dto';
+import { CreateChatroomParticipantDto } from './create-chatroomParticipants.dto';
 
-export class UpdateChatoomParticipantDto extends PartialType(
-  CreateChatoomParticipantDto,
-) {}
+export class UpdateChatroomParticipantDto extends PartialType(CreateChatroomParticipantDto) {}

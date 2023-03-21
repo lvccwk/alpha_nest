@@ -1,20 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ChatoomParticipantsService } from './chatoomParticipants.service';
+import { ChatroomParticipantsService } from './chatroomParticipants.service';
 
 describe('UsersService', () => {
-  let service: ChatoomParticipantsService;
+	let service: ChatroomParticipantsService;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [ChatoomParticipantsService],
-    }).compile();
+	beforeEach(async () => {
+		const module: TestingModule = await Test.createTestingModule({
+			providers: [ChatroomParticipantsService]
+		}).compile();
 
-    service = module.get<ChatoomParticipantsService>(
-      ChatoomParticipantsService,
-    );
-  });
+		service = module.get<ChatroomParticipantsService>(ChatroomParticipantsService);
+	});
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
+	it('should be defined', () => {
+		expect(service).toBeDefined();
+	});
 });

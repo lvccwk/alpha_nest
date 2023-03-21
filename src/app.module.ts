@@ -12,33 +12,33 @@ import { PurchaseHistorysModule } from './purchaseHistorys/purchaseHistorys.modu
 import { TimetablesModule } from './timetable/timetable.module';
 import { CartsModule } from './carts/carts.module';
 import { ChatroomsModule } from './chatrooms/chatrooms.module';
-import { ChatoomParticipantsModule } from './chatoomParticipants/chatoomParticipants.module';
+import { ChatroomParticipantsModule } from './chatroomParticipants/chatroomParticipants.module';
 import { ChatroomHistorysModule } from './chatroomHistorys/chatroomHistorys.module';
 import { ProductRatingsModule } from './productRatings/productRatings.module';
 import { PrivateMessagesModule } from './privateMessages/privateMessages.module';
 
 @Module({
-  imports: [
-    UsersModule,
-    SubjectsModule,
-    TeachersModule,
-    ProductsModule,
-    CartsModule,
-    CartDetailsModule,
-    ProductRatingsModule,
-    PurchaseHistorysModule,
-    TimetablesModule,
-    ChatroomsModule,
-    ChatroomHistorysModule,
-    ChatoomParticipantsModule,
-    PrivateMessagesModule,
-    PrismaModule.forRoot(),
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+	imports: [
+		UsersModule,
+		SubjectsModule,
+		TeachersModule,
+		ProductsModule,
+		CartsModule,
+		CartDetailsModule,
+		ProductRatingsModule,
+		PurchaseHistorysModule,
+		TimetablesModule,
+		ChatroomsModule,
+		ChatroomHistorysModule,
+		ChatroomParticipantsModule,
+		PrivateMessagesModule,
+		PrismaModule.forRoot()
+	],
+	controllers: [AppController],
+	providers: [AppService]
 })
 export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes('*');
-  }
+	configure(consumer: MiddlewareConsumer) {
+		consumer.apply(LoggerMiddleware).forRoutes('*');
+	}
 }

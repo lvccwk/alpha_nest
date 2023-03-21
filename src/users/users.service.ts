@@ -35,8 +35,8 @@ export class UsersService {
 				teacher: true,
 				timetable: true,
 				product_rating: true,
-				chartoom: true,
-				chatoom_participant: true,
+				chatroom: true,
+				chatroom_participant: true,
 				private_message_from_user: true,
 				private_message_to_user: true
 			}
@@ -54,8 +54,8 @@ export class UsersService {
 				teacher: true,
 				timetable: true,
 				product_rating: true,
-				chartoom: true,
-				chatoom_participant: true,
+				chatroom: true,
+				chatroom_participant: true,
 				private_message_from_user: true,
 				private_message_to_user: true
 			}

@@ -22,7 +22,7 @@ export class ChatroomsService {
 		return await this.prisma.chatrooms.findMany({
 			include: {
 				chatroom_history: true,
-				chatoom_participant: true
+				chatroom_participant: true
 			}
 		});
 	}
@@ -32,7 +32,7 @@ export class ChatroomsService {
 			where: { id },
 			include: {
 				chatroom_history: true,
-				chatoom_participant: true
+				chatroom_participant: true
 			}
 		});
 		if (!foundCartDetail) throw new NotFoundException('Cart not found!');

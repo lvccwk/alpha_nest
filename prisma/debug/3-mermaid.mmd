@@ -95,7 +95,7 @@ erDiagram
     }
   
 
-  ChatoomParticipants {
+  ChatroomParticipants {
     Int id PK 
     DateTime created_at  
     DateTime updated_at  
@@ -124,7 +124,8 @@ erDiagram
     Timetables o{--|o Subjects : "subject"
     Chatrooms o{--|o Users : "user"
     ChatroomHistorys o{--|o Chatrooms : "chatroom"
-    ChatoomParticipants o{--|o Chatrooms : "chatroom"
-    ChatoomParticipants o{--|o Users : "user"
+    ChatroomHistorys o{--|o Users : "user"
+    ChatroomParticipants o{--|o Chatrooms : "chatroom"
+    ChatroomParticipants o{--|o Users : "user"
     PrivateMessages o{--|o Users : "from"
     PrivateMessages o{--|o Users : "to"
