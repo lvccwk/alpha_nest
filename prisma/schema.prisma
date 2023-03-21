@@ -17,24 +17,25 @@ generator client {
 }
 
 model Users {
-  id                  Int                   @id @default(autoincrement())
-  user_type           String                @db.VarChar(255)
-  username            String?               @db.VarChar(255)
-  email               String                @unique @db.VarChar(255)
-  password            String                @db.VarChar(255)
-  image               String                @db.Text
-  created_at          DateTime              @default(now()) @db.Timestamp
-  updated_at          DateTime              @updatedAt @db.Timestamp
-  subject             Subjects[]
-  product             Products[]
-  purchase_history    PurchaseHistorys[]
-  cart                Carts[]
-  teacher             Teachers[]
-  timetable           Timetables[]
-  product_rating      ProductRatings[]
-  chartoom            Chatrooms[]
-  chatoom_participant ChatoomParticipants[]
-  private_message     PrivateMessages[]
+  id                        Int                   @id @default(autoincrement())
+  user_type                 String                @db.VarChar(255)
+  username                  String?               @db.VarChar(255)
+  email                     String                @unique @db.VarChar(255)
+  password                  String                @db.VarChar(255)
+  image                     String                @db.Text
+  created_at                DateTime              @default(now()) @db.Timestamp
+  updated_at                DateTime              @updatedAt @db.Timestamp
+  subject                   Subjects[]
+  product                   Products[]
+  purchase_history          PurchaseHistorys[]
+  cart                      Carts[]
+  teacher                   Teachers[]
+  timetable                 Timetables[]
+  product_rating            ProductRatings[]
+  chartoom                  Chatrooms[]
+  chatoom_participant       ChatoomParticipants[]
+  private_message_from_user PrivateMessages[]     @relation("from_user")
+  private_message_to_user   PrivateMessages[]     @relation("to_user")
 }
 
 model Subjects {
@@ -160,10 +161,10 @@ model ChatoomParticipants {
 
 model PrivateMessages {
   id         Int      @id @default(autoincrement())
-  from       Users?   @relation(fields: [from_id], references: [id])
+  from       Users?   @relation("from_user", fields: [from_id], references: [id])
   from_id    Int?
-  // to         Users?   @relation(fields: [to_id], references: [id])
-  // to_id      Int?
+  to         Users?   @relation("to_user", fields: [to_id], references: [id])
+  to_id      Int?
   content    String   @db.Text
   created_at DateTime @default(now()) @db.Timestamp
   updated_at DateTime @updatedAt @db.Timestamp

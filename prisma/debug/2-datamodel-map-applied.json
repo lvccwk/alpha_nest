@@ -262,7 +262,7 @@
           "isUpdatedAt": false
         },
         {
-          "name": "private_message",
+          "name": "private_message_from_user",
           "kind": "object",
           "isList": true,
           "isRequired": true,
@@ -271,7 +271,23 @@
           "isReadOnly": false,
           "hasDefaultValue": false,
           "type": "PrivateMessages",
-          "relationName": "PrivateMessagesToUsers",
+          "relationName": "from_user",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "private_message_to_user",
+          "kind": "object",
+          "isList": true,
+          "isRequired": true,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "PrivateMessages",
+          "relationName": "to_user",
           "relationFromFields": [],
           "relationToFields": [],
           "isGenerated": false,
@@ -1799,7 +1815,7 @@
           "isReadOnly": false,
           "hasDefaultValue": false,
           "type": "Users",
-          "relationName": "PrivateMessagesToUsers",
+          "relationName": "from_user",
           "relationFromFields": [
             "from_id"
           ],
@@ -1811,6 +1827,39 @@
         },
         {
           "name": "from_id",
+          "kind": "scalar",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": true,
+          "hasDefaultValue": false,
+          "type": "Int",
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "to",
+          "kind": "object",
+          "isList": false,
+          "isRequired": false,
+          "isUnique": false,
+          "isId": false,
+          "isReadOnly": false,
+          "hasDefaultValue": false,
+          "type": "Users",
+          "relationName": "to_user",
+          "relationFromFields": [
+            "to_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isGenerated": false,
+          "isUpdatedAt": false
+        },
+        {
+          "name": "to_id",
           "kind": "scalar",
           "isList": false,
           "isRequired": false,
