@@ -46,23 +46,11 @@ async function main() {
 				create: {
 					content: '中大第一'
 				}
-			},
-			private_message_from_user: {
-				create: {
-					to_id: 2,
-					content: 'HI, 中大「箭無不勝」 機械人賽三料冠軍 將再代表香港 出戰青島國際賽 '
-				}
-			},
-			private_message_to_user: {
-				create: {
-					from_id: 1,
-					content: 'HI, 中大「箭無不勝」 機械人賽三料冠軍 將再代表香港 出戰青島國際賽 '
-				}
 			}
 		}
 	});
-	const bob = await prisma.users.upsert({
-		where: { email: 'arfar@gmail.com' },
+	const arfarstudent = await prisma.users.upsert({
+		where: { email: 'arfarstudent@gmail.com' },
 		update: {},
 		create: {
 			user_type: 'student',
@@ -70,24 +58,23 @@ async function main() {
 			email: 'arfarstudent@gmail.com',
 			password: 'adminadmin',
 			image: 'admin.png',
-			subject: {
+			cart: {
 				create: {
-					name: 'chinese',
-					chinese_name: '中文'
+					cart_detail: {
+						create: {
+							product_id: 1
+						}
+					}
 				}
 			},
-			product: {
+			product_rating: {
 				create: {
-					name: '中文精讀班',
-					price: 38,
-					product_type: 'course',
-					avg_rating: 10,
-					file_url: 'http://download.pdf'
+					rating: 10
 				}
 			},
-			timetable: {
+			purchase_history: {
 				create: {
-					time_slot: '2023-03-18 16:00:00'
+					product_id: 1
 				}
 			},
 			chatroom: {
@@ -100,21 +87,14 @@ async function main() {
 					content: '中大第一'
 				}
 			},
-			private_message_from_user: {
+			chatroom_participant: {
 				create: {
-					to_id: 2,
-					content: 'HI, 中大「箭無不勝」 機械人賽三料冠軍 將再代表香港 出戰青島國際賽 '
-				}
-			},
-			private_message_to_user: {
-				create: {
-					from_id: 1,
-					content: 'HI, 中大「箭無不勝」 機械人賽三料冠軍 將再代表香港 出戰青島國際賽 '
+					chatroom_id: 1
 				}
 			}
 		}
 	});
-	console.log({ arfar });
+	console.log({ arfar, arfarstudent });
 }
 main()
 	.then(async () => {

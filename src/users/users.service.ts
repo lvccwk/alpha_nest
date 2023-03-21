@@ -24,8 +24,6 @@ export class UsersService {
 	}
 
 	async findAll(): Promise<User[]> {
-		// const user = await this.prisma.users.findMany();
-		// return user;
 		return await this.prisma.users.findMany({
 			include: {
 				subject: true,
@@ -77,13 +75,11 @@ export class UsersService {
 		});
 		if (!foundUser) throw new NotFoundException('User not found!');
 		return `#${id} user info has been updated`;
-		// return foundUser;
 	}
 
 	async remove(id: number) {
 		let deletedUser = await this.prisma.users.delete({ where: { id } });
 		if (!deletedUser) throw new NotFoundException('User not found!');
 		return `#${id} user has been deleted`;
-		// return deletedUser;
 	}
 }
