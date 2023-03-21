@@ -37,7 +37,8 @@ export class UsersService {
 				product_rating: true,
 				chartoom: true,
 				chatoom_participant: true,
-				private_message: true
+				private_message_from_user: true,
+				private_message_to_user: true
 			}
 		});
 	}
@@ -55,7 +56,8 @@ export class UsersService {
 				product_rating: true,
 				chartoom: true,
 				chatoom_participant: true,
-				private_message: true
+				private_message_from_user: true,
+				private_message_to_user: true
 			}
 		});
 		if (!foundUser) throw new NotFoundException('User not found!');

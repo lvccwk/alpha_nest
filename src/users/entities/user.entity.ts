@@ -61,5 +61,6 @@ export class User {
 	product_rating: ProductRating[];
 	chartoom: Chatroom[];
 	chatoom_participant: ChatoomParticipant[];
-	private_message: PrivateMessage[];
+	private_message_from_user: PrivateMessage[];
+	private_message_to_user: PrivateMessage[];
 }
