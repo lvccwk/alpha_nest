@@ -112,10 +112,14 @@
             "isUnique": false,
             "isId": false,
             "isReadOnly": false,
-            "hasDefaultValue": false,
+            "hasDefaultValue": true,
             "type": "DateTime",
+            "default": {
+              "name": "now",
+              "args": []
+            },
             "isGenerated": false,
-            "isUpdatedAt": true
+            "isUpdatedAt": false
           },
           {
             "name": "subject",
