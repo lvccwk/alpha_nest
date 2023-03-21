@@ -82,4 +82,28 @@ export class UsersService {
 		if (!deletedUser) throw new NotFoundException('User not found!');
 		return `#${id} user has been deleted`;
 	}
+
+	async login(data: { email: string; password: string }) {
+		return await this.prisma.users.findFirst({
+			where: data
+		});
+	}
+
+	async register(data: {
+		user_type: string;
+		username: string;
+		email: string;
+		password: string;
+		image: string;
+	}) {
+		return await this.prisma.users.create({
+			data: {
+				user_type: data.user_type,
+				username: data.username,
+				email: data.email,
+				password: data.password,
+				image: data.image
+			}
+		});
+	}
 }

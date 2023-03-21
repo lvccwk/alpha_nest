@@ -34,4 +34,70 @@ export class UsersController {
 	remove(@Param('id', ParseIntPipe) id: number) {
 		return this.usersService.remove(id);
 	}
+
+	@Post('/logout')
+	async logout(@Body() reqData: { email: string; password: string }): Promise<any> {
+		const user = await this.usersService.login({
+			email: reqData.email,
+			password: reqData.password
+		});
+
+		if (!user) {
+			// Create a user
+		}
+
+		// 1. Get a User.id, email, username by email
+
+		// 2. Make a JWT
+
+		return user;
+	}
+
+	@Post('/login')
+	async login(@Body() reqData: { email: string; password: string }): Promise<any> {
+		const user = await this.usersService.login({
+			email: reqData.email,
+			password: reqData.password
+		});
+
+		if (!user) {
+			// Create a user
+		}
+
+		// 1. Get a User.id, email, username by email
+
+		// 2. Make a JWT
+
+		return user;
+	}
+
+	@Post('/register')
+	async register(
+		@Body()
+		reqData: {
+			user_type: string;
+			username: string;
+			email: string;
+			password: string;
+			image: string;
+		}
+	): Promise<any> {
+		const user = await this.usersService.register({
+			user_type: reqData.user_type,
+			username: reqData.username,
+			email: reqData.email,
+			password: reqData.password,
+			image: reqData.image
+		});
+
+		if (!user) {
+			// Create a user
+		}
+
+		// 1. Get a User.id, email, username by email
+
+		// 2. Make a JWT
+
+		return user;
+	}
 }
