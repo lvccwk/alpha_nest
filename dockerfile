@@ -1,10 +1,13 @@
 FROM node:lts
 WORKDIR /usr/src/app
 COPY . .
+
+ENV DATABASE_URL="postgresql://postgres:postgres@postgres:5432/alpha"
+
 EXPOSE 3000
 CMD yarn install && \
-    yarn global add phantomjs-prebuilt && \
-    yarn prisma migrate dev &&\
-    init &&\
-    yarn prisma db seed &&\
-    yarn start
+    # yarn prisma migrate reset -f --skip-generate --skip-seed &&\
+    yarn prisma migrate reset -f &&\
+    # init &&\
+    # yarn prisma db seed &&\
+    yarn run start

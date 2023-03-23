@@ -61,9 +61,7 @@ async function main() {
 			cart: {
 				create: {
 					cart_detail: {
-						create: {
-							product_id: 1
-						}
+						create: { product_id: 1 }
 					}
 				}
 			},

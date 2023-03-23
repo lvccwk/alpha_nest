@@ -1,12 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-generator erd {
-  provider = "prisma-erd-generator"
-  output   = "./ERD.svg"
-  erdDebug = true
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -93,7 +87,7 @@ model CartDetails {
   product    Products? @relation(fields: [product_id], references: [id])
   product_id Int?
   cart       Carts?    @relation(fields: [cart_id], references: [id])
-  cart_id    Int?      @unique
+  cart_id    Int?
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
 }

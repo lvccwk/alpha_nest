@@ -4,10 +4,10 @@ CREATE TABLE "Users" (
     "user_type" VARCHAR(255) NOT NULL,
     "username" VARCHAR(255),
     "email" VARCHAR(255) NOT NULL,
-    "password" VARCHAR(255) NOT NULL,
+    "password" TEXT NOT NULL,
     "image" TEXT NOT NULL,
-    "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMPTZ NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Users_pkey" PRIMARY KEY ("id")
 );
@@ -18,8 +18,8 @@ CREATE TABLE "Subjects" (
     "name" VARCHAR(255) NOT NULL,
     "chinese_name" VARCHAR(255) NOT NULL,
     "user_id" INTEGER,
-    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Subjects_pkey" PRIMARY KEY ("id")
 );
@@ -30,8 +30,8 @@ CREATE TABLE "Teachers" (
     "user_id" INTEGER,
     "info" TEXT NOT NULL,
     "rating" INTEGER NOT NULL,
-    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Teachers_pkey" PRIMARY KEY ("id")
 );
@@ -46,8 +46,8 @@ CREATE TABLE "Products" (
     "file_url" TEXT NOT NULL,
     "user_id" INTEGER,
     "subject_id" INTEGER,
-    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Products_pkey" PRIMARY KEY ("id")
 );
@@ -56,8 +56,8 @@ CREATE TABLE "Products" (
 CREATE TABLE "Carts" (
     "id" SERIAL NOT NULL,
     "student_id" INTEGER,
-    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Carts_pkey" PRIMARY KEY ("id")
 );
@@ -67,8 +67,8 @@ CREATE TABLE "CartDetails" (
     "id" SERIAL NOT NULL,
     "product_id" INTEGER,
     "cart_id" INTEGER,
-    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "CartDetails_pkey" PRIMARY KEY ("id")
 );
@@ -79,8 +79,8 @@ CREATE TABLE "ProductRatings" (
     "product_id" INTEGER,
     "student_id" INTEGER,
     "rating" INTEGER NOT NULL,
-    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "ProductRatings_pkey" PRIMARY KEY ("id")
 );
@@ -90,8 +90,8 @@ CREATE TABLE "PurchaseHistorys" (
     "id" SERIAL NOT NULL,
     "product_id" INTEGER,
     "student_id" INTEGER,
-    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "PurchaseHistorys_pkey" PRIMARY KEY ("id")
 );
@@ -102,8 +102,8 @@ CREATE TABLE "Timetables" (
     "time_slot" VARCHAR(255) NOT NULL,
     "user_id" INTEGER,
     "subject_id" INTEGER,
-    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Timetables_pkey" PRIMARY KEY ("id")
 );
@@ -113,8 +113,8 @@ CREATE TABLE "Chatrooms" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "user_id" INTEGER,
-    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Chatrooms_pkey" PRIMARY KEY ("id")
 );
@@ -125,8 +125,8 @@ CREATE TABLE "ChatroomHistorys" (
     "content" VARCHAR(255) NOT NULL,
     "chatroom_id" INTEGER,
     "user_id" INTEGER,
-    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "ChatroomHistorys_pkey" PRIMARY KEY ("id")
 );
@@ -136,8 +136,8 @@ CREATE TABLE "ChatroomParticipants" (
     "id" SERIAL NOT NULL,
     "chatroom_id" INTEGER,
     "user_id" INTEGER,
-    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "ChatroomParticipants_pkey" PRIMARY KEY ("id")
 );
@@ -148,8 +148,8 @@ CREATE TABLE "PrivateMessages" (
     "from_id" INTEGER,
     "to_id" INTEGER,
     "content" TEXT NOT NULL,
-    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "PrivateMessages_pkey" PRIMARY KEY ("id")
 );
