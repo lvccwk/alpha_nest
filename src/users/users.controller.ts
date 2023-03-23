@@ -1,9 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import {
+	Controller,
+	Get,
+	Post,
+	Body,
+	Patch,
+	Param,
+	Delete,
+	ParseIntPipe,
+	Res,
+	UseGuards,
+	Req
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { ApiTags } from '@nestjs/swagger';
+import { generate } from 'rxjs';
+import { UserRegister } from 'src/model/user-register';
+import { JwtAuthGuard, Public } from '../../utils/jwt-auth.guard';
 
 @ApiTags('users')
 @Controller('users')
@@ -14,7 +29,8 @@ export class UsersController {
 	async create(@Body() createUserDto: CreateUserDto) {
 		return await this.usersService.create(createUserDto);
 	}
-
+	// @UseGuards(JwtAuthGuard)
+	@Public()
 	@Get()
 	async findAll(): Promise<User[]> {
 		return await this.usersService.findAll();
@@ -33,42 +49,6 @@ export class UsersController {
 	@Delete(':id')
 	remove(@Param('id', ParseIntPipe) id: number) {
 		return this.usersService.remove(id);
-	}
-
-	@Post('/logout')
-	async logout(@Body() reqData: { email: string; password: string }): Promise<any> {
-		const user = await this.usersService.login({
-			email: reqData.email,
-			password: reqData.password
-		});
-
-		if (!user) {
-			// Create a user
-		}
-
-		// 1. Get a User.id, email, username by email
-
-		// 2. Make a JWT
-
-		return user;
-	}
-
-	@Post('/login')
-	async login(@Body() reqData: { email: string; password: string }): Promise<any> {
-		const user = await this.usersService.login({
-			email: reqData.email,
-			password: reqData.password
-		});
-
-		if (!user) {
-			// Create a user
-		}
-
-		// 1. Get a User.id, email, username by email
-
-		// 2. Make a JWT
-
-		return user;
 	}
 
 	@Post('/register')
@@ -90,14 +70,83 @@ export class UsersController {
 			image: reqData.image
 		});
 
-		if (!user) {
-			// Create a user
-		}
+		return user;
+	}
 
+	// @Post('/register')
+	// async register(@Body() userRegister: UserRegister) {
+	// 	return await this.usersService.register(userRegister);
+	// }
+
+	@Post('/login')
+	async login(@Body() reqData: { email: string; password: string }): Promise<any> {
+		const token = await this.usersService.login({
+			email: reqData.email,
+			password: reqData.password
+		});
+
+		console.log('token :', token);
+		// if (!user) {
+		// 	// Create a user
+		// }
+
+		// const token = jwtSimple.encode(payLoad, jwt.jwtSecret);
+		// console.log(token);
 		// 1. Get a User.id, email, username by email
 
 		// 2. Make a JWT
 
-		return user;
+		return token;
 	}
+
+	// @Post('auth/loin/facebook')
+	// async facebookLogin(@Body() reqData: { email: string; password: string }): Promise<any> {
+	// 	try {
+	// 		if (!Body(key : reqData)) {
+	// 			res.status(401).json({ msg: 'Wrong Code!' });
+	// 			return;
+	// 		}
+	// 		const { code } = req.body;
+	// 		const fetchResponse = await fetch(`https://graph.facebook.com/oauth/access_token`, {
+	// 			method: 'POST',
+	// 			headers: {
+	// 				'Content-Type': 'application/x-www-form-urlencoded'
+	// 			},
+	// 			body: new URLSearchParams({
+	// 				grant_type: 'authorization_code',
+	// 				client_id: process.env.FACEBOOK_CLIENT_ID + '',
+	// 				client_secret: process.env.FACEBOOK_CLIENT_SECRET + '',
+	// 				code: code + '',
+	// 				redirect_uri: `${process.env.REACT_PUBLIC_HOSTNAME}/facebook-callback`
+	// 			})
+	// 		});
+	// 		const data = await fetchResponse.json();
+	// 		if (!data.access_token) {
+	// 			res.status(401).json({ msg: 'Failed to get access token!' });
+	// 			return;
+	// 		}
+	// 		const profileResponse = await fetch(
+	// 			`https://graph.facebook.com/me?fields=id,name,email,picture&access_token=${data.access_token}`
+	// 		);
+	// 		const profileData = await profileResponse.json();
+
+	// 		let user = await this.authService.getUser(profileData.email);
+
+	// 		// Create a new user if the user does not exist
+	// 		if (!user) {
+	// 			user = await this.authService.createUser(profileData.email);
+	// 		}
+	// 		const payload = {
+	// 			id: user.id,
+	// 			username: user.username
+	// 		};
+	// 		const token = jwtSimple.encode(payload, jwt.jwtSecret);
+	// 		res.json({
+	// 			username: user.username,
+	// 			token: token
+	// 		});
+	// 	} catch (e) {
+	// 		res.status(500).json({ msg: e.toString() });
+	// 	}
+	// }
 }

@@ -21,10 +21,10 @@ model Users {
   user_type                 String                 @db.VarChar(255)
   username                  String?                @db.VarChar(255)
   email                     String                 @unique @db.VarChar(255)
-  password                  String                 @db.VarChar(255)
+  password                  String
   image                     String                 @db.Text
-  created_at                DateTime               @default(now()) @db.Timestamptz
-  updated_at                DateTime               @updatedAt @db.Timestamptz
+  created_at                DateTime               @default(now())
+  updated_at                DateTime               @updatedAt
   subject                   Subjects[]
   product                   Products[]
   purchase_history          PurchaseHistorys[]
@@ -45,8 +45,8 @@ model Subjects {
   chinese_name String       @db.VarChar(255)
   user         Users?       @relation(fields: [user_id], references: [id])
   user_id      Int?
-  created_at   DateTime     @default(now()) @db.Timestamp
-  updated_at   DateTime     @updatedAt @db.Timestamp
+  created_at   DateTime     @default(now())
+  updated_at   DateTime     @updatedAt
   product      Products[]
   timetable    Timetables[]
 }
@@ -57,8 +57,8 @@ model Teachers {
   user_id    Int?
   info       String   @db.Text
   rating     Int      @db.Integer
-  created_at DateTime @default(now()) @db.Timestamp
-  updated_at DateTime @updatedAt @db.Timestamp
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model Products {
@@ -72,8 +72,8 @@ model Products {
   user_id          Int?
   subject          Subjects?          @relation(fields: [subject_id], references: [id])
   subject_id       Int?
-  created_at       DateTime           @default(now()) @db.Timestamp
-  updated_at       DateTime           @updatedAt @db.Timestamp
+  created_at       DateTime           @default(now())
+  updated_at       DateTime           @updatedAt
   product_rating   ProductRatings[]
   purchase_history PurchaseHistorys[]
   cart_detail      CartDetails[]
@@ -83,8 +83,8 @@ model Carts {
   id          Int           @id @default(autoincrement())
   student     Users?        @relation(fields: [student_id], references: [id])
   student_id  Int?          @unique
-  created_at  DateTime      @default(now()) @db.Timestamp
-  updated_at  DateTime      @updatedAt @db.Timestamp
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
   cart_detail CartDetails[]
 }
 
@@ -94,8 +94,8 @@ model CartDetails {
   product_id Int?
   cart       Carts?    @relation(fields: [cart_id], references: [id])
   cart_id    Int?      @unique
-  created_at DateTime  @default(now()) @db.Timestamp
-  updated_at DateTime  @updatedAt @db.Timestamp
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
 }
 
 model ProductRatings {
@@ -105,8 +105,8 @@ model ProductRatings {
   student    Users?    @relation(fields: [student_id], references: [id])
   student_id Int?
   rating     Int       @unique @db.Integer
-  created_at DateTime  @default(now()) @db.Timestamp
-  updated_at DateTime  @updatedAt @db.Timestamp
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
 }
 
 model PurchaseHistorys {
@@ -115,8 +115,8 @@ model PurchaseHistorys {
   product_id Int?
   student    Users?    @relation(fields: [student_id], references: [id])
   student_id Int?
-  created_at DateTime  @default(now()) @db.Timestamp
-  updated_at DateTime  @updatedAt @db.Timestamp
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
 }
 
 model Timetables {
@@ -126,8 +126,8 @@ model Timetables {
   user_id    Int?
   subject    Subjects? @relation(fields: [subject_id], references: [id])
   subject_id Int?
-  created_at DateTime  @default(now()) @db.Timestamp
-  updated_at DateTime  @updatedAt @db.Timestamp
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
 }
 
 model Chatrooms {
@@ -135,8 +135,8 @@ model Chatrooms {
   name                 String                 @db.VarChar(255)
   user                 Users?                 @relation(fields: [user_id], references: [id])
   user_id              Int?
-  created_at           DateTime               @default(now()) @db.Timestamp
-  updated_at           DateTime               @updatedAt @db.Timestamp
+  created_at           DateTime               @default(now())
+  updated_at           DateTime               @updatedAt
   chatroom_history     ChatroomHistorys[]
   chatroom_participant ChatroomParticipants[]
 }
@@ -148,8 +148,8 @@ model ChatroomHistorys {
   chatroom_id Int?
   user        Users?     @relation(fields: [user_id], references: [id])
   user_id     Int?
-  created_at  DateTime   @default(now()) @db.Timestamp
-  updated_at  DateTime   @updatedAt @db.Timestamp
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
 }
 
 model ChatroomParticipants {
@@ -158,8 +158,8 @@ model ChatroomParticipants {
   chatroom_id Int?
   user        Users?     @relation(fields: [user_id], references: [id])
   user_id     Int?
-  created_at  DateTime   @default(now()) @db.Timestamp
-  updated_at  DateTime   @updatedAt @db.Timestamp
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
 }
 
 model PrivateMessages {
@@ -169,6 +169,6 @@ model PrivateMessages {
   to         Users?   @relation("to_user", fields: [to_id], references: [id])
   to_id      Int?
   content    String   @db.Text
-  created_at DateTime @default(now()) @db.Timestamp
-  updated_at DateTime @updatedAt @db.Timestamp
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }

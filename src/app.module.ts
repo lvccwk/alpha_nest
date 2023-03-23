@@ -16,6 +16,10 @@ import { ChatroomHistorysModule } from './chatroomHistorys/chatroomHistorys.modu
 import { ProductRatingsModule } from './productRatings/productRatings.module';
 import { PrivateMessagesModule } from './privateMessages/privateMessages.module';
 import { ChatroomParticipantsModule } from './chatoomParticipants/chatoomParticipants.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from 'utils/jwt-auth.guard';
+import { JwtModule } from '@nestjs/jwt';
+import jwt from 'utils/jwt';
 
 @Module({
 	imports: [
@@ -33,9 +37,19 @@ import { ChatroomParticipantsModule } from './chatoomParticipants/chatoomPartici
 		ChatroomParticipantsModule,
 		PrivateMessagesModule,
 		PrismaModule.forRoot()
+		// JwtModule.register({
+		// 	secret: jwt.jwtSecret,
+		// 	signOptions: { expiresIn: '60s' }
+		// })
 	],
 	controllers: [AppController],
-	providers: [AppService]
+	providers: [
+		AppService
+		// {
+		// 	provide: APP_GUARD,
+		// 	useClass: JwtAuthGuard
+		// }
+	]
 })
 export class AppModule implements NestModule {
 	configure(consumer: MiddlewareConsumer) {

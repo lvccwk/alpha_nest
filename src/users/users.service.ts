@@ -3,12 +3,17 @@ import { PrismaService } from 'nestjs-prisma';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+import jwt from 'utils/jwt';
 @Injectable()
 export class UsersService {
-	constructor(private prisma: PrismaService) {}
+	constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
 	async create(createUserDto: CreateUserDto): Promise<string> {
+		const saltOrRounds = 10;
+		const password = createUserDto.password;
+		const hash = await bcrypt.hash(password, saltOrRounds);
 		let foundUser = await this.prisma.users.create({
 			data: {
 				user_type: createUserDto.user_type,
@@ -84,9 +89,21 @@ export class UsersService {
 	}
 
 	async login(data: { email: string; password: string }) {
-		return await this.prisma.users.findFirst({
+		const user = await this.prisma.users.findFirst({
 			where: data
 		});
+
+		if (user) {
+			const payLoad = {
+				id: user.id,
+				username: user.username
+			};
+			const token = this.jwtService.sign(payLoad, {
+				secret: jwt.jwtSecret
+			});
+			return token;
+		}
+		return '';
 	}
 
 	async register(data: {
@@ -106,4 +123,52 @@ export class UsersService {
 			}
 		});
 	}
+
+	// async facebookLogin(){
+	// 	try{
+	//         if(!req.body.code){
+	//             res.status(401).json({msg:"Wrong Code!"});
+	//             return;
+	//         }
+	//         const { code } = req.body;
+	//         const fetchResponse =await fetch(`https://graph.facebook.com/oauth/access_token`,{
+	//             method : "POST",
+	//             headers:{
+	//                 "Content-Type": "application/x-www-form-urlencoded"
+	//             },
+	//             body: new URLSearchParams({
+	//                 grant_type: 'authorization_code',
+	//                 client_id: process.env.FACEBOOK_CLIENT_ID + "",
+	//                 client_secret: process.env.FACEBOOK_CLIENT_SECRET + "",
+	//                 code: code + "",
+	//                 redirect_uri: `${process.env.REACT_PUBLIC_HOSTNAME}/facebook-callback`
+	//             })
+	//         });
+	//         const data = await fetchResponse.json();
+	//         if(!data.access_token){
+	//             res.status(401).json({msg:"Failed to get access token!"});
+	//             return ;
+	//         }
+	//         const profileResponse = await fetch(`https://graph.facebook.com/me?fields=id,name,email,picture&access_token=${data.access_token}`);
+	//         const profileData = await profileResponse.json();
+
+	//         let user = (await this.authService.getUser(profileData.email));
+
+	//         // Create a new user if the user does not exist
+	//         if (!user) {
+	//             user = (await this.authService.createUser(profileData.email));
+	//         }
+	//         const payload = {
+	//             id: user.id,
+	//             username: user.username
+	//         };
+	//         const token = jwtSimple.encode(payload, jwt.jwtSecret);
+	//         res.json({
+	//             username: user.username,
+	//             token: token
+	//         });
+	//     }catch(e){
+	//         res.status(500).json({msg:e.toString()})
+	//     }
+	// }
 }
