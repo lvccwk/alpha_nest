@@ -3,9 +3,8 @@ import { IsEmail, IsNotEmpty } from 'class-validator';
 import { User } from '../entities/user.entity';
 
 export class CreateUserDto extends OmitType(User, ['id'] as const) {
-	@IsEmail()
-	email: string;
-
-	@IsNotEmpty()
-	password: string;
+	// @IsEmail()
+	// email: string;
+	// @IsNotEmpty()
+	// password: string;
 }

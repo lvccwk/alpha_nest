@@ -87,7 +87,7 @@ model CartDetails {
   product    Products? @relation(fields: [product_id], references: [id])
   product_id Int?
   cart       Carts?    @relation(fields: [cart_id], references: [id])
-  cart_id    Int?
+  cart_id    Int?      @unique
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
 }

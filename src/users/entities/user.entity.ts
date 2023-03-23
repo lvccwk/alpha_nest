@@ -19,8 +19,7 @@ import { PurchaseHistory } from 'src/purchaseHistorys/entities/purchaseHistorys.
 import { Subject } from 'src/subjects/entities/subjects.entity';
 import { Teacher } from 'src/teachers/entities/teachers.entity';
 import { Timetable } from 'src/timetable/entities/timetable.entity';
-import { BeforeInsert, Column } from 'typeorm';
-import * as bcrypt from 'bcryptjs';
+
 export class User {
 	@ApiProperty({ default: 1 })
 	@IsInt()
@@ -43,7 +42,7 @@ export class User {
 	email: string;
 
 	@ApiProperty({ default: 'adminadmin' })
-	@Column()
+	// @Column()
 	password: string;
 
 	// @BeforeInsert()
