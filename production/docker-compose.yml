@@ -4,11 +4,11 @@ services:
   alpha:
     build: 
       dockerfile: ./Dockerfile
-    depends_on:
-      - postgres
     image: "lvccwk/alpha:latest"
     ports:
       - "3000:3000"
+    depends_on:
+      - postgres
   postgres:
     container_name: postgres
     image: "postgres:13"
