@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ProductRatings, Products, Timetables } from '@prisma/client';
 import { IsInt, IsNotEmpty, IsPhoneNumber, IsString, MinLength } from 'class-validator';
 
 export class Subject {
