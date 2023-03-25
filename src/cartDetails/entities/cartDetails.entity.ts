@@ -16,9 +16,4 @@ export class CartDetail {
 	@IsInt()
 	@IsNotEmpty()
 	cart_id: number;
-
-	@ApiProperty({ default: 1 })
-	@IsInt()
-	@IsNotEmpty()
-	student_id;
 }
