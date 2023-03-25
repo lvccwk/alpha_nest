@@ -11,9 +11,6 @@ export class UsersService {
 	constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
 	async create(createUserDto: CreateUserDto): Promise<string> {
-		const saltOrRounds = 10;
-		const password = createUserDto.password;
-		const hash = await bcrypt.hash(password, saltOrRounds);
 		let foundUser = await this.prisma.users.create({
 			data: {
 				user_type: createUserDto.user_type,

@@ -42,17 +42,9 @@ export class User {
 	email: string;
 
 	@ApiProperty({ default: 'adminadmin' })
-	// @Column()
+	@IsString()
+	@IsNotEmpty()
 	password: string;
-
-	// @BeforeInsert()
-	// async hashPasword() {
-	// 	this.password = await bcrypt.hash(this.password, 8);
-	// }
-
-	// async validatePassword(password: string): Promise<boolean> {
-	// 	return bcrypt.compare(password, this.password);
-	// }
 
 	@ApiProperty({ default: 'admin.png' })
 	@IsString()
