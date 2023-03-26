@@ -94,7 +94,151 @@ async function main() {
 			}
 		}
 	});
-	console.log({ arfar, arfarstudent });
+
+	const teacher2 = await prisma.users.upsert({
+		where: { email: 'teacher2@gmail.com' },
+		update: {},
+		create: {
+			user_type: 'teacher',
+			username: 'teacher2',
+			email: 'teacher2@gmail.com',
+			password: 'adminadmin',
+			image: 'admin.png',
+			subject: {
+				create: {
+					name: 'english',
+					chinese_name: '英文'
+				}
+			},
+			teacher: {
+				create: {
+					info: 'Teacher2 為ArFar Learning英文補習導師，為理大中國語言文學碩士。熱衷於中文及教育的他，每年均會親征DSE考場並捧星而回，中文知識及考試技巧深厚，絕對無庸置疑。其輕鬆幽默的教學風格，以及課堂後的答問環節，深得學生歡心，更成功令學生於校內考試由中下游成績躍升至全級第四，寫作卷更考獲全級第一名佳績。 ',
+					rating: 10
+				}
+			},
+			product: {
+				create: {
+					name: '中文精讀班',
+					price: 38,
+					product_type: 'course',
+					avg_rating: 10,
+					file_url: 'http://download.pdf'
+				}
+			},
+			timetable: {
+				create: {
+					time_slot: '2023-03-18 16:00:00'
+				}
+			},
+			chatroom: {
+				create: {
+					name: '牙遠補習房'
+				}
+			},
+			chatroom_history: {
+				create: {
+					content: '中大第一'
+				}
+			}
+		}
+	});
+
+	const teacher3 = await prisma.users.upsert({
+		where: { email: 'teacher3@gmail.com' },
+		update: {},
+		create: {
+			user_type: 'teacher',
+			username: 'teacher3',
+			email: 'teacher3@gmail.com',
+			password: 'adminadmin',
+			image: 'admin.png',
+			subject: {
+				create: {
+					name: 'econ',
+					chinese_name: '經濟'
+				}
+			},
+			teacher: {
+				create: {
+					info: 'Teacher2 為ArFar Learning經濟補習導師，為理大中國語言文學碩士。熱衷於中文及教育的他，每年均會親征DSE考場並捧星而回，中文知識及考試技巧深厚，絕對無庸置疑。其輕鬆幽默的教學風格，以及課堂後的答問環節，深得學生歡心，更成功令學生於校內考試由中下游成績躍升至全級第四，寫作卷更考獲全級第一名佳績。 ',
+					rating: 10
+				}
+			},
+			product: {
+				create: {
+					name: '中文精讀班',
+					price: 38,
+					product_type: 'course',
+					avg_rating: 10,
+					file_url: 'http://download.pdf'
+				}
+			},
+			timetable: {
+				create: {
+					time_slot: '2023-03-18 16:00:00'
+				}
+			},
+			chatroom: {
+				create: {
+					name: '牙遠補習房'
+				}
+			},
+			chatroom_history: {
+				create: {
+					content: '中大第一'
+				}
+			}
+		}
+	});
+
+	const teacher4 = await prisma.users.upsert({
+		where: { email: 'teacher4@gmail.com' },
+		update: {},
+		create: {
+			user_type: 'teacher',
+			username: 'teacher4',
+			email: 'teacher4@gmail.com',
+			password: 'adminadmin',
+			image: 'admin.png',
+			subject: {
+				create: {
+					name: 'engligh',
+					chinese_name: '英文'
+				}
+			},
+			teacher: {
+				create: {
+					info: 'Teacher2 為ArFar Learning英文補習導師，為理大中國語言文學碩士。熱衷於中文及教育的他，每年均會親征DSE考場並捧星而回，中文知識及考試技巧深厚，絕對無庸置疑。其輕鬆幽默的教學風格，以及課堂後的答問環節，深得學生歡心，更成功令學生於校內考試由中下游成績躍升至全級第四，寫作卷更考獲全級第一名佳績。 ',
+					rating: 10
+				}
+			},
+			product: {
+				create: {
+					name: '中文精讀班',
+					price: 38,
+					product_type: 'course',
+					avg_rating: 10,
+					file_url: 'http://download.pdf'
+				}
+			},
+			timetable: {
+				create: {
+					time_slot: '2023-03-18 16:00:00'
+				}
+			},
+			chatroom: {
+				create: {
+					name: '牙遠補習房'
+				}
+			},
+			chatroom_history: {
+				create: {
+					content: '中大第一'
+				}
+			}
+		}
+	});
+	console.log({ arfar, arfarstudent, teacher2, teacher3, teacher4 });
 }
 main()
 	.then(async () => {
