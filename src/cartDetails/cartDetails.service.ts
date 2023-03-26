@@ -19,12 +19,21 @@ export class CartDetailsService {
 	}
 
 	async findAll(): Promise<CartDetail[]> {
-		return await this.prisma.cartDetails.findMany();
+		return await this.prisma.cartDetails.findMany({
+			include: {
+				product: true,
+				cart: true
+			}
+		});
 	}
 
 	async findOne(id: number) {
 		let foundCartDetail = await this.prisma.cartDetails.findUnique({
-			where: { id }
+			where: { id },
+			include: {
+				product: true,
+				cart: true
+			}
 		});
 		if (!foundCartDetail) throw new NotFoundException('Cart not found!');
 		return foundCartDetail;
