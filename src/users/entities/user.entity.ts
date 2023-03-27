@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { ChatroomHistorys } from '@prisma/client';
 import {
 	IsEmail,
 	isEmail,
@@ -59,6 +60,7 @@ export class User {
 	timetable: Timetable[];
 	product_rating: ProductRating[];
 	chatroom: Chatroom[];
+	chatroom_history: ChatroomHistorys[];
 	chatroom_participant: ChatroomParticipant[];
 	private_message_from_user: PrivateMessage[];
 	private_message_to_user: PrivateMessage[];

@@ -36,6 +36,7 @@ export class UsersService {
 				timetable: true,
 				product_rating: true,
 				chatroom: true,
+				chatroom_history: true,
 				chatroom_participant: true,
 				private_message_from_user: true,
 				private_message_to_user: true
