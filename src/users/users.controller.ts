@@ -9,7 +9,10 @@ import {
 	ParseIntPipe,
 	Res,
 	UseGuards,
-	Req
+	Req,
+	NotFoundException,
+	HttpStatus,
+	Put
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -41,14 +44,16 @@ export class UsersController {
 		return this.usersService.findOne(+id);
 	}
 
-	@Patch(':id')
+	@Put('/:id')
 	update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
+		console.log('called update username');
 		return this.usersService.update(id, updateUserDto);
 	}
 
 	@Delete(':id')
 	remove(@Param('id', ParseIntPipe) id: number) {
 		return this.usersService.remove(id);
+		// return id;
 	}
 
 	@Post('/register')
