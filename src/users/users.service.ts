@@ -29,15 +29,12 @@ export class UsersService {
 	async findAll(): Promise<User[]> {
 		return await this.prisma.users.findMany({
 			include: {
-				subject: true,
 				product: true,
 				purchase_history: true,
 				cart: true,
-				teacher: true,
 				timetable: true,
 				product_rating: true,
 				chatroom: true,
-				chatroom_history: true,
 				chatroom_participant: true,
 				private_message_from_user: true,
 				private_message_to_user: true
@@ -52,7 +49,6 @@ export class UsersService {
 				product: true,
 				purchase_history: true,
 				cart: true,
-				teacher: true,
 				timetable: true,
 				product_rating: true,
 				chatroom: true,

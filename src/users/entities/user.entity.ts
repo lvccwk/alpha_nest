@@ -60,7 +60,7 @@ export class User {
 	product?: Product[];
 	purchase_history?: PurchaseHistory[];
 	cart?: Cart[];
-	teacher?: Teacher[];
+	// teacher?: Teacher[];
 	timetable?: Timetable[];
 	product_rating?: ProductRating[];
 	chatroom?: Chatroom[];

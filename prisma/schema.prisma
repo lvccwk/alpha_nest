@@ -20,7 +20,7 @@ model Users {
   created_at                DateTime               @default(now())
   updated_at                DateTime               @updatedAt
   is_deleted                Boolean                @default(false)
-  subject                   Subjects[]
+
   product                   Products[]
   purchase_history          PurchaseHistorys[]
   cart                      Carts[]
@@ -43,8 +43,7 @@ model Subjects {
   product         Products[]
   timetable       Timetables[]
   teacher_subject TeacherSubjects[]
-  Users           Users?            @relation(fields: [usersId], references: [id])
-  usersId         Int?
+
 }
 
 model Teachers {
