@@ -12,13 +12,23 @@ export class UsersService {
 	constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
 	async create(createUserDto: CreateUserDto): Promise<Users> {
+		console.log({
+			user_type: createUserDto.user_type,
+			username: createUserDto.username,
+			email: createUserDto.email,
+			password: createUserDto.password,
+			image: createUserDto.image,
+			is_deleted: createUserDto.is_deleted
+		})
+
 		let foundUser = await this.prisma.users.create({
 			data: {
 				user_type: createUserDto.user_type,
 				username: createUserDto.username,
 				email: createUserDto.email,
 				password: createUserDto.password,
-				image: createUserDto.image
+				image: createUserDto.image,
+				is_deleted: createUserDto.is_deleted
 			}
 		});
 		console.log(foundUser);
@@ -42,6 +52,13 @@ export class UsersService {
 		});
 	}
 
+	async findByEmail(email: string) {
+		let foundUser = await this.prisma.users.findUnique({
+			where: { email }
+		});
+		// if (!foundUser) throw new NotFoundException('User not found!');
+		return foundUser;
+	}
 	async findOne(id: number) {
 		let foundUser = await this.prisma.users.findUnique({
 			where: { id },

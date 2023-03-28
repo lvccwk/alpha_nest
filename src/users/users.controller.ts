@@ -12,7 +12,8 @@ import {
 	Req,
 	NotFoundException,
 	HttpStatus,
-	Put
+	Put,
+	Logger
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -30,6 +31,8 @@ import * as jwtSimple from 'jwt-simple';
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
+	logger = new Logger('HTTP');
+
 	constructor(private readonly usersService: UsersService) {}
 
 	@Post()
@@ -134,18 +137,27 @@ export class UsersController {
 		  }
 		  const profileResponse = await fetch(`https://graph.facebook.com/me?fields=id,name,email,picture&access_token=${data.access_token}`);
 		  const profileData = await profileResponse.json();
-		  
-		  let user:User = await this.usersService.findOne(profileData.email); // 
-	
+
+		  let user:User = await this.usersService.findByEmail(profileData.email); 
+		  console.log({profileData})
 		  if (!user) {
-			user = await this.usersService.create(profileData.email); //
+			user = await this.usersService.create({
+				user_type: "student",
+				username: profileData.name,
+				email: profileData.email,
+				password: "",
+				image: profileData.picture.data.url,
+				is_deleted: false
+			}); 
 		  } 
 		  const payload = {
 			id: user.id,
 			username: user.username,
-			
 		  };
-		  const token = jwtSimple.encode(payload, jwt.jwtSecret); //
+		  console.log({
+			payload
+		})
+		  const token = jwtSimple.encode(payload, jwt.jwtSecret); 
 		  return res.status(HttpStatus.OK).json({
 			username: user.username,
 			token: token,
