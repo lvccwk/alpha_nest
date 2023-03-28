@@ -52,16 +52,16 @@ export class User {
 	@IsNotEmpty()
 	image: string;
 
-	subject: Subject[];
-	product: Product[];
-	purchase_history: PurchaseHistory[];
-	cart: Cart[];
-	teacher: Teacher[];
-	timetable: Timetable[];
-	product_rating: ProductRating[];
-	chatroom: Chatroom[];
-	chatroom_history: ChatroomHistorys[];
-	chatroom_participant: ChatroomParticipant[];
-	private_message_from_user: PrivateMessage[];
-	private_message_to_user: PrivateMessage[];
+	subject?: Subject[];
+	product?: Product[];
+	purchase_history?: PurchaseHistory[];
+	cart?: Cart[];
+	teacher?: Teacher[];
+	timetable?: Timetable[];
+	product_rating?: ProductRating[];
+	chatroom?: Chatroom[];
+	chatroom_history?: ChatroomHistorys[];
+	chatroom_participant?: ChatroomParticipant[];
+	private_message_from_user?: PrivateMessage[];
+	private_message_to_user?: PrivateMessage[];
 }

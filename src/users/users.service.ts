@@ -6,11 +6,12 @@ import { User } from './entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import jwt from 'utils/jwt';
+import { Users } from '@prisma/client';
 @Injectable()
 export class UsersService {
 	constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
-	async create(createUserDto: CreateUserDto): Promise<string> {
+	async create(createUserDto: CreateUserDto): Promise<Users> {
 		let foundUser = await this.prisma.users.create({
 			data: {
 				user_type: createUserDto.user_type,
@@ -22,7 +23,7 @@ export class UsersService {
 		});
 		console.log(foundUser);
 
-		return 'ok';
+		return foundUser;
 	}
 
 	async findAll(): Promise<User[]> {
