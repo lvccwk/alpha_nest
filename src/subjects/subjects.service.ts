@@ -11,8 +11,7 @@ export class SubjectsService {
 		let subject = await this.prisma.subjects.create({
 			data: {
 				name: createSubjectDto.name,
-				chinese_name: createSubjectDto.chinese_name,
-				user_id: createSubjectDto.user_id
+				chinese_name: createSubjectDto.chinese_name
 			}
 		});
 		console.log(subject);
@@ -48,8 +47,7 @@ export class SubjectsService {
 			where: { id },
 			data: {
 				name: updateSubjectDto.name,
-				chinese_name: updateSubjectDto.chinese_name,
-				user_id: updateSubjectDto.user_id
+				chinese_name: updateSubjectDto.chinese_name
 			}
 		});
 		if (!foundSubject) throw new NotFoundException('User not found!');

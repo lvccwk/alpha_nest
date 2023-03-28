@@ -8,6 +8,7 @@ CREATE TABLE "Users" (
     "image" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
+    "is_deleted" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Users_pkey" PRIMARY KEY ("id")
 );
@@ -17,9 +18,9 @@ CREATE TABLE "Subjects" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "chinese_name" VARCHAR(255) NOT NULL,
-    "user_id" INTEGER,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
+    "usersId" INTEGER,
 
     CONSTRAINT "Subjects_pkey" PRIMARY KEY ("id")
 );
@@ -37,6 +38,15 @@ CREATE TABLE "Teachers" (
 );
 
 -- CreateTable
+CREATE TABLE "TeacherSubjects" (
+    "id" SERIAL NOT NULL,
+    "teacher_id" INTEGER NOT NULL,
+    "subject_id" INTEGER NOT NULL,
+
+    CONSTRAINT "TeacherSubjects_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Products" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(255),
@@ -44,6 +54,7 @@ CREATE TABLE "Products" (
     "product_type" VARCHAR(255) NOT NULL,
     "avg_rating" INTEGER NOT NULL,
     "file_url" TEXT NOT NULL,
+    "image" TEXT NOT NULL,
     "user_id" INTEGER,
     "subject_id" INTEGER,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -167,10 +178,16 @@ CREATE UNIQUE INDEX "CartDetails_cart_id_key" ON "CartDetails"("cart_id");
 CREATE UNIQUE INDEX "ProductRatings_rating_key" ON "ProductRatings"("rating");
 
 -- AddForeignKey
-ALTER TABLE "Subjects" ADD CONSTRAINT "Subjects_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "Users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Subjects" ADD CONSTRAINT "Subjects_usersId_fkey" FOREIGN KEY ("usersId") REFERENCES "Users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Teachers" ADD CONSTRAINT "Teachers_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "Users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "TeacherSubjects" ADD CONSTRAINT "TeacherSubjects_teacher_id_fkey" FOREIGN KEY ("teacher_id") REFERENCES "Teachers"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "TeacherSubjects" ADD CONSTRAINT "TeacherSubjects_subject_id_fkey" FOREIGN KEY ("subject_id") REFERENCES "Subjects"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Products" ADD CONSTRAINT "Products_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "Users"("id") ON DELETE SET NULL ON UPDATE CASCADE;

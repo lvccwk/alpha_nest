@@ -15,6 +15,7 @@ export class ProductsService {
 				product_type: createProductDto.product_type,
 				avg_rating: createProductDto.avg_rating,
 				file_url: createProductDto.file_url,
+				image: createProductDto.image,
 				user_id: createProductDto.user_id,
 				subject_id: createProductDto.subject_id
 			}
@@ -58,6 +59,7 @@ export class ProductsService {
 				product_type: updateProductDto.product_type,
 				avg_rating: updateProductDto.avg_rating,
 				file_url: updateProductDto.file_url,
+				image: updateProductDto.image,
 				user_id: updateProductDto.user_id,
 				subject_id: updateProductDto.subject_id
 			}

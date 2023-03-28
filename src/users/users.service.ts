@@ -49,7 +49,6 @@ export class UsersService {
 		let foundUser = await this.prisma.users.findUnique({
 			where: { id },
 			include: {
-				subject: true,
 				product: true,
 				purchase_history: true,
 				cart: true,
@@ -74,7 +73,8 @@ export class UsersService {
 				username: updateUserDto.username,
 				email: updateUserDto.email,
 				password: updateUserDto.password,
-				image: updateUserDto.image
+				image: updateUserDto.image,
+				is_deleted: updateUserDto.is_deleted
 			}
 		});
 		if (!foundUser) throw new NotFoundException('User not found!');

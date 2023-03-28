@@ -1,12 +1,13 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  ParseIntPipe,
+	Controller,
+	Get,
+	Post,
+	Body,
+	Patch,
+	Param,
+	Delete,
+	ParseIntPipe,
+	Put
 } from '@nestjs/common';
 import { TimetablesService } from './timetable.service';
 import { CreateTimetableDto } from './dto/create-timetable.dto';
@@ -17,33 +18,30 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('timetables')
 @Controller('timetables')
 export class TimetablesController {
-  constructor(private readonly timetablesService: TimetablesService) {}
+	constructor(private readonly timetablesService: TimetablesService) {}
 
-  @Post()
-  async create(@Body() createTimetableDto: CreateTimetableDto) {
-    return await this.timetablesService.create(createTimetableDto);
-  }
+	@Post()
+	async create(@Body() createTimetableDto: CreateTimetableDto) {
+		return await this.timetablesService.create(createTimetableDto);
+	}
 
-  @Get()
-  async findAll(): Promise<Timetable[]> {
-    return await this.timetablesService.findAll();
-  }
+	@Get()
+	async findAll(): Promise<Timetable[]> {
+		return await this.timetablesService.findAll();
+	}
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.timetablesService.findOne(+id);
-  }
+	@Get(':id')
+	findOne(@Param('id') id: string) {
+		return this.timetablesService.findOne(+id);
+	}
 
-  @Patch(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateTimetableDto: UpdateTimetableDto,
-  ) {
-    return this.timetablesService.update(id, updateTimetableDto);
-  }
+	@Put(':id')
+	update(@Param('id', ParseIntPipe) id: number, @Body() updateTimetableDto: UpdateTimetableDto) {
+		return this.timetablesService.update(id, updateTimetableDto);
+	}
 
-  @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.timetablesService.remove(id);
-  }
+	@Delete(':id')
+	remove(@Param('id', ParseIntPipe) id: number) {
+		return this.timetablesService.remove(id);
+	}
 }

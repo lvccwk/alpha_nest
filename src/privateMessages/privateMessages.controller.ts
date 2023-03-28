@@ -1,12 +1,13 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  ParseIntPipe,
+	Controller,
+	Get,
+	Post,
+	Body,
+	Patch,
+	Param,
+	Delete,
+	ParseIntPipe,
+	Put
 } from '@nestjs/common';
 import { PrivateMessagesService } from './privateMessages.service';
 import { CreatePrivateMessageDto } from './dto/create-privateMessages.dto';
@@ -17,35 +18,33 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('privateMessages')
 @Controller('privateMessages')
 export class PrivateMessagesController {
-  constructor(
-    private readonly privateMessagesService: PrivateMessagesService,
-  ) {}
+	constructor(private readonly privateMessagesService: PrivateMessagesService) {}
 
-  @Post()
-  async create(@Body() createPrivateMessageDto: CreatePrivateMessageDto) {
-    return await this.privateMessagesService.create(createPrivateMessageDto);
-  }
+	@Post()
+	async create(@Body() createPrivateMessageDto: CreatePrivateMessageDto) {
+		return await this.privateMessagesService.create(createPrivateMessageDto);
+	}
 
-  @Get()
-  async findAll(): Promise<PrivateMessage[]> {
-    return await this.privateMessagesService.findAll();
-  }
+	@Get()
+	async findAll(): Promise<PrivateMessage[]> {
+		return await this.privateMessagesService.findAll();
+	}
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.privateMessagesService.findOne(+id);
-  }
+	@Get(':id')
+	findOne(@Param('id') id: string) {
+		return this.privateMessagesService.findOne(+id);
+	}
 
-  @Patch(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updatePrivateMessageDto: UpdatePrivateMessageDto,
-  ) {
-    return this.privateMessagesService.update(id, updatePrivateMessageDto);
-  }
+	@Put(':id')
+	update(
+		@Param('id', ParseIntPipe) id: number,
+		@Body() updatePrivateMessageDto: UpdatePrivateMessageDto
+	) {
+		return this.privateMessagesService.update(id, updatePrivateMessageDto);
+	}
 
-  @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.privateMessagesService.remove(id);
-  }
+	@Delete(':id')
+	remove(@Param('id', ParseIntPipe) id: number) {
+		return this.privateMessagesService.remove(id);
+	}
 }

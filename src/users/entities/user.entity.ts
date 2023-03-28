@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ChatroomHistorys } from '@prisma/client';
+import { ChatroomHistorys, Subjects } from '@prisma/client';
 import {
 	IsEmail,
 	isEmail,
@@ -52,7 +52,11 @@ export class User {
 	@IsNotEmpty()
 	image: string;
 
-	subject?: Subject[];
+	@ApiProperty({ default: false })
+	@IsNotEmpty()
+	is_deleted: boolean;
+
+
 	product?: Product[];
 	purchase_history?: PurchaseHistory[];
 	cart?: Cart[];

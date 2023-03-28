@@ -1,12 +1,13 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  ParseIntPipe,
+	Controller,
+	Get,
+	Post,
+	Body,
+	Patch,
+	Param,
+	Delete,
+	ParseIntPipe,
+	Put
 } from '@nestjs/common';
 import { SubjectsService } from './subjects.service';
 import { CreateSubjectDto } from './dto/create-subjects.dto';
@@ -17,33 +18,30 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('subjects')
 @Controller('subjects')
 export class SubjectsController {
-  constructor(private readonly subjectsService: SubjectsService) {}
+	constructor(private readonly subjectsService: SubjectsService) {}
 
-  @Post()
-  async create(@Body() createSubjectDto: CreateSubjectDto) {
-    return await this.subjectsService.create(createSubjectDto);
-  }
+	@Post()
+	async create(@Body() createSubjectDto: CreateSubjectDto) {
+		return await this.subjectsService.create(createSubjectDto);
+	}
 
-  @Get()
-  async findAll(): Promise<Subject[]> {
-    return await this.subjectsService.findAll();
-  }
+	@Get()
+	async findAll(): Promise<Subject[]> {
+		return await this.subjectsService.findAll();
+	}
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.subjectsService.findOne(+id);
-  }
+	@Get(':id')
+	findOne(@Param('id') id: string) {
+		return this.subjectsService.findOne(+id);
+	}
 
-  @Patch(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateSubjectDto: UpdateSubjectDto,
-  ) {
-    return this.subjectsService.update(id, updateSubjectDto);
-  }
+	@Put(':id')
+	update(@Param('id', ParseIntPipe) id: number, @Body() updateSubjectDto: UpdateSubjectDto) {
+		return this.subjectsService.update(id, updateSubjectDto);
+	}
 
-  @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.subjectsService.remove(id);
-  }
+	@Delete(':id')
+	remove(@Param('id', ParseIntPipe) id: number) {
+		return this.subjectsService.remove(id);
+	}
 }

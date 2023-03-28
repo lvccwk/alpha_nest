@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import {
+	Controller,
+	Get,
+	Post,
+	Body,
+	Patch,
+	Param,
+	Delete,
+	ParseIntPipe,
+	Put
+} from '@nestjs/common';
 
 import { ApiTags } from '@nestjs/swagger';
 import { ChatroomParticipantsService } from './chatoomParticipants.service';
@@ -26,7 +36,7 @@ export class ChatroomParticipantsController {
 		return this.chatroomParticipantsService.findOne(+id);
 	}
 
-	@Patch(':id')
+	@Put(':id')
 	update(
 		@Param('id', ParseIntPipe) id: number,
 		@Body() updateChatroomParticipantDto: UpdateChatroomParticipantDto
