@@ -19,6 +19,7 @@ model Users {
   image                     String                 @db.Text
   created_at                DateTime               @default(now())
   updated_at                DateTime               @updatedAt
+  is_deleted                Boolean                @default(false)
   subject                   Subjects[]
   product                   Products[]
   purchase_history          PurchaseHistorys[]
@@ -34,25 +35,35 @@ model Users {
 }
 
 model Subjects {
-  id           Int          @id @default(autoincrement())
-  name         String       @db.VarChar(255)
-  chinese_name String       @db.VarChar(255)
-  user         Users?       @relation(fields: [user_id], references: [id])
-  user_id      Int?
-  created_at   DateTime     @default(now())
-  updated_at   DateTime     @updatedAt
-  product      Products[]
-  timetable    Timetables[]
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar(255)
+  chinese_name    String            @db.VarChar(255)
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+  product         Products[]
+  timetable       Timetables[]
+  teacher_subject TeacherSubjects[]
+  Users           Users?            @relation(fields: [usersId], references: [id])
+  usersId         Int?
 }
 
 model Teachers {
-  id         Int      @id @default(autoincrement())
-  user       Users?   @relation(fields: [user_id], references: [id])
-  user_id    Int?
-  info       String   @db.Text
-  rating     Int      @db.Integer
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id              Int               @id @default(autoincrement())
+  user            Users?            @relation(fields: [user_id], references: [id])
+  user_id         Int?
+  info            String            @db.Text
+  rating          Int               @db.Integer
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+  teacher_subject TeacherSubjects[]
+}
+
+model TeacherSubjects {
+  id         Int       @id @default(autoincrement())
+  teacher    Teachers? @relation(fields: [teacher_id], references: [id])
+  teacher_id Int
+  subject    Subjects? @relation(fields: [subject_id], references: [id])
+  subject_id Int
 }
 
 model Products {
@@ -62,6 +73,7 @@ model Products {
   product_type     String             @db.VarChar(255)
   avg_rating       Int                @db.Integer
   file_url         String             @db.Text
+  image            String             @db.Text
   user             Users?             @relation(fields: [user_id], references: [id])
   user_id          Int?
   subject          Subjects?          @relation(fields: [subject_id], references: [id])

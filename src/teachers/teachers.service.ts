@@ -25,7 +25,8 @@ export class TeachersService {
 		// return user;
 		return await this.prisma.teachers.findMany({
 			include: {
-				user: true
+				user: true,
+				teacher_subject: true
 			}
 		});
 	}
