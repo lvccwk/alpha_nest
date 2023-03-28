@@ -20,7 +20,6 @@ CREATE TABLE "Subjects" (
     "chinese_name" VARCHAR(255) NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
-    "usersId" INTEGER,
 
     CONSTRAINT "Subjects_pkey" PRIMARY KEY ("id")
 );
@@ -176,9 +175,6 @@ CREATE UNIQUE INDEX "CartDetails_cart_id_key" ON "CartDetails"("cart_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "ProductRatings_rating_key" ON "ProductRatings"("rating");
-
--- AddForeignKey
-ALTER TABLE "Subjects" ADD CONSTRAINT "Subjects_usersId_fkey" FOREIGN KEY ("usersId") REFERENCES "Users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Teachers" ADD CONSTRAINT "Teachers_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "Users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
