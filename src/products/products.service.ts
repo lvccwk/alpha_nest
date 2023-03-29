@@ -37,6 +37,32 @@ export class ProductsService {
 		});
 	}
 
+	async findCourse(product_type: string): Promise<Product[]> {
+		// const user = await this.prisma.users.findMany();
+		// return user
+		return await this.prisma.products.findMany({
+			where:{ product_type },
+			include: {
+				product_rating: true,
+				purchase_history: true,
+				cart_detail: true,
+			}
+		});
+	}
+
+	async findNote(product_type: string): Promise<Product[]> {
+		// const user = await this.prisma.users.findMany();
+		// return user;
+		return await this.prisma.products.findMany({
+			where:{ product_type },
+			include: {
+				product_rating: true,
+				purchase_history: true,
+				cart_detail: true
+			}
+		});
+	}
+
 	async findOne(id: number) {
 		let foundProduct = await this.prisma.products.findUnique({
 			where: { id },

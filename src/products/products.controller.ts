@@ -30,6 +30,16 @@ export class ProductsController {
 		return await this.productsService.findAll();
 	}
 
+	@Get('/Course')
+	async findCourse(): Promise<Product[]> {
+		return await this.productsService.findCourse("course");
+	}
+
+	@Get('/Note')
+	async findNote(): Promise<Product[]> {
+		return await this.productsService.findNote("note");
+	}
+
 	@Get(':id')
 	findOne(@Param('id') id: string) {
 		return this.productsService.findOne(+id);
