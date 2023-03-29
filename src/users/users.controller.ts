@@ -25,7 +25,7 @@ import { UserRegister } from 'src/model/user-register';
 import { JwtAuthGuard, Public } from '../../utils/jwt-auth.guard';
 
 import { Response } from 'express';
-import jwt from "../../utils/jwt";
+import jwt from '../../utils/jwt';
 import * as jwtSimple from 'jwt-simple';
 
 @ApiTags('users')
@@ -114,60 +114,62 @@ export class UsersController {
 	@Post('login/facebook')
 	async loginFacebook(@Body() req: any, @Res() res: Response) {
 		try {
-		  if (!req.code) {
-			return res.status(HttpStatus.UNAUTHORIZED).json({ msg: 'Wrong Code!' });
-		  }
-		  const { code } = req;
-		  const fetchResponse = await fetch(`https://graph.facebook.com/oauth/access_token`, {
-			method: 'POST',
-			headers: {
-			  'Content-Type': 'application/x-www-form-urlencoded',
-			},
-			body: new URLSearchParams({
-			  grant_type: 'authorization_code',
-			  client_id: `${process.env.FACEBOOK_CLIENT_ID}`,
-			  client_secret: `${process.env.FACEBOOK_CLIENT_SECRET}`,
-			  code: `${code}`,
-			  redirect_uri: `${process.env.REACT_PUBLIC_HOSTNAME}/facebook-callback`,
-			}),
-		  });
-		  const data = await fetchResponse.json();
-		  if (!data.access_token) {
-			return res.status(HttpStatus.UNAUTHORIZED).json({ msg: 'Failed to get access token!' });
-		  }
-		  const profileResponse = await fetch(`https://graph.facebook.com/me?fields=id,name,email,picture&access_token=${data.access_token}`);
-		  const profileData = await profileResponse.json();
+			if (!req.code) {
+				return res.status(HttpStatus.UNAUTHORIZED).json({ msg: 'Wrong Code!' });
+			}
+			const { code } = req;
+			const fetchResponse = await fetch(`https://graph.facebook.com/oauth/access_token`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				body: new URLSearchParams({
+					grant_type: 'authorization_code',
+					client_id: `${process.env.FACEBOOK_CLIENT_ID}`,
+					client_secret: `${process.env.FACEBOOK_CLIENT_SECRET}`,
+					code: `${code}`,
+					redirect_uri: `${process.env.REACT_PUBLIC_HOSTNAME}/facebook-callback`
+				})
+			});
+			const data = await fetchResponse.json();
+			if (!data.access_token) {
+				return res
+					.status(HttpStatus.UNAUTHORIZED)
+					.json({ msg: 'Failed to get access token!' });
+			}
+			const profileResponse = await fetch(
+				`https://graph.facebook.com/me?fields=id,name,email,picture&access_token=${data.access_token}`
+			);
+			const profileData = await profileResponse.json();
 
-		  let user:User = await this.usersService.findByEmail(profileData.email); 
-		  console.log({profileData})
-		  if (!user) {
-			user = await this.usersService.create({
-				user_type: "student",
-				username: profileData.name,
-				email: profileData.email,
-				password: "",
-				image: profileData.picture.data.url,
-				is_deleted: false
-			}); 
-		  } 
-		  const payload = {
-			id: user.id,
-			username: user.username,
-			email: user.email,
-			image: user.image,
-			
-		  };
-		  console.log({
-			payload
-		})
-		  const token = jwtSimple.encode(payload, jwt.jwtSecret); 
-		  return res.status(HttpStatus.OK).json({
-			payload: payload,
-			token: token,
-		  });
+			let user: User = await this.usersService.findByEmail(profileData.email);
+			console.log({ profileData });
+			if (!user) {
+				user = await this.usersService.create({
+					user_type: 'student',
+					username: profileData.name,
+					email: profileData.email,
+					password: '',
+					image: profileData.picture.data.url,
+					is_deleted: false
+				});
+			}
+			const payload = {
+				id: user.id,
+				username: user.username,
+				email: user.email,
+				image: user.image
+			};
+			console.log({
+				payload
+			});
+			const token = jwtSimple.encode(payload, jwt.jwtSecret);
+			return res.status(HttpStatus.OK).json({
+				payload: payload,
+				token: token
+			});
 		} catch (e) {
-		  return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
+			return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
 		}
-	  }
-
+	}
 }

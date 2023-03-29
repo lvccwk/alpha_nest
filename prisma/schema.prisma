@@ -31,6 +31,7 @@ model Users {
   chatroom_participant      ChatroomParticipants[]
   private_message_from_user PrivateMessages[]      @relation("from_user")
   private_message_to_user   PrivateMessages[]      @relation("to_user")
+  followed_teachers         FollowedTeachers[]
 }
 
 model Subjects {
@@ -45,14 +46,23 @@ model Subjects {
 }
 
 model Teachers {
-  id              Int               @id @default(autoincrement())
-  user            Users?            @relation(fields: [user_id], references: [id])
-  user_id         Int?
-  info            String            @db.Text
-  rating          Int               @db.Integer
-  created_at      DateTime          @default(now())
-  updated_at      DateTime          @updatedAt
-  teacher_subject TeacherSubjects[]
+  id                Int                @id @default(autoincrement())
+  user              Users?             @relation(fields: [user_id], references: [id])
+  user_id           Int?
+  info              String             @db.Text
+  rating            Int                @db.Integer
+  created_at        DateTime           @default(now())
+  updated_at        DateTime           @updatedAt
+  teacher_subject   TeacherSubjects[]
+  followed_teachers FollowedTeachers[]
+}
+
+model FollowedTeachers {
+  id         Int       @id @default(autoincrement())
+  user       Users?    @relation(fields: [user_id], references: [id])
+  user_id    Int
+  teacher    Teachers? @relation(fields: [teacher_id], references: [id])
+  teacher_id Int
 }
 
 model TeacherSubjects {
