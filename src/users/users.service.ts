@@ -19,7 +19,7 @@ export class UsersService {
 			password: createUserDto.password,
 			image: createUserDto.image,
 			is_deleted: createUserDto.is_deleted
-		})
+		});
 
 		let foundUser = await this.prisma.users.create({
 			data: {
@@ -39,6 +39,7 @@ export class UsersService {
 	async findAll(): Promise<User[]> {
 		return await this.prisma.users.findMany({
 			include: {
+				followed_teachers: true,
 				product: true,
 				purchase_history: true,
 				cart: true,
@@ -59,10 +60,23 @@ export class UsersService {
 		// if (!foundUser) throw new NotFoundException('User not found!');
 		return foundUser;
 	}
+
+	async findUnique(id: number) {
+		let foundUser = await this.prisma.users.findUnique({
+			where: { id },
+			include: {
+				followed_teachers: { include: { teacher: true } }
+			}
+		});
+		if (!foundUser) throw new NotFoundException('User not found!');
+		return foundUser;
+	}
+
 	async findOne(id: number) {
 		let foundUser = await this.prisma.users.findUnique({
 			where: { id },
 			include: {
+				followed_teachers: true,
 				product: true,
 				purchase_history: true,
 				cart: true,

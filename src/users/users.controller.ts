@@ -63,6 +63,11 @@ export class UsersController {
 		// return id;
 	}
 
+	@Get(':id/followed')
+	findUnique(@Param('id') id: string) {
+		return this.usersService.findUnique(+id);
+	}
+
 	@Post('/register')
 	async register(
 		@Body()
@@ -84,11 +89,6 @@ export class UsersController {
 
 		return user;
 	}
-
-	// @Post('/register')
-	// async register(@Body() userRegister: UserRegister) {
-	// 	return await this.usersService.register(userRegister);
-	// }
 
 	@Post('/login')
 	async login(@Body() reqData: { email: string; password: string }): Promise<any> {
