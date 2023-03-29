@@ -162,7 +162,7 @@ export class UsersController {
 		})
 		  const token = jwtSimple.encode(payload, jwt.jwtSecret); 
 		  return res.status(HttpStatus.OK).json({
-			payload: payload,
+			id: user.id,
 			token: token,
 		  });
 		} catch (e) {
