@@ -56,7 +56,6 @@ export class User {
 	@IsNotEmpty()
 	is_deleted: boolean;
 
-
 	product?: Product[];
 	purchase_history?: PurchaseHistory[];
 	cart?: Cart[];

@@ -23,6 +23,5 @@ export class Teacher {
 	@IsInt()
 	// @IsNotEmpty()
 	rating: number;
-
 	teacher_subject: TeacherSubjects[];
 }

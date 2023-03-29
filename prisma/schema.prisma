@@ -20,7 +20,6 @@ model Users {
   created_at                DateTime               @default(now())
   updated_at                DateTime               @updatedAt
   is_deleted                Boolean                @default(false)
-
   product                   Products[]
   purchase_history          PurchaseHistorys[]
   cart                      Carts[]
@@ -43,7 +42,6 @@ model Subjects {
   product         Products[]
   timetable       Timetables[]
   teacher_subject TeacherSubjects[]
-
 }
 
 model Teachers {
