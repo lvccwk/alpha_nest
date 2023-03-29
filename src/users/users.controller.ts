@@ -153,13 +153,16 @@ export class UsersController {
 		  const payload = {
 			id: user.id,
 			username: user.username,
+			email: user.email,
+			image: user.image,
+			
 		  };
 		  console.log({
 			payload
 		})
 		  const token = jwtSimple.encode(payload, jwt.jwtSecret); 
 		  return res.status(HttpStatus.OK).json({
-			username: user.username,
+			payload: payload,
 			token: token,
 		  });
 		} catch (e) {
