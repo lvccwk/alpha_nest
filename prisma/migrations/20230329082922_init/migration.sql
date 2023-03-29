@@ -37,6 +37,15 @@ CREATE TABLE "Teachers" (
 );
 
 -- CreateTable
+CREATE TABLE "FollowedTeachers" (
+    "id" SERIAL NOT NULL,
+    "user_id" INTEGER NOT NULL,
+    "teacher_id" INTEGER NOT NULL,
+
+    CONSTRAINT "FollowedTeachers_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "TeacherSubjects" (
     "id" SERIAL NOT NULL,
     "teacher_id" INTEGER NOT NULL,
@@ -178,6 +187,12 @@ CREATE UNIQUE INDEX "ProductRatings_rating_key" ON "ProductRatings"("rating");
 
 -- AddForeignKey
 ALTER TABLE "Teachers" ADD CONSTRAINT "Teachers_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "Users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "FollowedTeachers" ADD CONSTRAINT "FollowedTeachers_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "FollowedTeachers" ADD CONSTRAINT "FollowedTeachers_teacher_id_fkey" FOREIGN KEY ("teacher_id") REFERENCES "Teachers"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "TeacherSubjects" ADD CONSTRAINT "TeacherSubjects_teacher_id_fkey" FOREIGN KEY ("teacher_id") REFERENCES "Teachers"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

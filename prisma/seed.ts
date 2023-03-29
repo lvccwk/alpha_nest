@@ -104,6 +104,11 @@ async function main() {
 			password: 'adminadmin',
 			image: 'admin.png',
 
+			followed_teachers: {
+				create: {
+					teacher_id: 1
+				}
+			},
 			cart: {
 				create: {
 					cart_detail: {
@@ -141,6 +146,49 @@ async function main() {
 		}
 	});
 
+	const arfarteacher1 = await prisma.users.upsert({
+		where: { email: 'arfar1@gmail.com' },
+		update: {},
+		create: {
+			user_type: 'teacher',
+			username: '牙花',
+			email: 'arfar1@gmail.com',
+			password: 'adminadmin',
+			image: 'admin.png',
+
+			teacher: {
+				create: {
+					info: '牙花英文知識及考試技巧深厚，絕對無庸置疑。其輕鬆幽默的教學風格，以及課堂後的答問環節，深得學生歡心，更成功令學生於校內考試由中下游成績躍升至全級第四，寫作卷更考獲全級第一名佳績。 ',
+					rating: 10
+				}
+			},
+			product: {
+				create: {
+					name: '英文精讀班',
+					price: 38,
+					product_type: 'course',
+					avg_rating: 10,
+					file_url: 'http://download.pdf',
+					image: 'hihi.jpg'
+				}
+			},
+			timetable: {
+				create: {
+					time_slot: '2023-03-18 16:00:00'
+				}
+			},
+			chatroom: {
+				create: {
+					name: '牙花補習房'
+				}
+			},
+			chatroom_history: {
+				create: {
+					content: '不用讀書'
+				}
+			}
+		}
+	});
 	console.log({ arfar, arfarstudent, fixedSubject });
 }
 main()
