@@ -63,11 +63,6 @@ export class UsersController {
 		// return id;
 	}
 
-	@Get(':id/followed')
-	findUnique(@Param('id') id: string) {
-		return this.usersService.findUnique(+id);
-	}
-
 	@Post('/register')
 	async register(
 		@Body()
@@ -89,6 +84,11 @@ export class UsersController {
 
 		return user;
 	}
+
+	// @Post('/register')
+	// async register(@Body() userRegister: UserRegister) {
+	// 	return await this.usersService.register(userRegister);
+	// }
 
 	@Post('/login')
 	async login(@Body() reqData: { email: string; password: string }): Promise<any> {
@@ -142,33 +142,32 @@ export class UsersController {
 			);
 			const profileData = await profileResponse.json();
 
-		  let user:User = await this.usersService.findByEmail(profileData.email); 
-		  console.log({profileData})
-		  if (!user) {
-			user = await this.usersService.create({
-				user_type: "student",
-				username: profileData.name,
-				email: profileData.email,
-				password: "",
-				image: profileData.picture.data.url,
-				is_deleted: false
-			}); 
-		  } 
-		  const payload = {
-			id: user.id,
-			username: user.username,
-			email: user.email,
-			image: user.image,
-			
-		  };
-		  console.log({
-			payload
-		})
-		  const token = jwtSimple.encode(payload, jwt.jwtSecret); 
-		  return res.status(HttpStatus.OK).json({
-			payload: payload,
-			token: token,
-		  });
+			let user: User = await this.usersService.findByEmail(profileData.email);
+			console.log({ profileData });
+			if (!user) {
+				user = await this.usersService.create({
+					user_type: 'student',
+					username: profileData.name,
+					email: profileData.email,
+					password: '',
+					image: profileData.picture.data.url,
+					is_deleted: false
+				});
+			}
+			const payload = {
+				id: user.id,
+				username: user.username,
+				email: user.email,
+				image: user.image
+			};
+			console.log({
+				payload
+			});
+			const token = jwtSimple.encode(payload, jwt.jwtSecret);
+			return res.status(HttpStatus.OK).json({
+				id: user.id,
+				token: token
+			});
 		} catch (e) {
 			return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
 		}
