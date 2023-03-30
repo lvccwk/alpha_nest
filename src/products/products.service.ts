@@ -70,7 +70,11 @@ export class ProductsService {
 				product_rating: true,
 				purchase_history: true,
 				cart_detail: true,
-				teacher: true
+				teacher: {
+					include: {
+						user: true
+					}
+				}
 			}
 		});
 	}
@@ -81,7 +85,12 @@ export class ProductsService {
 			include: {
 				product_rating: true,
 				purchase_history: true,
-				cart_detail: true
+				cart_detail: true,
+				teacher: {
+					include: {
+						user: true
+					}
+				}
 			}
 		});
 		if (!foundProduct) throw new NotFoundException('Product not found!');
