@@ -74,7 +74,8 @@ async function main() {
 					product_type: 'course',
 					avg_rating: 10,
 					file_url: 'http://download.pdf',
-					image: 'hihi.jpg'
+					image: 'hihi.jpg',
+					teacher_id: 1
 				}
 			},
 			timetable: {
@@ -171,9 +172,10 @@ async function main() {
 					name: '英文精讀班',
 					price: 38,
 					product_type: 'course',
-					avg_rating: 10,
+					avg_rating: 8,
 					file_url: 'http://download.pdf',
-					image: 'hihi.jpg'
+					image: 'hihi.jpg',
+					teacher_id: 2
 				}
 			},
 			timetable: {
@@ -223,12 +225,13 @@ async function main() {
 			},
 			product: {
 				create: {
-					name: '英文精讀班',
+					name: '數學精讀班',
 					price: 38,
 					product_type: 'course',
 					avg_rating: 10,
 					file_url: 'http://download.pdf',
-					image: 'hihi.jpg'
+					image: 'hihi.jpg',
+					teacher_id: 3
 				}
 			},
 			timetable: {

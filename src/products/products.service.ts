@@ -17,7 +17,8 @@ export class ProductsService {
 				file_url: createProductDto.file_url,
 				image: createProductDto.image,
 				user_id: createProductDto.user_id,
-				subject_id: createProductDto.subject_id
+				subject_id: createProductDto.subject_id,
+				teacher_id: createProductDto.teacher_id
 			}
 		});
 		console.log(teacher);
@@ -32,7 +33,12 @@ export class ProductsService {
 			include: {
 				product_rating: true,
 				purchase_history: true,
-				cart_detail: true
+				cart_detail: true,
+				teacher: {
+					include: {
+						user: true
+					}
+				}
 			}
 		});
 	}
@@ -41,11 +47,16 @@ export class ProductsService {
 		// const user = await this.prisma.users.findMany();
 		// return user
 		return await this.prisma.products.findMany({
-			where:{ product_type },
+			where: { product_type },
 			include: {
 				product_rating: true,
 				purchase_history: true,
 				cart_detail: true,
+				teacher: {
+					include: {
+						user: true
+					}
+				}
 			}
 		});
 	}
@@ -54,11 +65,16 @@ export class ProductsService {
 		// const user = await this.prisma.users.findMany();
 		// return user;
 		return await this.prisma.products.findMany({
-			where:{ product_type },
+			where: { product_type },
 			include: {
 				product_rating: true,
 				purchase_history: true,
-				cart_detail: true
+				cart_detail: true,
+				teacher: {
+					include: {
+						user: true
+					}
+				}
 			}
 		});
 	}
@@ -69,7 +85,12 @@ export class ProductsService {
 			include: {
 				product_rating: true,
 				purchase_history: true,
-				cart_detail: true
+				cart_detail: true,
+				teacher: {
+					include: {
+						user: true
+					}
+				}
 			}
 		});
 		if (!foundProduct) throw new NotFoundException('Product not found!');
@@ -87,7 +108,8 @@ export class ProductsService {
 				file_url: updateProductDto.file_url,
 				image: updateProductDto.image,
 				user_id: updateProductDto.user_id,
-				subject_id: updateProductDto.subject_id
+				subject_id: updateProductDto.subject_id,
+				teacher_id: updateProductDto.teacher_id
 			}
 		});
 		if (!foundProduct) throw new NotFoundException('Product not found!');

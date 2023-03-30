@@ -55,6 +55,7 @@ model Teachers {
   updated_at        DateTime           @updatedAt
   teacher_subject   TeacherSubjects[]
   followed_teachers FollowedTeachers[]
+  product           Products[]
 }
 
 model FollowedTeachers {
@@ -85,6 +86,8 @@ model Products {
   user_id          Int?
   subject          Subjects?          @relation(fields: [subject_id], references: [id])
   subject_id       Int?
+  teacher          Teachers?          @relation(fields: [teacher_id], references: [id])
+  teacher_id       Int?
   created_at       DateTime           @default(now())
   updated_at       DateTime           @updatedAt
   product_rating   ProductRatings[]
@@ -107,6 +110,7 @@ model CartDetails {
   product_id Int?
   cart       Carts?    @relation(fields: [cart_id], references: [id])
   cart_id    Int?      @unique
+  is_buying  Boolean   @default(false)
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
 }

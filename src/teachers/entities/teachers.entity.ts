@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { TeacherSubjects } from '@prisma/client';
+import { Products, TeacherSubjects } from '@prisma/client';
 import { IsInt, IsNotEmpty, IsPhoneNumber, IsString, MinLength } from 'class-validator';
 
 export class Teacher {
@@ -24,4 +24,5 @@ export class Teacher {
 	// @IsNotEmpty()
 	rating: number;
 	teacher_subject: TeacherSubjects[];
+	product: Products[];
 }

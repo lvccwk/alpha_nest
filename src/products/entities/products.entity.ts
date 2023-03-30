@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Teachers } from '@prisma/client';
 import { IsBIC, IsInt, IsNotEmpty, IsPhoneNumber, IsString, MinLength } from 'class-validator';
 import { isBigInt64Array } from 'util/types';
 
@@ -46,4 +47,10 @@ export class Product {
 	@IsInt()
 	@IsNotEmpty()
 	subject_id: number;
+
+	@ApiProperty({ default: 1 })
+	@IsInt()
+	@IsNotEmpty()
+	teacher_id: number;
+	// teacher: Teachers[];
 }
