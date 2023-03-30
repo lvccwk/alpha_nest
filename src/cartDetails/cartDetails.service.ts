@@ -11,7 +11,8 @@ export class CartDetailsService {
 		let cartDetail = await this.prisma.cartDetails.create({
 			data: {
 				product_id: createCartDetailDto.product_id,
-				cart_id: createCartDetailDto.cart_id
+				cart_id: createCartDetailDto.cart_id,
+				is_buying: createCartDetailDto.is_buying
 			}
 		});
 		console.log(cartDetail);
@@ -44,7 +45,8 @@ export class CartDetailsService {
 			where: { id },
 			data: {
 				product_id: updateCartDetailDto.product_id,
-				cart_id: updateCartDetailDto.cart_id
+				cart_id: updateCartDetailDto.cart_id,
+				is_buying: updateCartDetailDto.is_buying
 			}
 		});
 		if (!foundCartDetail) throw new NotFoundException('Cart not found!');

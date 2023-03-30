@@ -107,6 +107,7 @@ model CartDetails {
   product_id Int?
   cart       Carts?    @relation(fields: [cart_id], references: [id])
   cart_id    Int?      @unique
+  is_buying  Boolean   @default(false)
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
 }

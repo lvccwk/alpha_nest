@@ -41,11 +41,11 @@ export class ProductsService {
 		// const user = await this.prisma.users.findMany();
 		// return user
 		return await this.prisma.products.findMany({
-			where:{ product_type },
+			where: { product_type },
 			include: {
 				product_rating: true,
 				purchase_history: true,
-				cart_detail: true,
+				cart_detail: true
 			}
 		});
 	}
@@ -54,7 +54,7 @@ export class ProductsService {
 		// const user = await this.prisma.users.findMany();
 		// return user;
 		return await this.prisma.products.findMany({
-			where:{ product_type },
+			where: { product_type },
 			include: {
 				product_rating: true,
 				purchase_history: true,
