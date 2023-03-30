@@ -40,7 +40,7 @@ export class UsersService {
 		return await this.prisma.users.findMany({
 			include: {
 				followed_teachers: true,
-				product: true,
+				// product: true,
 				purchase_history: true,
 				cart: true,
 				timetable: true,
