@@ -14,7 +14,9 @@ import {
 	HttpStatus,
 	Put,
 	Logger,
-	Request
+	Request,
+	UseInterceptors,
+	UploadedFile
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -25,26 +27,37 @@ import { generate } from 'rxjs';
 import { UserRegister } from 'src/model/user-register';
 import { JwtAuthGuard, Public } from '../../utils/jwt-auth.guard';
 
-import { Response } from 'express';
+import e, { Response } from 'express';
 import jwt from '../../utils/jwt';
 import * as jwtSimple from 'jwt-simple';
 import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 import { request } from 'http';
 
+// AWS S3 Upload
+import { initFormidable } from '../../upload/upload';
+import IncomingForm from 'formidable/Formidable';
+import { uploadToS3 } from '../../upload/aws-s3-upload';
+import fs from 'fs';
+import { File } from 'formidable';
+import { FileInterceptor } from '@nestjs/platform-express/multer';
+
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
 	logger = new Logger('HTTP');
 
-	constructor(private readonly usersService: UsersService ,private readonly jwtService: JwtService) {}
+	constructor(
+		private readonly usersService: UsersService,
+		private readonly jwtService: JwtService
+	) {}
 
 	@Post()
 	async create(@Body() createUserDto: CreateUserDto) {
 		return await this.usersService.create(createUserDto);
 	}
 	// @UseGuards(JwtAuthGuard)
-	
+
 	//@Public()
 
 	@UseGuards(AuthGuard('jwt'))
@@ -53,11 +66,10 @@ export class UsersController {
 	// 	const x = req.user.id
 	// 	return await this.usersService.findAll();
 	// }
-
 	@UseGuards(AuthGuard('jwt'))
-	@Get("")
-	findOne(@Request()req:any) {
-		const id = req.user.id
+	@Get('')
+	findOne(@Request() req: any) {
+		const id = req.user.id;
 		return this.usersService.findOne(id);
 	}
 
@@ -180,6 +192,37 @@ export class UsersController {
 				id: user.id,
 				token: token
 			});
+		} catch (e) {
+			return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
+		}
+	}
+
+	@Post('/file')
+	@UseInterceptors(FileInterceptor('file'))
+	async uploadFile(@UploadedFile() file, @Body() body, @Res() res: Response) {
+		const fileName = file.originalname;
+		try {
+			// 	console.log('form');
+			// 	const form: IncomingForm = initFormidable();
+			// 	console.log('form1');
+
+			// 	form.parse(req, async (err, fields, files) => {
+			// 		req.body = fields;
+			// 		// console.log({fields})
+			// 		console.log({ files });
+
+			// 		let file: File = Array.isArray(files.test123) ? files.test123[0] : files.test123;
+			// 		let fileName = file ? file.newFilename : undefined;
+
+			// 		// // Upload file to AWS S3
+			const accessPath = await uploadToS3({
+				Bucket: 'alphafile',
+				Key: `${fileName}`,
+				Body: file.buffer
+			});
+			console.log(accessPath);
+			res.json({ accessPath: accessPath });
+			// 	});
 		} catch (e) {
 			return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
 		}
