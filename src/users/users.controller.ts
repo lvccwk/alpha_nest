@@ -13,7 +13,8 @@ import {
 	NotFoundException,
 	HttpStatus,
 	Put,
-	Logger
+	Logger,
+	Request
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -27,36 +28,47 @@ import { JwtAuthGuard, Public } from '../../utils/jwt-auth.guard';
 import { Response } from 'express';
 import jwt from '../../utils/jwt';
 import * as jwtSimple from 'jwt-simple';
+import { JwtService } from '@nestjs/jwt';
+import { AuthGuard } from '@nestjs/passport';
+import { request } from 'http';
 
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
 	logger = new Logger('HTTP');
 
-	constructor(private readonly usersService: UsersService) {}
+	constructor(private readonly usersService: UsersService ,private readonly jwtService: JwtService) {}
 
 	@Post()
 	async create(@Body() createUserDto: CreateUserDto) {
 		return await this.usersService.create(createUserDto);
 	}
 	// @UseGuards(JwtAuthGuard)
-	@Public()
-	@Get()
-	async findAll(): Promise<User[]> {
-		return await this.usersService.findAll();
+	
+	//@Public()
+
+	@UseGuards(AuthGuard('jwt'))
+	// @Get()
+	// async findAll(@Request()req): Promise<User[]> {
+	// 	const x = req.user.id
+	// 	return await this.usersService.findAll();
+	// }
+
+	@UseGuards(AuthGuard('jwt'))
+	@Get("")
+	findOne(@Request()req:any) {
+		const id = req.user.id
+		return this.usersService.findOne(id);
 	}
 
-	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return this.usersService.findOne(+id);
-	}
-
+	@UseGuards(AuthGuard('jwt'))
 	@Put('/:id')
 	update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
 		console.log('called update username');
 		return this.usersService.update(id, updateUserDto);
 	}
 
+	@UseGuards(AuthGuard('jwt'))
 	@Delete(':id')
 	remove(@Param('id', ParseIntPipe) id: number) {
 		return this.usersService.remove(id);

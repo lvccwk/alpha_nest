@@ -22,6 +22,7 @@ import { JwtModule } from '@nestjs/jwt';
 import jwt from 'utils/jwt';
 import { FollowedTeacher } from './followedTeachers/entities/followedTeachers.entity';
 import { FollowedTeachersModule } from './followedTeachers/followedTeachers.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
 	imports: [
@@ -39,7 +40,8 @@ import { FollowedTeachersModule } from './followedTeachers/followedTeachers.modu
 		ChatroomHistorysModule,
 		ChatroomParticipantsModule,
 		PrivateMessagesModule,
-		PrismaModule.forRoot()
+		PrismaModule.forRoot(),
+		AuthModule
 		// JwtModule.register({
 		// 	secret: jwt.jwtSecret,
 		// 	signOptions: { expiresIn: '60s' }
