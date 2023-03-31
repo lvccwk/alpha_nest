@@ -57,8 +57,6 @@ export class UsersController {
 	}
 	// @UseGuards(JwtAuthGuard)
 
-	//@Public()
-
 	// @UseGuards(AuthGuard('jwt'))
 	// @Get('12333')
 	// async findAll(@Request() req): Promise<User[]> {
@@ -215,9 +213,16 @@ export class UsersController {
 			// 		let fileName = file ? file.newFilename : undefined;
 
 			// 		// // Upload file to AWS S3
+			console.log({
+				Bucket: 'alphafile',
+				Key: `${fileName}`,
+				ContentType: `${file.mimetype}`,
+				Body: file.buffer
+			});
 			const accessPath = await uploadToS3({
 				Bucket: 'alphafile',
 				Key: `${fileName}`,
+				ContentType: `${file.mimetype}`,
 				Body: file.buffer
 			});
 			console.log(accessPath);

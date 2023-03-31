@@ -19,8 +19,9 @@ export class CartDetailsService {
 		return 'ok';
 	}
 
-	async findAll(): Promise<CartDetail[]> {
+	async findAll(cart_id: number): Promise<CartDetail[]> {
 		return await this.prisma.cartDetails.findMany({
+			where: { cart_id },
 			include: {
 				product: true,
 				cart: true

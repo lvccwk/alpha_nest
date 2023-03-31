@@ -25,11 +25,11 @@ export class CartsService {
 		});
 	}
 
-	async findOne(id: number) {
+	async findOne(student_id: number) {
 		let foundChatroom = await this.prisma.carts.findUnique({
-			where: { id },
+			where: { student_id },
 			include: {
-				cart_detail: true
+				cart_detail: { include: {product : true}}
 			}
 		});
 		if (!foundChatroom) throw new NotFoundException('Cart not found!');

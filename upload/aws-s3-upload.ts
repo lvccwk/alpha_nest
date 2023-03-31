@@ -4,6 +4,7 @@ export const uploadToS3 = async (params: {
 	Bucket: string;
 	Key: string;
 	Body: Buffer;
+	ContentType: string;
 }): Promise<string> => {
 	const s3 = new AWS.S3({
 		accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -21,6 +22,7 @@ const putObjectPromise = async (
 		Bucket: string;
 		Key: string;
 		Body: Buffer;
+		ContentType: string;
 	}
 ): Promise<string> => {
 	return new Promise((resolve, reject) => {
