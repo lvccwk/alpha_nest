@@ -27,7 +27,11 @@ export class UsersService {
 				email: createUserDto.email,
 				password: createUserDto.password,
 				image: createUserDto.image,
-				is_deleted: createUserDto.is_deleted
+				is_deleted: createUserDto.is_deleted,
+
+				cart: {
+					create: {}
+				}
 			}
 		});
 		console.log(foundUser);
