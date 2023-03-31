@@ -74,11 +74,10 @@ export class UsersController {
 		// return this.usersService.findOne(id);
 	}
 
-	// @UseGuards(AuthGuard('jwt'))
-	@Put('/:id')
-	update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
-		console.log('called update username');
-		return this.usersService.update(id, updateUserDto);
+	@UseGuards(AuthGuard)
+	@Put('/')
+	update(@Request() req: any, @Body() updateUserDto: UpdateUserDto) {
+		return this.usersService.update(req.user.id, updateUserDto);
 	}
 
 	@UseGuards(AuthGuard)

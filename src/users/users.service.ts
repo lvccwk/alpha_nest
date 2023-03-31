@@ -103,6 +103,11 @@ export class UsersService {
 				is_deleted: updateUserDto.is_deleted
 			}
 		});
+		if (foundUser){
+			console.log("yesUSER",foundUser);
+		}else {
+			console.log('noUSER');
+		}
 		if (!foundUser) throw new NotFoundException('User not found!');
 		return `#${id} user info has been updated`;
 	}
