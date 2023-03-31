@@ -39,21 +39,11 @@ import { AuthModule } from './auth/auth.module';
 		ChatroomHistorysModule,
 		ChatroomParticipantsModule,
 		PrivateMessagesModule,
-		PrismaModule.forRoot(),
-		AuthModule
-		// JwtModule.register({
-		// 	secret: jwt.jwtSecret,
-		// 	signOptions: { expiresIn: '60s' }
-		// })
+		AuthModule,
+		PrismaModule.forRoot()
 	],
 	controllers: [AppController],
-	providers: [
-		AppService
-		// {
-		// 	provide: APP_GUARD,
-		// 	useClass: JwtAuthGuard
-		// }
-	]
+	providers: [AppService]
 })
 export class AppModule implements NestModule {
 	configure(consumer: MiddlewareConsumer) {

@@ -58,18 +58,18 @@ export class UsersController {
 	// @UseGuards(JwtAuthGuard)
 
 	// @UseGuards(AuthGuard('jwt'))
-	// @Get('12333')
-	// async findAll(@Request() req): Promise<User[]> {
-	// 	const x = req.user.id;
-	// 	return await this.usersService.findAll();
-	// }
+	@Get('/all')
+	async findAll(@Request() req): Promise<User[]> {
+		// const x = req.user.id;
+		return await this.usersService.findAll();
+	}
 
 	// @UseGuards(AuthGuard('jwt'))
 	@UseGuards(AuthGuard)
 	@Get('/')
 	findOne(@Request() req: any) {
-		return req.user;
-		// return this.usersService.findOne(id);
+		// return req.user;
+		return this.usersService.findOne(req.user.id);
 	}
 
 	@UseGuards(AuthGuard)
@@ -213,12 +213,8 @@ export class UsersController {
 			// 		let fileName = file ? file.newFilename : undefined;
 
 			// 		// // Upload file to AWS S3
-			console.log({
-				Bucket: 'alphafile',
-				Key: `${fileName}`,
-				ContentType: `${file.mimetype}`,
-				Body: file.buffer
-			});
+
+			// add timestamp in file name
 			const accessPath = await uploadToS3({
 				Bucket: 'alphafile',
 				Key: `${fileName}`,
