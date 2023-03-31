@@ -19,7 +19,6 @@ import { ChatroomParticipantsModule } from './chatoomParticipants/chatoomPartici
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from 'utils/jwt-auth.guard';
 import { JwtModule } from '@nestjs/jwt';
-import jwt from 'utils/jwt';
 import { FollowedTeacher } from './followedTeachers/entities/followedTeachers.entity';
 import { FollowedTeachersModule } from './followedTeachers/followedTeachers.module';
 import { AuthModule } from './auth/auth.module';

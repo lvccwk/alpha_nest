@@ -5,7 +5,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import jwt from 'utils/jwt';
 import { Users } from '@prisma/client';
 @Injectable()
 export class UsersService {
@@ -40,7 +39,7 @@ export class UsersService {
 		return await this.prisma.users.findMany({
 			include: {
 				followed_teachers: true,
-				// product: true,
+				product: true,
 				purchase_history: true,
 				cart: true,
 				timetable: true,
@@ -125,7 +124,7 @@ export class UsersService {
 				username: user.username
 			};
 			const token = this.jwtService.sign(payLoad, {
-				secret: jwt.jwtSecret
+				secret: process.env.JWT_SECRET
 			});
 			return token;
 		}

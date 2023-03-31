@@ -28,10 +28,8 @@ import { UserRegister } from 'src/model/user-register';
 import { JwtAuthGuard, Public } from '../../utils/jwt-auth.guard';
 
 import e, { Response } from 'express';
-import jwt from '../../utils/jwt';
 import * as jwtSimple from 'jwt-simple';
 import { JwtService } from '@nestjs/jwt';
-import { AuthGuard } from '@nestjs/passport';
 import { request } from 'http';
 
 // AWS S3 Upload
@@ -41,6 +39,7 @@ import { uploadToS3 } from '../../upload/aws-s3-upload';
 import fs from 'fs';
 import { File } from 'formidable';
 import { FileInterceptor } from '@nestjs/platform-express/multer';
+import { AuthGuard } from './auth.guard';
 
 @ApiTags('users')
 @Controller('users')
@@ -60,28 +59,30 @@ export class UsersController {
 
 	//@Public()
 
-	@UseGuards(AuthGuard('jwt'))
-	// @Get()
-	// async findAll(@Request()req): Promise<User[]> {
-	// 	const x = req.user.id
+	// @UseGuards(AuthGuard('jwt'))
+	// @Get('12333')
+	// async findAll(@Request() req): Promise<User[]> {
+	// 	const x = req.user.id;
 	// 	return await this.usersService.findAll();
 	// }
-	@UseGuards(AuthGuard('jwt'))
-	@Get('')
+
+	// @UseGuards(AuthGuard('jwt'))
+	@UseGuards(AuthGuard)
+	@Get('/')
 	findOne(@Request() req: any) {
-		const id = req.user.id;
-		return this.usersService.findOne(id);
+		return 'hello';
+		// return this.usersService.findOne(id);
 	}
 
-	@UseGuards(AuthGuard('jwt'))
+	// @UseGuards(AuthGuard('jwt'))
 	@Put('/:id')
 	update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
 		console.log('called update username');
 		return this.usersService.update(id, updateUserDto);
 	}
 
-	@UseGuards(AuthGuard('jwt'))
-	@Delete(':id')
+	@UseGuards(AuthGuard)
+	@Delete('/:id')
 	remove(@Param('id', ParseIntPipe) id: number) {
 		return this.usersService.remove(id);
 		// return id;
@@ -187,7 +188,7 @@ export class UsersController {
 			console.log({
 				payload
 			});
-			const token = jwtSimple.encode(payload, jwt.jwtSecret);
+			const token = jwtSimple.encode(payload, process.env.JWT_SECRET);
 			return res.status(HttpStatus.OK).json({
 				id: user.id,
 				token: token
