@@ -70,7 +70,7 @@ export class UsersController {
 	@UseGuards(AuthGuard)
 	@Get('/')
 	findOne(@Request() req: any) {
-		return 'hello';
+		return req.user;
 		// return this.usersService.findOne(id);
 	}
 
