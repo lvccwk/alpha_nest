@@ -6,6 +6,7 @@ import { User } from './entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { Users } from '@prisma/client';
+
 @Injectable()
 export class UsersService {
 	constructor(private prisma: PrismaService, private jwtService: JwtService) {}

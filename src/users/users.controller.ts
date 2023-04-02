@@ -3,14 +3,11 @@ import {
 	Get,
 	Post,
 	Body,
-	Patch,
 	Param,
 	Delete,
 	ParseIntPipe,
 	Res,
 	UseGuards,
-	Req,
-	NotFoundException,
 	HttpStatus,
 	Put,
 	Logger,
@@ -23,23 +20,40 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { ApiTags } from '@nestjs/swagger';
-import { generate } from 'rxjs';
-import { UserRegister } from 'src/model/user-register';
-import { JwtAuthGuard, Public } from '../../utils/jwt-auth.guard';
-
-import e, { Response } from 'express';
+import { CookieSerializeOptions, serialize } from 'cookie';
+// import * as cookieParser from 'cookie-parser';
+import { Response } from 'express';
 import * as jwtSimple from 'jwt-simple';
 import { JwtService } from '@nestjs/jwt';
-import { request } from 'http';
+// import { request } from 'http';
 
 // AWS S3 Upload
-import { initFormidable } from '../../upload/upload';
-import IncomingForm from 'formidable/Formidable';
 import { uploadToS3 } from '../../upload/aws-s3-upload';
-import fs from 'fs';
-import { File } from 'formidable';
 import { FileInterceptor } from '@nestjs/platform-express/multer';
+
+// Firebase
 import { AuthGuard } from './auth.guard';
+import { getAuth, signInWithCustomToken } from 'firebase/auth';
+import * as admin from 'firebase-admin';
+import { initializeApp } from 'firebase/app';
+
+const firebaseConfig = {
+	apiKey: 'AIzaSyAvdEYTLjjMFEvjGgtO2J-PWqCLMwKbaqA',
+	authDomain: 'alpha-10854.firebaseapp.com',
+	projectId: 'alpha-10854',
+	storageBucket: 'alpha-10854.appspot.com',
+	messagingSenderId: '365651135121',
+	appId: '1:365651135121:web:ad185dec1d25a6254d8d30',
+	measurementId: 'G-6FRM6XL9QS'
+};
+
+const serviceAccount = require('../../../alpha-10854-firebase-adminsdk-dr7fq-3fdb61cca5.json');
+admin.initializeApp({
+	credential: admin.credential.cert(serviceAccount),
+	databaseURL: 'https://alpha-10854-default-rtdb.asia-southeast1.firebasedatabase.app'
+});
+const app = initializeApp(firebaseConfig);
+const auth = admin.auth();
 
 @ApiTags('users')
 @Controller('users')
@@ -106,11 +120,6 @@ export class UsersController {
 
 		return user;
 	}
-
-	// @Post('/register')
-	// async register(@Body() userRegister: UserRegister) {
-	// 	return await this.usersService.register(userRegister);
-	// }
 
 	@Post('/login')
 	async login(@Body() reqData: { email: string; password: string }): Promise<any> {
@@ -186,9 +195,24 @@ export class UsersController {
 				payload
 			});
 			const token = jwtSimple.encode(payload, process.env.JWT_SECRET);
+			console.log('token', token);
+
+			// Retrieve Firebase ID token for the user
+			const customToken = await admin.auth().createCustomToken(user.id.toString());
+			const auth = getAuth();
+			const { user: firebaseUser } = await signInWithCustomToken(auth, customToken);
+			const firebaseIdToken = await firebaseUser.getIdToken(/* forceRefresh */ true);
+
+			// Verify the Firebase ID token using Firebase Admin SDK
+			const decodedToken = await admin.auth().verifyIdToken(firebaseIdToken);
+			const uid = decodedToken.uid;
+
+			console.log('firebaseIdToken', firebaseIdToken);
+
 			return res.status(HttpStatus.OK).json({
 				id: user.id,
-				token: token
+				token: token,
+				firebaseIdToken: firebaseIdToken
 			});
 		} catch (e) {
 			return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
