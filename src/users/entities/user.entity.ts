@@ -20,6 +20,7 @@ import { PurchaseHistory } from 'src/purchaseHistorys/entities/purchaseHistorys.
 import { Subject } from 'src/subjects/entities/subjects.entity';
 import { Teacher } from 'src/teachers/entities/teachers.entity';
 import { Timetable } from 'src/timetable/entities/timetable.entity';
+import { Unique } from 'typeorm';
 
 export class User {
 	@ApiProperty({ default: 1 })
@@ -48,12 +49,12 @@ export class User {
 	password: string;
 
 	@ApiProperty({ default: 'admin.png' })
-	@IsString()
-	@IsNotEmpty()
+	// @IsString()
+	// @IsNotEmpty()
 	image: string;
 
 	@ApiProperty({ default: false })
-	@IsNotEmpty()
+	// @IsNotEmpty()
 	is_deleted: boolean;
 
 	product?: Product[];

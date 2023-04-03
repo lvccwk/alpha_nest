@@ -33,7 +33,12 @@ import { FileInterceptor } from '@nestjs/platform-express/multer';
 
 // Firebase
 import { AuthGuard } from './auth.guard';
-import { getAuth, signInWithCustomToken } from 'firebase/auth';
+import {
+	FacebookAuthProvider,
+	getAuth,
+	signInWithCustomToken,
+	signInWithPopup
+} from 'firebase/auth';
 import * as admin from 'firebase-admin';
 import { initializeApp } from 'firebase/app';
 
@@ -53,7 +58,9 @@ admin.initializeApp({
 	databaseURL: 'https://alpha-10854-default-rtdb.asia-southeast1.firebasedatabase.app'
 });
 const app = initializeApp(firebaseConfig);
-const auth = admin.auth();
+const auth = getAuth();
+
+const provider = new FacebookAuthProvider();
 
 @ApiTags('users')
 @Controller('users')
@@ -65,7 +72,7 @@ export class UsersController {
 		private readonly jwtService: JwtService
 	) {}
 
-	@Post()
+	@Post('/reg')
 	async create(@Body() createUserDto: CreateUserDto) {
 		return await this.usersService.create(createUserDto);
 	}
@@ -197,22 +204,34 @@ export class UsersController {
 			const token = jwtSimple.encode(payload, process.env.JWT_SECRET);
 			console.log('token', token);
 
-			// Retrieve Firebase ID token for the user
-			const customToken = await admin.auth().createCustomToken(user.id.toString());
-			const auth = getAuth();
-			const { user: firebaseUser } = await signInWithCustomToken(auth, customToken);
-			const firebaseIdToken = await firebaseUser.getIdToken(/* forceRefresh */ true);
+			// // Retrieve Firebase ID token for the user
+			// const customToken = await admin.auth().createCustomToken(user.id.toString());
+			// const auth = getAuth();
+			// const { user: firebaseUser } = await signInWithCustomToken(auth, customToken);
+			// const firebaseIdToken = await firebaseUser.getIdToken(/* forceRefresh */ true);
 
-			// Verify the Firebase ID token using Firebase Admin SDK
-			const decodedToken = await admin.auth().verifyIdToken(firebaseIdToken);
-			const uid = decodedToken.uid;
+			// // Verify the Firebase ID token using Firebase Admin SDK
+			// const decodedToken = await admin.auth().verifyIdToken(firebaseIdToken);
+			// const uid = decodedToken.uid;
 
-			console.log('firebaseIdToken', firebaseIdToken);
+			// // Set the identifier and providers
+			// const firebaseUserRecord = await admin.auth().getUser(uid);
+			// const identifier =
+			// 	firebaseUserRecord.email || firebaseUserRecord.phoneNumber || 'default@example.com';
+			// const providers =
+			// 	firebaseUserRecord.providerData.length > 0
+			// 		? firebaseUserRecord.providerData.map((provider) => provider.providerId)
+			// 		: ['password'];
+			// console.log('uid', uid);
+			// console.log('firebaseUserRecord', firebaseUserRecord);
+			// console.log('identifier', identifier);
+			// console.log('providers', providers);
+
+			// console.log('firebaseIdToken', firebaseIdToken);
 
 			return res.status(HttpStatus.OK).json({
 				id: user.id,
-				token: token,
-				firebaseIdToken: firebaseIdToken
+				token: token
 			});
 		} catch (e) {
 			return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });

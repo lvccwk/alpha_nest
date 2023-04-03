@@ -59,7 +59,6 @@ async function main() {
 			username: 'arfar',
 			email: 'arfar@gmail.com',
 			password: 'adminadmin',
-			image: 'admin.png',
 
 			teacher: {
 				create: {
@@ -103,7 +102,6 @@ async function main() {
 			username: 'arfarstudent',
 			email: 'arfarstudent@gmail.com',
 			password: 'adminadmin',
-			image: 'admin.png',
 
 			followed_teachers: {
 				create: {
@@ -155,7 +153,6 @@ async function main() {
 			username: '牙花',
 			email: 'arfar1@gmail.com',
 			password: 'adminadmin',
-			image: 'admin.png',
 			followed_teachers: {
 				create: {
 					teacher_id: 1
@@ -204,7 +201,6 @@ async function main() {
 			username: '牙花老師',
 			email: 'arfar2@gmail.com',
 			password: 'adminadmin',
-			image: 'admin.png',
 			followed_teachers: {
 				createMany: {
 					data: [

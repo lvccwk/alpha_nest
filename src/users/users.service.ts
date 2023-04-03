@@ -12,32 +12,23 @@ export class UsersService {
 	constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
 	async create(createUserDto: CreateUserDto): Promise<Users> {
-		console.log({
-			user_type: createUserDto.user_type,
-			username: createUserDto.username,
-			email: createUserDto.email,
-			password: createUserDto.password,
-			image: createUserDto.image,
-			is_deleted: createUserDto.is_deleted
-		});
-
-		let foundUser = await this.prisma.users.create({
-			data: {
-				user_type: createUserDto.user_type,
-				username: createUserDto.username,
-				email: createUserDto.email,
-				password: createUserDto.password,
-				image: createUserDto.image,
-				is_deleted: createUserDto.is_deleted,
-
-				cart: {
-					create: {}
+		try {
+			let foundUser = await this.prisma.users.create({
+				data: {
+					user_type: createUserDto.user_type,
+					username: createUserDto.username,
+					email: createUserDto.email,
+					password: createUserDto.password,
+					cart: {
+						create: {}
+					}
 				}
-			}
-		});
-		console.log(foundUser);
-
-		return foundUser;
+			});
+			console.log(foundUser);
+			return foundUser;
+		} catch (e) {
+			console.log(e);
+		}
 	}
 
 	async findAll(): Promise<User[]> {
