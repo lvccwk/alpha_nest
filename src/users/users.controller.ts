@@ -130,13 +130,15 @@ export class UsersController {
 
 	@Post('/login')
 	async login(@Body() reqData: { email: string; password: string }): Promise<any> {
+		console.log('reqData :', reqData);
+
 		const token = await this.usersService.login({
 			email: reqData.email,
 			password: reqData.password
 		});
 		console.log('token :', token);
 
-		return { data: token };
+		return { token };
 	}
 
 	@Post('login/facebook')

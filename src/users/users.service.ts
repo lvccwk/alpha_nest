@@ -119,7 +119,7 @@ export class UsersService {
 			where: data
 		});
 
-		console.log(data);
+		console.log('login: ', user);
 		if (user) {
 			const payLoad = {
 				id: user.id,
@@ -130,7 +130,7 @@ export class UsersService {
 			});
 			return token;
 		}
-		return '';
+		throw new NotFoundException('User not found!');
 	}
 
 	async register(data: {
