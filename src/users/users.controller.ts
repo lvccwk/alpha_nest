@@ -130,31 +130,13 @@ export class UsersController {
 
 	@Post('/login')
 	async login(@Body() reqData: { email: string; password: string }): Promise<any> {
-		const user = await this.usersService.login({
+		const token = await this.usersService.login({
 			email: reqData.email,
 			password: reqData.password
 		});
-		console.log('token :', user);
+		console.log('token :', token);
 
-		// const payload = {
-		// 	email: email,
-		// 	password: user.password
-		// };
-
-		// const token = jwtSimple.encode(payload, process.env.JWT_SECRET);
-		// console.log('token', token);
-
-		return { data: user };
-
-		// if (!user) {
-		// 	// Create a user
-		// }
-
-		// const token = jwtSimple.encode(payLoad, jwt.jwtSecret);
-		// console.log(token);
-		// 1. Get a User.id, email, username by email
-
-		// 2. Make a JWT
+		return { data: token };
 	}
 
 	@Post('login/facebook')

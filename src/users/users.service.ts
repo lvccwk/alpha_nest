@@ -123,7 +123,7 @@ export class UsersService {
 		if (user) {
 			const payLoad = {
 				id: user.id,
-				username: user.username
+				email: user.email
 			};
 			const token = this.jwtService.sign(payLoad, {
 				secret: process.env.JWT_SECRET
