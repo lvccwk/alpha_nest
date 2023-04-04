@@ -23,6 +23,7 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
+    "@firebase/auth": "^0.22.0",
     "@nestjs/common": "^9.3.12",
     "@nestjs/core": "^9.0.0",
     "@nestjs/jwt": "^10.0.2",

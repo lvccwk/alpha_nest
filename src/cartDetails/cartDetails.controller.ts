@@ -23,9 +23,10 @@ import { JwtService } from '@nestjs/jwt';
 export class CartDetailsController {
 	constructor(private readonly cartDetailsService: CartDetailsService,
 		private readonly jwtService: JwtService) {}
-
+	
 	@Post()
 	async create(@Body() createCartDetailDto: CreateCartDetailDto) {
+		console.log("Test1")
 		return await this.cartDetailsService.create(createCartDetailDto);
 	}
 

@@ -3,20 +3,28 @@ import { PrismaService } from 'nestjs-prisma';
 import { CreateCartDetailDto } from './dto/create-cartDetails.dto';
 import { UpdateCartDetailDto } from './dto/update-cartDetails.dto';
 import { CartDetail } from './entities/cartDetails.entity';
+import { CartDetails } from '@prisma/client';
 
 @Injectable()
 export class CartDetailsService {
 	constructor(private prisma: PrismaService) {}
-	async create(createCartDetailDto: CreateCartDetailDto): Promise<string> {
+	async create(createCartDetailDto: CreateCartDetailDto): Promise<CartDetails> {
+		console.log(
+			{
+				cart_id: createCartDetailDto.cart_id,
+				product_id: createCartDetailDto.product_id,
+				is_buying: createCartDetailDto.is_buying
+			}
+		)
 		let cartDetail = await this.prisma.cartDetails.create({
 			data: {
-				product_id: createCartDetailDto.product_id,
 				cart_id: createCartDetailDto.cart_id,
+				product_id: createCartDetailDto.product_id,
 				is_buying: createCartDetailDto.is_buying
 			}
 		});
 		console.log(cartDetail);
-		return 'ok';
+		return cartDetail;
 	}
 
 	async findAll(cart_id: number): Promise<CartDetail[]> {
