@@ -129,7 +129,7 @@ export class UsersService {
 			});
 			return token;
 		}
-		return '';
+		// return '';
 	}
 
 	async register(data: {
