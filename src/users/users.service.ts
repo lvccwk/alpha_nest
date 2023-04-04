@@ -119,6 +119,7 @@ export class UsersService {
 			where: data
 		});
 
+		console.log(data);
 		if (user) {
 			const payLoad = {
 				id: user.id,
@@ -129,7 +130,7 @@ export class UsersService {
 			});
 			return token;
 		}
-		// return '';
+		return '';
 	}
 
 	async register(data: {
