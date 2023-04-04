@@ -34,9 +34,9 @@ export class CartsController {
 	// }
 
 	@UseGuards(AuthGuard)
-	@Get('/')
-	findOne(@Param() id: string) {
-		return this.cartsService.findOne(+id);
+	@Get(':id')
+	findOne(@Param('id') student_id: string) {
+		return this.cartsService.findOne(+student_id);
 	}
 
 	@Put(':id')
