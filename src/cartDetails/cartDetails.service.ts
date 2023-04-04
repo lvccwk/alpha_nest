@@ -9,22 +9,24 @@ import { CartDetails } from '@prisma/client';
 export class CartDetailsService {
 	constructor(private prisma: PrismaService) {}
 	async create(createCartDetailDto: CreateCartDetailDto): Promise<CartDetails> {
-		console.log(
-			{
-				cart_id: createCartDetailDto.cart_id,
-				product_id: createCartDetailDto.product_id,
-				is_buying: createCartDetailDto.is_buying
-			}
-		)
-		let cartDetail = await this.prisma.cartDetails.create({
-			data: {
-				cart_id: createCartDetailDto.cart_id,
-				product_id: createCartDetailDto.product_id,
-				is_buying: createCartDetailDto.is_buying
-			}
+		console.log({
+			cart_id: createCartDetailDto.cart_id,
+			product_id: createCartDetailDto.product_id,
+			is_buying: createCartDetailDto.is_buying
 		});
-		console.log(cartDetail);
-		return cartDetail;
+		try {
+			let cartDetail = await this.prisma.cartDetails.create({
+				data: {
+					cart_id: createCartDetailDto.cart_id,
+					product_id: createCartDetailDto.product_id,
+					is_buying: createCartDetailDto.is_buying
+				}
+			});
+			console.log(cartDetail);
+			return cartDetail;
+		} catch (e) {
+			console.log(e);
+		}
 	}
 
 	async findAll(cart_id: number): Promise<CartDetail[]> {
