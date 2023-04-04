@@ -140,89 +140,11 @@ export class UsersController {
 
 		return { token };
 	}
-
 	@Post('login/facebook')
 	async loginFacebook(@Body() req: any, @Res() res: Response) {
 		try {
-			if (!req.code) {
-				return res.status(HttpStatus.UNAUTHORIZED).json({ msg: 'Wrong Code!' });
-			}
-			const { code } = req;
-			const fetchResponse = await fetch(`https://graph.facebook.com/oauth/access_token`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded'
-				},
-				body: new URLSearchParams({
-					grant_type: 'authorization_code',
-					client_id: `${process.env.FACEBOOK_CLIENT_ID}`,
-					client_secret: `${process.env.FACEBOOK_CLIENT_SECRET}`,
-					code: `${code}`,
-					redirect_uri: `${process.env.REACT_PUBLIC_HOSTNAME}/facebook-callback`
-				})
-			});
-			const data = await fetchResponse.json();
-			if (!data.access_token) {
-				return res
-					.status(HttpStatus.UNAUTHORIZED)
-					.json({ msg: 'Failed to get access token!' });
-			}
-			const profileResponse = await fetch(
-				`https://graph.facebook.com/me?fields=id,name,email,picture&access_token=${data.access_token}`
-			);
-			const profileData = await profileResponse.json();
-
-			let user: User = await this.usersService.findByEmail(profileData.email);
-			console.log({ profileData });
-			if (!user) {
-				user = await this.usersService.create({
-					user_type: 'student',
-					username: profileData.name,
-					email: profileData.email,
-					password: '',
-					image: profileData.picture.data.url,
-					is_deleted: false
-				});
-			}
-			const payload = {
-				id: user.id,
-				username: user.username,
-				email: user.email,
-				image: user.image
-			};
-			console.log({
-				payload
-			});
-			const token = jwtSimple.encode(payload, process.env.JWT_SECRET);
-			console.log('token', token);
-
-			// // Retrieve Firebase ID token for the user
-			// const customToken = await admin.auth().createCustomToken(user.id.toString());
-			// const auth = getAuth();
-			// const { user: firebaseUser } = await signInWithCustomToken(auth, customToken);
-			// const firebaseIdToken = await firebaseUser.getIdToken(/* forceRefresh */ true);
-
-			// // Verify the Firebase ID token using Firebase Admin SDK
-			// const decodedToken = await admin.auth().verifyIdToken(firebaseIdToken);
-			// const uid = decodedToken.uid;
-
-			// // Set the identifier and providers
-			// const firebaseUserRecord = await admin.auth().getUser(uid);
-			// const identifier =
-			// 	firebaseUserRecord.email || firebaseUserRecord.phoneNumber || 'default@example.com';
-			// const providers =
-			// 	firebaseUserRecord.providerData.length > 0
-			// 		? firebaseUserRecord.providerData.map((provider) => provider.providerId)
-			// 		: ['password'];
-			// console.log('uid', uid);
-			// console.log('firebaseUserRecord', firebaseUserRecord);
-			// console.log('identifier', identifier);
-			// console.log('providers', providers);
-
-			// console.log('firebaseIdToken', firebaseIdToken);
-
+			const token = await this.usersService.loginWithFacebook(req.code);
 			return res.status(HttpStatus.OK).json({
-				id: user.id,
 				token: token
 			});
 		} catch (e) {
@@ -235,21 +157,6 @@ export class UsersController {
 	async uploadFile(@UploadedFile() file, @Body() body, @Res() res: Response) {
 		const fileName = file.originalname;
 		try {
-			// 	console.log('form');
-			// 	const form: IncomingForm = initFormidable();
-			// 	console.log('form1');
-
-			// 	form.parse(req, async (err, fields, files) => {
-			// 		req.body = fields;
-			// 		// console.log({fields})
-			// 		console.log({ files });
-
-			// 		let file: File = Array.isArray(files.test123) ? files.test123[0] : files.test123;
-			// 		let fileName = file ? file.newFilename : undefined;
-
-			// 		// // Upload file to AWS S3
-
-			// add timestamp in file name
 			const accessPath = await uploadToS3({
 				Bucket: 'alphafile',
 				Key: `${fileName}`,
