@@ -27,11 +27,13 @@ import { InjectStripe } from 'nestjs-stripe';
 @ApiTags('cartDetails')
 @Controller('cartDetails')
 export class CartDetailsController {
+	// private stripe: Stripe;
 	lineItems: any[];
 
 	constructor(
 		private readonly cartDetailsService: CartDetailsService,
-		private readonly jwtService: JwtService
+		private readonly jwtService: JwtService,
+		@InjectStripe() private readonly stripe: Stripe
 	) {}
 
 	@Post()
@@ -82,11 +84,23 @@ export class CartDetailsController {
 			});
 			console.log(cartDetails);
 
+			const session = await this.stripe.checkout.sessions.create({
+				payment_method_types: ['card'],
+				mode: 'payment',
+				line_items: this.lineItems,
+				success_url: `${process.env.REACT_PUBLIC_HOSTNAME}/success.html`,
+				cancel_url: `${process.env.REACT_PUBLIC_HOSTNAME}/fail.html`
+			});
+
 			return res.status(HttpStatus.OK).json({
-				message: 'ok'
+				url: session.url
 			});
 		} catch (e) {
 			return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
 		}
 	}
 }
+
+export const lineItems = [
+	/* your line items array */
+];

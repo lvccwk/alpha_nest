@@ -10,7 +10,9 @@ import { CartDetailsController } from './cartDetails.controller';
 
 @Injectable()
 export class CartDetailsService {
+	// cartDetailsController = new CartDetailsController()
 	constructor(private prisma: PrismaService, @InjectStripe() private readonly stripe: Stripe) {}
+
 	async create(createCartDetailDto: CreateCartDetailDto): Promise<CartDetails> {
 		console.log({
 			cart_id: createCartDetailDto.cart_id,
@@ -66,15 +68,15 @@ export class CartDetailsService {
 			throw new NotFoundException('Cart not found!');
 		}
 
-		const session = await this.stripe.checkout.sessions.create({
-			payment_method_types: ['card'],
-			mode: 'payment',
-			// line_items: CartDetailsController.lineItems,
-			success_url: `${process.env.SERVER_URL}/success.html`,
-			cancel_url: `${process.env.SERVER_URL}/fail.html`
-		});
+		// const session = await this.stripe.checkout.sessions.create({
+		// 	payment_method_types: ['card'],
+		// 	mode: 'payment',
+		// 	line_items: this.cartDetailsController.lineItems,
+		// 	success_url: `${process.env.REACT_PUBLIC_HOSTNAME}/success.html`,
+		// 	cancel_url: `${process.env.REACT_PUBLIC_HOSTNAME}/fail.html`
+		// });
 
-		return session;
+		return foundCartDetail;
 	}
 
 	async update(id: number, updateCartDetailDto: UpdateCartDetailDto) {
