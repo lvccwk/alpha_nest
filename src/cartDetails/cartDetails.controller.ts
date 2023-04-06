@@ -11,7 +11,8 @@ import {
 	UseGuards,
 	Req,
 	Res,
-	HttpStatus
+	HttpStatus,
+	Query
 } from '@nestjs/common';
 import { CartDetailsService } from './cartDetails.service';
 import { CreateCartDetailDto } from './dto/create-cartDetails.dto';
@@ -28,7 +29,6 @@ import { InjectStripe } from 'nestjs-stripe';
 @Controller('cartDetails')
 export class CartDetailsController {
 	// private stripe: Stripe;
-	lineItems: any[];
 
 	constructor(
 		private readonly cartDetailsService: CartDetailsService,
@@ -65,29 +65,33 @@ export class CartDetailsController {
 		return this.cartDetailsService.remove(id);
 	}
 
+	@UseGuards(AuthGuard)
 	@Get('/stripe/:id')
 	async redirectToCheckout(@Param('id', ParseIntPipe) cart_id: number, @Res() res: Response) {
 		try {
 			const cartDetails = await this.cartDetailsService.findCheckOut(cart_id);
 
-			this.lineItems = Array.from([cartDetails]).map((item: any) => {
-				return {
-					price_data: {
-						currency: 'hkd',
-						product_data: {
-							name: item.image
+			const lineItems =
+				Array.from([cartDetails]) &&
+				cartDetails.map((item: any) => {
+					return {
+						price_data: {
+							currency: 'HKD',
+							product_data: {
+								name: item.product.name
+							},
+							unit_amount: item.product.price * 100
 						},
-						unit_amount: item.price
-					},
-					quantity: 1
-				};
-			});
+						quantity: 1
+					};
+				});
+			console.log(`lineItems`, lineItems);
 			console.log(cartDetails);
 
 			const session = await this.stripe.checkout.sessions.create({
 				payment_method_types: ['card'],
 				mode: 'payment',
-				line_items: this.lineItems,
+				line_items: lineItems,
 				success_url: `${process.env.REACT_PUBLIC_HOSTNAME}/success.html`,
 				cancel_url: `${process.env.REACT_PUBLIC_HOSTNAME}/fail.html`
 			});
@@ -100,7 +104,3 @@ export class CartDetailsController {
 		}
 	}
 }
-
-export const lineItems = [
-	/* your line items array */
-];

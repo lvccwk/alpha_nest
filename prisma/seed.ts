@@ -167,7 +167,7 @@ async function main() {
 			product: {
 				create: {
 					name: '英文精讀班',
-					price: 38,
+					price: 58,
 					product_type: 'course',
 					avg_rating: 8,
 					file_url: 'http://download.pdf',

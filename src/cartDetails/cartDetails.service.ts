@@ -75,7 +75,7 @@ export class CartDetailsService {
 		// 	success_url: `${process.env.REACT_PUBLIC_HOSTNAME}/success.html`,
 		// 	cancel_url: `${process.env.REACT_PUBLIC_HOSTNAME}/fail.html`
 		// });
-
+		console.log('foundCartDetail', foundCartDetail);
 		return foundCartDetail;
 	}
 
@@ -101,5 +101,16 @@ export class CartDetailsService {
 		if (!deletedCartDetail) throw new NotFoundException('Cart not found!');
 		// return `Cart:#${id} has been deleted`;
 		return deletedCartDetail;
+	}
+
+	async createCheckoutSession(lineItems: any[], successUrl: string, cancelUrl: string) {
+		const session = await this.stripe.checkout.sessions.create({
+			payment_method_types: ['card'],
+			line_items: lineItems,
+			mode: 'payment',
+			success_url: successUrl,
+			cancel_url: cancelUrl
+		});
+		return session;
 	}
 }
