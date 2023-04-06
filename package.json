@@ -25,6 +25,7 @@
   "dependencies": {
     "@firebase/auth": "^0.22.0",
     "@nestjs/common": "^9.3.12",
+    "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.0.0",
     "@nestjs/jwt": "^10.0.2",
     "@nestjs/mapped-types": "*",
@@ -46,6 +47,7 @@
     "formidable": "^2.1.1",
     "jwt-simple": "^0.5.6",
     "nestjs-prisma": "^0.20.0",
+    "nestjs-stripe": "^1.0.0",
     "node-fetch": "2",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",

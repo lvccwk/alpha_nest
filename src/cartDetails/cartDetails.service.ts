@@ -4,10 +4,13 @@ import { CreateCartDetailDto } from './dto/create-cartDetails.dto';
 import { UpdateCartDetailDto } from './dto/update-cartDetails.dto';
 import { CartDetail } from './entities/cartDetails.entity';
 import { CartDetails } from '@prisma/client';
+import { InjectStripe } from 'nestjs-stripe';
+import Stripe from 'stripe';
+import { CartDetailsController } from './cartDetails.controller';
 
 @Injectable()
 export class CartDetailsService {
-	constructor(private prisma: PrismaService) {}
+	constructor(private prisma: PrismaService, @InjectStripe() private readonly stripe: Stripe) {}
 	async create(createCartDetailDto: CreateCartDetailDto): Promise<CartDetails> {
 		console.log({
 			cart_id: createCartDetailDto.cart_id,
@@ -63,7 +66,15 @@ export class CartDetailsService {
 			throw new NotFoundException('Cart not found!');
 		}
 
-		return foundCartDetail;
+		const session = await this.stripe.checkout.sessions.create({
+			payment_method_types: ['card'],
+			mode: 'payment',
+			// line_items: CartDetailsController.lineItems,
+			success_url: `${process.env.SERVER_URL}/success.html`,
+			cancel_url: `${process.env.SERVER_URL}/fail.html`
+		});
+
+		return session;
 	}
 
 	async update(id: number, updateCartDetailDto: UpdateCartDetailDto) {
