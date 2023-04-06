@@ -13,9 +13,7 @@ import {
 	Logger,
 	Request,
 	UseInterceptors,
-	UploadedFile,
-	ParseFilePipe,
-	MaxFileSizeValidator
+	UploadedFile
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -31,7 +29,7 @@ import { JwtService } from '@nestjs/jwt';
 
 // AWS S3 Upload
 import { uploadToS3 } from '../../upload/aws-s3-upload';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express/multer';
+import { FileInterceptor } from '@nestjs/platform-express/multer';
 
 // Firebase
 import { AuthGuard } from './auth.guard';
@@ -43,7 +41,7 @@ import {
 } from 'firebase/auth';
 import * as admin from 'firebase-admin';
 import { initializeApp } from 'firebase/app';
-import { Validator } from 'class-validator';
+import { IsNotEmpty } from 'class-validator/types/decorator/common/IsNotEmpty';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyAvdEYTLjjMFEvjGgtO2J-PWqCLMwKbaqA',
@@ -156,18 +154,14 @@ export class UsersController {
 	}
 
 	@Post('/file')
-	@UseInterceptors(FileInterceptor('image'))
-	async uploadFile(@UploadedFile() file:Express.Multer.File, @Body() body, @Res() res: Response
+	@UseInterceptors(FileInterceptor('file'))
+	async uploadFile(
+		@UploadedFile() file: Express.Multer.File,
+		@Body() body,
+		@Res() res: Response
 	) {
-		console.log(body);
-		console.log(123);
-		console.log(file)
-		//return {message:'ok'}
 		const fileName = file.originalname;
-
-
 		console.log('file.buffer', file.buffer);
-
 		try {
 			const accessPath = await uploadToS3({
 				Bucket: 'alphafile',
@@ -178,10 +172,34 @@ export class UsersController {
 
 			console.log(accessPath);
 			res.json({ accessPath: accessPath });
-				
+			// 	});
 		} catch (e) {
 			return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
 		}
 	}
-	
+
+	// @Post('/file')
+	// @UseInterceptors(FileInterceptor('image'))
+	// async uploadFile(
+	// 	@UploadedFile() file: Express.Multer.File,
+	// 	@Body() body,
+	// 	@Res() res: Response
+	// ) {
+	// 	const fileName = file.originalname;
+	// 	console.log('file.buffer', file.buffer);
+
+	// 	try {
+	// 		const accessPath = await uploadToS3({
+	// 			Bucket: 'alphafile',
+	// 			Key: `${fileName}`,
+	// 			ContentType: `${file.mimetype}`,
+	// 			Body: file.buffer
+	// 		});
+
+	// 		console.log(accessPath);
+	// 		res.json({ accessPath: accessPath });
+	// 	} catch (e) {
+	// 		return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
+	// 	}
+	// }
 }
