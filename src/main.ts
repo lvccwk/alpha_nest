@@ -2,6 +2,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import  { json, urlencoded } from 'express';
+import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -12,13 +14,16 @@ async function bootstrap() {
     .addTag('cats')
     .build();
   const document = SwaggerModule.createDocument(app, config);
+  app.enableCors()
+
+//   app.use(bodyParser.json({limit: '50000mb'}));
+// app.use(bodyParser.urlencoded({ extended: true,limit: '50000mb'}));
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
     }),
   );
-  app.enableCors()
   SwaggerModule.setup('api', app, document);
   await app.listen(3000);
   console.log('http://localhost:3000');

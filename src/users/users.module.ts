@@ -5,9 +5,11 @@ import { PrismaService } from 'nestjs-prisma';
 import { JwtService } from '@nestjs/jwt';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategy/jwt.strategy';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
 	imports: [
+		MulterModule.register(),
 		JwtModule.register({
 			secret: process.env.JWT_SECRET,
 			signOptions: { expiresIn: '12h' }
