@@ -51,6 +51,21 @@ export class CartDetailsService {
 		return foundCartDetail;
 	}
 
+	async findCheckOut(cart_id: number) {
+		const foundCartDetail = await this.prisma.cartDetails.findMany({
+			where: { cart_id },
+			include: {
+				product: true,
+				cart: true
+			}
+		});
+		if (!foundCartDetail) {
+			throw new NotFoundException('Cart not found!');
+		}
+
+		return foundCartDetail;
+	}
+
 	async update(id: number, updateCartDetailDto: UpdateCartDetailDto) {
 		let foundCartDetail = await this.prisma.cartDetails.update({
 			where: { id },
@@ -68,7 +83,7 @@ export class CartDetailsService {
 
 	async remove(id: number) {
 		let deletedCartDetail = await this.prisma.cartDetails.delete({
-			where: { id}
+			where: { id }
 		});
 		if (!deletedCartDetail) throw new NotFoundException('Cart not found!');
 		// return `Cart:#${id} has been deleted`;

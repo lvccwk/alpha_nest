@@ -65,37 +65,36 @@ export class CartDetailsController {
 		return this.cartDetailsService.remove(id);
 	}
 
-	@Get('/stripe/:id')
-	async redirectToCheckout(@Req() req: any, @Res() res: Response) {
-		try {
-			const userId = Number(req.session.user.id);
-			const cartDetails = await this.cartDetailsService.findOne(userId);
+	// @Get('/stripe/:id')
+	// async redirectToCheckout(@Param('id', ParseIntPipe) cart_id: number, @Res() res: Response) {
+	// 	try {
+	// 		const cartDetails = await this.cartDetailsService.findCheckOut(cart_id);
 
-			const lineItems = Array.from([cartDetails]).map((item: any) => {
-				return {
-					price_data: {
-						currency: 'hkd',
-						product_data: {
-							name: item.image
-						},
-						unit_amount: item.price
-					},
-					quantity: 1
-				};
-			});
+	// 		const lineItems = Array.from([cartDetails]).map((item: any) => {
+	// 			return {
+	// 				price_data: {
+	// 					currency: 'hkd',
+	// 					product_data: {
+	// 						name: item.image
+	// 					},
+	// 					unit_amount: item.price
+	// 				},
+	// 				quantity: 1
+	// 			};
+	// 		});
 
-			const session = await this.stripe.checkout.sessions.create({
-				payment_method_types: ['card'],
-				mode: 'payment',
-				line_items: lineItems,
-				success_url: `${process.env.SERVER_URL}/success.html`,
-				cancel_url: `${process.env.SERVER_URL}/fail.html`
-			});
-			return res.status(HttpStatus.OK).json({
-				url: session.url
-			});
-		} catch (e) {
-			return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
-		}
-	}
+	// 		const session = await this.stripe.checkout.sessions.create({
+	// 			payment_method_types: ['card'],
+	// 			mode: 'payment',
+	// 			line_items: lineItems,
+	// 			success_url: `${process.env.SERVER_URL}/success.html`,
+	// 			cancel_url: `${process.env.SERVER_URL}/fail.html`
+	// 		});
+	// 		return res.status(HttpStatus.OK).json({
+	// 			url: session.url
+	// 		});
+	// 	} catch (e) {
+	// 		return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
+	// 	}
+	// }
 }
