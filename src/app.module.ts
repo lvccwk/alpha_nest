@@ -22,6 +22,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { FollowedTeacher } from './followedTeachers/entities/followedTeachers.entity';
 import { FollowedTeachersModule } from './followedTeachers/followedTeachers.module';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
+import { StripeModule } from 'nestjs-stripe';
 
 @Module({
 	imports: [
@@ -40,7 +42,8 @@ import { AuthModule } from './auth/auth.module';
 		ChatroomParticipantsModule,
 		PrivateMessagesModule,
 		AuthModule,
-		PrismaModule.forRoot()
+		PrismaModule.forRoot(),
+		StripeModule
 	],
 	controllers: [AppController],
 	providers: [AppService]

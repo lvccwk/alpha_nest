@@ -156,6 +156,7 @@ export class UsersController {
 	@UseInterceptors(FileInterceptor('file'))
 	async uploadFile(@UploadedFile() file, @Body() body, @Res() res: Response) {
 		const fileName = file.originalname;
+		console.log('file.buffer', file.buffer);
 		try {
 			const accessPath = await uploadToS3({
 				Bucket: 'alphafile',
@@ -163,6 +164,7 @@ export class UsersController {
 				ContentType: `${file.mimetype}`,
 				Body: file.buffer
 			});
+
 			console.log(accessPath);
 			res.json({ accessPath: accessPath });
 			// 	});
