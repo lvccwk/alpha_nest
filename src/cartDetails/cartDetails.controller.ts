@@ -22,19 +22,17 @@ import { AuthGuard } from 'src/users/auth.guard';
 import { JwtService } from '@nestjs/jwt';
 import Stripe from 'stripe';
 import { Response } from 'express';
+import { InjectStripe } from 'nestjs-stripe';
 
 @ApiTags('cartDetails')
 @Controller('cartDetails')
 export class CartDetailsController {
+	lineItems: any[];
+
 	constructor(
 		private readonly cartDetailsService: CartDetailsService,
-		private readonly jwtService: JwtService,
-		private readonly stripe: Stripe
-	) {
-		this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-			apiVersion: '2022-11-15'
-		});
-	}
+		private readonly jwtService: JwtService
+	) {}
 
 	@Post()
 	async create(@Body() createCartDetailDto: CreateCartDetailDto) {
@@ -65,36 +63,30 @@ export class CartDetailsController {
 		return this.cartDetailsService.remove(id);
 	}
 
-	// @Get('/stripe/:id')
-	// async redirectToCheckout(@Param('id', ParseIntPipe) cart_id: number, @Res() res: Response) {
-	// 	try {
-	// 		const cartDetails = await this.cartDetailsService.findCheckOut(cart_id);
+	@Get('/stripe/:id')
+	async redirectToCheckout(@Param('id', ParseIntPipe) cart_id: number, @Res() res: Response) {
+		try {
+			const cartDetails = await this.cartDetailsService.findCheckOut(cart_id);
 
-	// 		const lineItems = Array.from([cartDetails]).map((item: any) => {
-	// 			return {
-	// 				price_data: {
-	// 					currency: 'hkd',
-	// 					product_data: {
-	// 						name: item.image
-	// 					},
-	// 					unit_amount: item.price
-	// 				},
-	// 				quantity: 1
-	// 			};
-	// 		});
+			this.lineItems = Array.from([cartDetails]).map((item: any) => {
+				return {
+					price_data: {
+						currency: 'hkd',
+						product_data: {
+							name: item.image
+						},
+						unit_amount: item.price
+					},
+					quantity: 1
+				};
+			});
+			console.log(cartDetails);
 
-	// 		const session = await this.stripe.checkout.sessions.create({
-	// 			payment_method_types: ['card'],
-	// 			mode: 'payment',
-	// 			line_items: lineItems,
-	// 			success_url: `${process.env.SERVER_URL}/success.html`,
-	// 			cancel_url: `${process.env.SERVER_URL}/fail.html`
-	// 		});
-	// 		return res.status(HttpStatus.OK).json({
-	// 			url: session.url
-	// 		});
-	// 	} catch (e) {
-	// 		return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
-	// 	}
-	// }
+			return res.status(HttpStatus.OK).json({
+				message: 'ok'
+			});
+		} catch (e) {
+			return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
+		}
+	}
 }

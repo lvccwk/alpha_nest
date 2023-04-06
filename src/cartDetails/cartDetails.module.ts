@@ -16,18 +16,6 @@ import Stripe from 'stripe';
 			apiVersion: '2022-11-15'
 		})
 	],
-	providers: [
-		CartDetailsService,
-		PrismaService,
-		JwtService,
-		JwtStrategy,
-		{
-			provide: Stripe,
-			useValue: new Stripe(process.env.STRIPE_SECRET_KEY, {
-				apiVersion: '2022-11-15'
-			})
-		}
-	]
-	// providers: [CartDetailsService, PrismaService, JwtService, JwtStrategy]
+	providers: [CartDetailsService, PrismaService, JwtService, JwtStrategy]
 })
 export class CartDetailsModule {}
