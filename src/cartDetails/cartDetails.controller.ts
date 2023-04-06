@@ -26,7 +26,6 @@ export class CartDetailsController {
 	
 	@Post()
 	async create(@Body() createCartDetailDto: CreateCartDetailDto) {
-		console.log("Test1")
 		return await this.cartDetailsService.create(createCartDetailDto);
 	}
 
