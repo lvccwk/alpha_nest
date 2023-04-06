@@ -49,7 +49,7 @@ export class CartDetailsController {
 	}
 
 	@Delete(':id')
-	remove(@Param('id', ParseIntPipe) id: number) {
+	remove(@Param('id', ParseIntPipe) id: any) {
 		return this.cartDetailsService.remove(id);
 	}
 }

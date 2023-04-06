@@ -60,17 +60,18 @@ export class CartDetailsService {
 				is_buying: updateCartDetailDto.is_buying
 			}
 		});
+
 		if (!foundCartDetail) throw new NotFoundException('Cart not found!');
-		return ` Cart: #${id} info has been updated`;
-		// return foundUser;
+		// return ` Cart: #${id} info has been updated`;
+		return foundCartDetail;
 	}
 
 	async remove(id: number) {
 		let deletedCartDetail = await this.prisma.cartDetails.delete({
-			where: { id }
+			where: { id}
 		});
 		if (!deletedCartDetail) throw new NotFoundException('Cart not found!');
-		return `Cart:#${id} has been deleted`;
-		// return deletedUser;
+		// return `Cart:#${id} has been deleted`;
+		return deletedCartDetail;
 	}
 }
