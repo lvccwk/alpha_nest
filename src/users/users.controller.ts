@@ -100,9 +100,9 @@ export class UsersController {
 	}
 
 	@UseGuards(AuthGuard)
-	@Delete('/:id')
-	remove(@Param('id', ParseIntPipe) id: number) {
-		return this.usersService.remove(id);
+	@Delete()
+	remove(@Request() req: any) {
+		return this.usersService.remove(req.user.id);
 		// return id;
 	}
 
