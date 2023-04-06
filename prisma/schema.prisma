@@ -113,6 +113,8 @@ model CartDetails {
   is_buying  Boolean   @default(false)
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
+
+  // @@unique(fields: [cart_id, is_buying], name: "idAndIs_buying")
 }
 
 model ProductRatings {

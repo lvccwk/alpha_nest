@@ -26,14 +26,17 @@ export class CartsService {
 	}
 
 	async findOne(student_id: number) {
-		let foundChatroom = await this.prisma.carts.findUnique({
+		let foundCart = await this.prisma.carts.findUnique({
 			where: { student_id },
 			include: {
-				cart_detail: { include: { product: true } }
+				cart_detail: {
+					include: { product: true },
+					orderBy: { created_at: 'desc' } // order by created_at in descending order
+				}
 			}
 		});
-		if (!foundChatroom) throw new NotFoundException('Cart not found!');
-		return foundChatroom;
+		if (!foundCart) throw new NotFoundException('Cart not found!');
+		return foundCart;
 	}
 
 	async update(id: number, updateCartDto: UpdateCartDto) {
@@ -44,14 +47,14 @@ export class CartsService {
 			}
 		});
 		if (!foundChatroom) throw new NotFoundException('Cart not found!');
-		return ` Cart: #${id} info has been updated`;
-		// return foundUser;
+		// return ` Cart: #${id} info has been updated`;
+		return foundChatroom;
 	}
 
 	async remove(id: number) {
 		let deletedChatroom = await this.prisma.carts.delete({ where: { id } });
 		if (!deletedChatroom) throw new NotFoundException('Cart not found!');
-		return `Cart:#${id} has been deleted`;
-		// return deletedUser;
+		// return `Cart:#${id} has been deleted`;
+		return deletedChatroom;
 	}
 }
