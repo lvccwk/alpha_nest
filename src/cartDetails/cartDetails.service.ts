@@ -57,26 +57,22 @@ export class CartDetailsService {
 	}
 
 	async findCheckOut(cart_id: number) {
-		const foundCartDetail = await this.prisma.cartDetails.findMany({
-			where: { cart_id },
-			include: {
-				product: true,
-				cart: true
+		try {
+			const foundCartDetail = await this.prisma.cartDetails.findMany({
+				where: { cart_id, is_buying: true },
+				include: {
+					product: true,
+					cart: true
+				}
+			});
+			if (!foundCartDetail) {
+				throw new NotFoundException('Cart not found!');
 			}
-		});
-		if (!foundCartDetail) {
-			throw new NotFoundException('Cart not found!');
+			console.log('foundCartDetail', foundCartDetail);
+			return foundCartDetail;
+		} catch (e) {
+			throw new NotFoundException(e);
 		}
-
-		// const session = await this.stripe.checkout.sessions.create({
-		// 	payment_method_types: ['card'],
-		// 	mode: 'payment',
-		// 	line_items: this.cartDetailsController.lineItems,
-		// 	success_url: `${process.env.REACT_PUBLIC_HOSTNAME}/success.html`,
-		// 	cancel_url: `${process.env.REACT_PUBLIC_HOSTNAME}/fail.html`
-		// });
-		console.log('foundCartDetail', foundCartDetail);
-		return foundCartDetail;
 	}
 
 	async update(id: number, updateCartDetailDto: UpdateCartDetailDto) {
@@ -90,7 +86,6 @@ export class CartDetailsService {
 		});
 
 		if (!foundCartDetail) throw new NotFoundException('Cart not found!');
-		// return ` Cart: #${id} info has been updated`;
 		return foundCartDetail;
 	}
 
@@ -99,7 +94,6 @@ export class CartDetailsService {
 			where: { id }
 		});
 		if (!deletedCartDetail) throw new NotFoundException('Cart not found!');
-		// return `Cart:#${id} has been deleted`;
 		return deletedCartDetail;
 	}
 
