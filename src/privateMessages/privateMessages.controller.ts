@@ -47,4 +47,14 @@ export class PrivateMessagesController {
 	remove(@Param('id', ParseIntPipe) id: number) {
 		return this.privateMessagesService.remove(id);
 	}
+
+	@Post('messages')
+	async messages(@Body('username') username: string, @Body('message') message: string) {
+		await this.privateMessagesService.trigger('chat', 'message', {
+			username,
+			message
+		});
+
+		return [];
+	}
 }
