@@ -7,23 +7,33 @@ import {
 	Param,
 	Delete,
 	ParseIntPipe,
-	Put
+	Put,
+	UseGuards,
+	Logger,
+	Request,
 } from '@nestjs/common';
 import { FollowedTeachersService } from './followedTeachers.service';
 import { CreateFollowedTeacherDto } from './dto/create-followedTeachers.dto';
 import { UpdateFollowedTeacherDto } from './dto/update-followedTeachers.dto';
 import { FollowedTeacher } from './entities/followedTeachers.entity';
 import { ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
+import { JwtService } from '@nestjs/jwt';
+import { AuthGuard } from '../users/auth.guard';
 
 @ApiTags('followedTeachers')
 @Controller('followedTeachers')
 export class FollowedTeachersController {
-	constructor(private readonly followedTeachersService: FollowedTeachersService) {}
-
+	logger = new Logger('HTTP');
+	constructor(
+		private readonly followedTeachersService: FollowedTeachersService	
+	) {}
+	
+	//@UseGuards(AuthGuard)
 	@Post()
 	async create(@Body() createFollowedTeacherDto: CreateFollowedTeacherDto) {
 		return await this.followedTeachersService.create(createFollowedTeacherDto);
-	}
+	} 
 
 	@Get()
 	async findAll(): Promise<FollowedTeacher[]> {

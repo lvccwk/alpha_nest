@@ -8,13 +8,13 @@ import { FollowedTeacher } from './entities/followedTeachers.entity';
 export class FollowedTeachersService {
 	constructor(private prisma: PrismaService) {}
 	async create(createFollowedTeacherDto: CreateFollowedTeacherDto): Promise<string> {
-		let cartDetail = await this.prisma.followedTeachers.create({
+		let bookmarkDetail = await this.prisma.followedTeachers.create({
 			data: {
 				user_id: createFollowedTeacherDto.user_id,
 				teacher_id: createFollowedTeacherDto.teacher_id
 			}
 		});
-		console.log(cartDetail);
+		console.log(bookmarkDetail);
 		return 'ok';
 	}
 
