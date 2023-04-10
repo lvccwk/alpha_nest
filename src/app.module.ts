@@ -23,6 +23,7 @@ import { FollowedTeacher } from './followedTeachers/entities/followedTeachers.en
 import { FollowedTeachersModule } from './followedTeachers/followedTeachers.module';
 import { AuthModule } from './auth/auth.module';
 import { StripeModule } from 'nestjs-stripe';
+import { ChatGateway } from './chat/chat.gateway';
 
 @Module({
 	imports: [
@@ -45,7 +46,7 @@ import { StripeModule } from 'nestjs-stripe';
 		StripeModule
 	],
 	controllers: [AppController],
-	providers: [AppService]
+	providers: [AppService, ChatGateway]
 })
 export class AppModule implements NestModule {
 	configure(consumer: MiddlewareConsumer) {
