@@ -30,10 +30,10 @@ export class TeachersController {
 		return await this.teachersService.findAll();
 	}
 
-	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return this.teachersService.findOne(+id);
-	}
+	// @Get(':id')
+	// findOne(@Param('id') id: string) {
+	// 	return this.teachersService.findOne(+id);
+	// }
 
 	@Put(':id')
 	update(@Param('id', ParseIntPipe) id: number, @Body() updateTeacherDto: UpdateTeacherDto) {

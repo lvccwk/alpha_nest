@@ -32,16 +32,16 @@ export class TeachersService {
 		});
 	}
 
-	async findOne(id: number) {
-		let foundSubject = await this.prisma.teachers.findUnique({
-			where: { id },
-			include: {
-				user: true
-			}
-		});
-		if (!foundSubject) throw new NotFoundException('Subject not found!');
-		return foundSubject;
-	}
+	// async findOne(id: number) {
+	// 	let foundSubject = await this.prisma.teachers.findUnique({
+	// 		where: { id },
+	// 		include: {
+	// 			user: true
+	// 		}
+	// 	});
+	// 	if (!foundSubject) throw new NotFoundException('Subject not found!');
+	// 	return foundSubject;
+	// }
 
 	async update(id: number, updateTeacherDto: UpdateTeacherDto) {
 		let foundUser = await this.prisma.teachers.update({
