@@ -82,6 +82,7 @@ model Products {
   avg_rating       Int                @db.Integer
   file_url         String             @db.Text
   image            String             @db.Text
+  info             String             @db.Text
   user             Users?             @relation(fields: [user_id], references: [id])
   user_id          Int?
   subject          Subjects?          @relation(fields: [subject_id], references: [id])

@@ -53,4 +53,9 @@ export class Product {
 	@IsNotEmpty()
 	teacher_id: number;
 	// teacher: Teachers[];
+
+	@ApiProperty({ default: 'product info' })
+	@IsString()
+	@IsNotEmpty()
+	info: string;
 }
