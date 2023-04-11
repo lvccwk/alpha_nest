@@ -74,7 +74,8 @@ async function main() {
 					avg_rating: 10,
 					file_url: 'http://download.pdf',
 					image: 'hihi.jpg',
-					teacher_id: 1
+					teacher_id: 1,
+					info: '中文好玩'
 				}
 			},
 			timetable: {
@@ -172,7 +173,8 @@ async function main() {
 					avg_rating: 8,
 					file_url: 'http://download.pdf',
 					image: 'hihi.jpg',
-					teacher_id: 2
+					teacher_id: 2,
+					info: '英文唔好玩'
 				}
 			},
 			timetable: {
@@ -227,7 +229,8 @@ async function main() {
 					avg_rating: 10,
 					file_url: 'http://download.pdf',
 					image: 'hihi.jpg',
-					teacher_id: 3
+					teacher_id: 3,
+					info: '數學好玩'
 				}
 			},
 			timetable: {
