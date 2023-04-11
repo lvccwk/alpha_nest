@@ -77,9 +77,7 @@ export class UsersController {
 	async create(@Body() createUserDto: CreateUserDto) {
 		return await this.usersService.create(createUserDto);
 	}
-	// @UseGuards(JwtAuthGuard)
 
-	// @UseGuards(AuthGuard('jwt'))
 	@Get('/all')
 	async findAll(@Request() req): Promise<User[]> {
 		// const x = req.user.id;
@@ -94,6 +92,10 @@ export class UsersController {
 		return this.usersService.findOne(req.user.id);
 	}
 
+	@Get('/:id')
+	findTheOne(@Param('id') id: string) {
+		return this.usersService.findOne(+id);
+	}
 	@UseGuards(AuthGuard)
 	@Put('/')
 	update(@Request() req: any, @Body() updateUserDto: UpdateUserDto) {
