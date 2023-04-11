@@ -16,28 +16,41 @@ export class ChatGateway {
 	@SubscribeMessage('message')
 	handleMessage(@MessageBody() message: string, @ConnectedSocket() client: WebSocket): void {
 		console.log(message);
-		this.server.emit('message', message);
+		this.server.to('message', message);
 	}
 
-	// @SubscribeMessage({ value: 'pushMessage' })
-	// AddMessage(sender, message: string) {
-	// 	//推訊息給自己的前端畫面。
-	// 	sender.emit('newMessage', message);
-	// 	//推訊息給其他已建立連線的前端畫面。
-	// 	sender.broadcast.emit('newMessage', message);
-	// }
+	@SubscribeMessage('joinRoom')
+	joinRoom(@MessageBody() message: string, @ConnectedSocket() client: WebSocket): void {
+		const sender = Number(message[0]); // replace with actual sender ID
+		const receiver = Number(message[1]); // replace with actual receiver ID
+		// var roomid = url.parse(client.request.url, true).query.roomid; /*获取房间号 获取桌号*/
+		const room1 = `${sender}_${receiver}`;
+		const room2 = `${receiver}_${sender}`;
 
-	// 	@SubscribeMessage('privateMessage')
-	// 	handlePrivateMessage(
-	// 		@MessageBody() message: string,
-	// 		@ConnectedSocket() client: WebSocket
-	// 	): void {
-	// 		console.log(`Received private message: ${message}`);
-	// 		const sender = 'sender_id'; // replace with actual sender ID
-	// 		const receiver = 'receiver_id'; // replace with actual receiver ID
-	// 		var roomid = url.parse(client.request.url, true).query.roomid; /*获取房间号 获取桌号*/
-	// 		const room = `${sender}_${receiver}`;
-	// 		client.join(sender);
-	// 		this.server.to(5).emit('message', { message, sender, receiver });
-	// 	}
+		console.log({
+			room1,
+			room2
+		});
+		client.join(room1);
+		client.join(room2);
+		// this.server.emit('message', message);
+	}
+	@SubscribeMessage('privateMessage')
+	handlePrivateMessage(
+		@MessageBody() message: string,
+		@ConnectedSocket() client: WebSocket
+	): void {
+		client.server.to('5_1').emit('message', 'test');
+		console.log('message: ', message);
+		// console.log(`Received private message: ${message}`);
+		// console.log(`private message: ${message[0]}`);
+		// console.log(`sender_id: ${message[1]}`);
+		// console.log(`receiver_id: ${message[2]}`);
+		// const sender = Number(message[1]); // replace with actual sender ID
+		// const receiver = Number(message[2]); // replace with actual receiver ID
+		// const room = `${sender}_${receiver}`;
+		// console.log(`room`, room);
+		// client.join(room);
+		// this.server.to(room).emit('privateMessage', { message, sender, receiver });
+	}
 }
