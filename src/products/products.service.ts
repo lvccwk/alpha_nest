@@ -18,7 +18,8 @@ export class ProductsService {
 				image: createProductDto.image,
 				user_id: createProductDto.user_id,
 				subject_id: createProductDto.subject_id,
-				teacher_id: createProductDto.teacher_id
+				teacher_id: createProductDto.teacher_id,
+				info: createProductDto.info
 			}
 		});
 		console.log(teacher);
@@ -109,7 +110,8 @@ export class ProductsService {
 				image: updateProductDto.image,
 				user_id: updateProductDto.user_id,
 				subject_id: updateProductDto.subject_id,
-				teacher_id: updateProductDto.teacher_id
+				teacher_id: updateProductDto.teacher_id,
+				info: updateProductDto.info
 			}
 		});
 		if (!foundProduct) throw new NotFoundException('Product not found!');

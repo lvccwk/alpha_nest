@@ -40,8 +40,15 @@ export class ChatGateway {
 		@MessageBody() message: string,
 		@ConnectedSocket() client: WebSocket
 	): void {
-		client.server.to('5_1').emit('message', 'test');
+		const sender = Number(message[1]); // replace with actual sender ID
+		const receiver = Number(message[2]); // replace with actual receiver ID
+		const room1 = `${sender}_${receiver}`;
+		const room2 = `${receiver}_${sender}`;
+		client.server.to(room1).emit('message', message[0]);
+		// client.server.to(room2).emit('message', message[0]);
 		console.log('message: ', message);
+		console.log('room1: ', room1);
+		console.log('room2: ', room2);
 		// console.log(`Received private message: ${message}`);
 		// console.log(`private message: ${message[0]}`);
 		// console.log(`sender_id: ${message[1]}`);
