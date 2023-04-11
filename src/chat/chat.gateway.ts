@@ -44,7 +44,8 @@ export class ChatGateway {
 		const receiver = Number(message[2]); // replace with actual receiver ID
 		const room1 = `${sender}_${receiver}`;
 		const room2 = `${receiver}_${sender}`;
-		client.server.to(room1).emit('message', message[0]);
+		client.server.to(room1).emit('message', message);
+
 		// client.server.to(room2).emit('message', message[0]);
 		console.log('message: ', message);
 		console.log('room1: ', room1);
