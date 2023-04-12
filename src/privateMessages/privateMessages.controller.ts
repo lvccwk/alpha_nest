@@ -25,7 +25,7 @@ export class PrivateMessagesController {
 		return await this.privateMessagesService.create(createPrivateMessageDto);
 	}
 
-	@Get()
+	@Get('/all')
 	async findAll(): Promise<PrivateMessage[]> {
 		return await this.privateMessagesService.findAll();
 	}

@@ -25,12 +25,13 @@ export class PrivateMessagesService {
 	async create(createPrivateMessageDto: CreatePrivateMessageDto): Promise<string> {
 		let cartDetail = await this.prisma.privateMessages.create({
 			data: {
-				from_id: createPrivateMessageDto.from_id,
-				content: createPrivateMessageDto.content
+				from_id: createPrivateMessageDto.to_id,
+				content: createPrivateMessageDto.content,
+				to_id: createPrivateMessageDto.from_id
 			}
 		});
 		console.log(cartDetail);
-		return 'ok';
+		return JSON.stringify({ cartDetail });
 	}
 
 	async findAll(): Promise<PrivateMessage[]> {

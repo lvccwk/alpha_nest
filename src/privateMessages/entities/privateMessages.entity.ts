@@ -12,6 +12,11 @@ export class PrivateMessage {
 	@IsNotEmpty()
 	from_id: number;
 
+	@ApiProperty({ default: 1 })
+	@IsInt()
+	@IsNotEmpty()
+	to_id: number;
+
 	@ApiProperty({
 		default: 'HI, 中大「箭無不勝」 機械人賽三料冠軍 將再代表香港 出戰青島國際賽 '
 	})
