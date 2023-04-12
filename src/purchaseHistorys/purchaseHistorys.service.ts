@@ -3,30 +3,34 @@ import { PrismaService } from 'nestjs-prisma';
 import { CreatePurchaseHistoryDto } from './dto/create-purchaseHistorys.dto';
 import { UpdatePurchaseHistoryDto } from './dto/update-purchaseHistorys.dto';
 import { PurchaseHistory } from './entities/purchaseHistorys.entity';
+import { PurchaseHistorys } from '@prisma/client';
 
 @Injectable()
 export class PurchaseHistorysService {
   constructor(private prisma: PrismaService) {}
-  async create(
-    createPurchaseHistoryDto: CreatePurchaseHistoryDto,
-  ): Promise<string> {
-    let cartDetail = await this.prisma.purchaseHistorys.create({
-      data: {
-        product_id: createPurchaseHistoryDto.product_id,
-        student_id: createPurchaseHistoryDto.student_id,
-      },
-    });
-    console.log(cartDetail);
-    return 'ok';
+
+  async create(createPurchaseHistoryDto: CreatePurchaseHistoryDto): Promise<PurchaseHistorys> {
+      try{   
+         let purchaseHistoryDetail = await this.prisma.purchaseHistorys.create({
+            data: {
+              product_id: createPurchaseHistoryDto.product_id,
+              student_id: createPurchaseHistoryDto.student_id,
+            },
+        });
+        console.log(purchaseHistoryDetail);
+        return purchaseHistoryDetail;
+    } catch (e) {
+        console.log(e)
+    }
   }
 
   async findAll(): Promise<PurchaseHistory[]> {
     return await this.prisma.purchaseHistorys.findMany();
   }
 
-  async findOne(id: number) {
-    let foundCartDetail = await this.prisma.purchaseHistorys.findUnique({
-      where: { id },
+  async findOne(student_id: number) {
+    let foundCartDetail = await this.prisma.purchaseHistorys.findMany({
+      where: { student_id },
     });
     if (!foundCartDetail) throw new NotFoundException('Cart not found!');
     return foundCartDetail;

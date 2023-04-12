@@ -36,24 +36,21 @@ export class CartDetailsService {
 
 	async findAll(cart_id: number): Promise<CartDetail[]> {
 		return await this.prisma.cartDetails.findMany({
-			where: { cart_id },
+			where: { cart_id, is_buying: true },
 			include: {
-				product: true,
-				cart: true
+				product: true
 			}
 		});
 	}
 
-	async findOne(id: number) {
-		let foundCartDetail = await this.prisma.cartDetails.findUnique({
-			where: { id },
+	async findOne(cart_id: number): Promise<CartDetail[]> {
+		return await this.prisma.cartDetails.findMany({
+			where: { cart_id, is_buying: true },
 			include: {
 				product: true,
 				cart: true
 			}
 		});
-		if (!foundCartDetail) throw new NotFoundException('Cart not found!');
-		return foundCartDetail;
 	}
 
 	async findCheckOut(cart_id: number) {
@@ -89,9 +86,9 @@ export class CartDetailsService {
 		return foundCartDetail;
 	}
 
-	async remove(id: number) {
-		let deletedCartDetail = await this.prisma.cartDetails.delete({
-			where: { id }
+	async remove(cart_id: number) {
+		let deletedCartDetail = await this.prisma.cartDetails.deleteMany({
+			where: { cart_id , is_buying: true }
 		});
 		if (!deletedCartDetail) throw new NotFoundException('Cart not found!');
 		return deletedCartDetail;

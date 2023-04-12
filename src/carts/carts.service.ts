@@ -17,12 +17,19 @@ export class CartsService {
 		return 'ok';
 	}
 
-	async findAll(): Promise<Cart[]> {
-		return await this.prisma.carts.findMany({
+	async findIsBuying(student_id: number) {
+		let foundCart = await this.prisma.carts.findUnique({
+			where: { student_id },
 			include: {
-				cart_detail: true
+				cart_detail: {
+					where: { is_buying: true },
+					include: { product: true },
+					orderBy: { created_at: 'asc' } // order by created_at in descending order
+				}
 			}
 		});
+		if (!foundCart) throw new NotFoundException('Cart not found!');
+		return foundCart;
 	}
 
 	async findOne(student_id: number) {

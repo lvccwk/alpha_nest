@@ -47,10 +47,10 @@ export class CartDetailsController {
 		return await this.cartDetailsService.findAll(+id);
 	}
 
-	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return this.cartDetailsService.findOne(+id);
-	}
+	// @Get(':id')
+	// findOne(@Param('id') id: string) {
+	// 	return this.cartDetailsService.findOne(+id);
+	// }
 
 	@Put(':id')
 	update(

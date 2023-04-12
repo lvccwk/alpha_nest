@@ -28,10 +28,11 @@ export class CartsController {
 		return await this.cartsService.create(createCartDto);
 	}
 
-	// @Get()
-	// async findAll(): Promise<Cart[]> {
-	// 	return await this.cartsService.findAll();
-	// }
+	@UseGuards(AuthGuard)
+	@Get('/isBuying/:id')
+	findIsBuying(@Param('id') student_id: string) {
+		return this.cartsService.findIsBuying(+student_id);
+	}
 
 	@UseGuards(AuthGuard)
 	@Get(':id')
