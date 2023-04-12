@@ -31,6 +31,9 @@ export class PurchaseHistorysService {
   async findOne(student_id: number) {
     let foundCartDetail = await this.prisma.purchaseHistorys.findMany({
       where: { student_id },
+			include: {
+				product: true
+			}
     });
     if (!foundCartDetail) throw new NotFoundException('Cart not found!');
     return foundCartDetail;
