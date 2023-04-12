@@ -22,7 +22,8 @@ export class AvailableTimeService {
 	async findAll(): Promise<AvailableTime[]> {
 		return await this.prisma.availableTimes.findMany({
 			include: {
-				teacher: true
+				teacher: true,
+				reqest: true
 				// chatroom_participant: true
 			}
 		});
@@ -32,7 +33,8 @@ export class AvailableTimeService {
 		let foundCartDetail = await this.prisma.availableTimes.findUnique({
 			where: { id },
 			include: {
-				teacher: true
+				teacher: true,
+				reqest: true
 			}
 		});
 		if (!foundCartDetail) throw new NotFoundException('Cart not found!');
@@ -54,7 +56,7 @@ export class AvailableTimeService {
 	}
 
 	async remove(id: number) {
-		let deletedCartDetail = await this.prisma.chatrooms.delete({
+		let deletedCartDetail = await this.prisma.availableTimes.delete({
 			where: { id }
 		});
 		if (!deletedCartDetail) throw new NotFoundException('Cart not found!');

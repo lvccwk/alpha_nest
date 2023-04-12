@@ -7,24 +7,32 @@ import {
 	Param,
 	Delete,
 	ParseIntPipe,
-	Put
+	Put,
+	UseGuards
 } from '@nestjs/common';
 import { AvailableTimeService } from './availableTimes.service';
 import { CreateAvailableTimesDto } from './dto/create-availableTimes.dto';
 import { UpdateAvailableTimesDto } from './dto/update-availableTimes.dto';
 import { AvailableTime } from './entities/availableTimes.entity';
 import { ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
+import * as jwtSimple from 'jwt-simple';
+import { JwtService } from '@nestjs/jwt';
+import { AuthGuard } from 'src/users/auth.guard';
 
-@ApiTags('availabletimes')
-@Controller('availabletimes')
+@ApiTags('availableTimes')
+@Controller('availableTimes')
 export class AvailableTimeController {
-	constructor(private readonly availableTimeService: AvailableTimeService) {}
+	constructor(
+		private readonly availableTimeService: AvailableTimeService,
+		private readonly jwtService: JwtService
+	) {}
 
 	@Post()
 	async create(@Body() createCartDetailDto: CreateAvailableTimesDto) {
 		return await this.availableTimeService.create(createCartDetailDto);
 	}
-
+	@UseGuards(AuthGuard)
 	@Get()
 	async findAll(): Promise<AvailableTime[]> {
 		return await this.availableTimeService.findAll();

@@ -32,6 +32,7 @@ model Users {
   private_message_from_user PrivateMessages[]      @relation("from_user")
   private_message_to_user   PrivateMessages[]      @relation("to_user")
   followed_teachers         FollowedTeachers[]
+  request                   Requests[]
 }
 
 model Subjects {
@@ -56,7 +57,8 @@ model Teachers {
   teacher_subject   TeacherSubjects[]
   followed_teachers FollowedTeachers[]
   product           Products[]
-  availableTimes    AvailableTimes[]
+  available_time    AvailableTimes[]
+  request           Requests[]
 }
 
 model FollowedTeachers {
@@ -193,12 +195,25 @@ model PrivateMessages {
 }
 
 model AvailableTimes {
-  id          Int       @id @default(autoincrement())
-  time_slot   String    @db.Text
+  id          Int        @id @default(autoincrement())
+  time_slot   String     @db.Text
   time_during Int
-  teacher     Teachers? @relation(fields: [teacher_id], references: [id])
+  teacher     Teachers?  @relation(fields: [teacher_id], references: [id])
   teacher_id  Int?
-  to_id       Int?
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+  reqest      Requests[]
+}
+
+model Requests {
+  id                Int             @id @default(autoincrement())
+  status            String          @db.VarChar()
+  user              Users?          @relation(fields: [user_id], references: [id])
+  user_id           Int?
+  teacher           Teachers?       @relation(fields: [teacher_id], references: [id])
+  teacher_id        Int?
+  available_time    AvailableTimes? @relation(fields: [available_time_id], references: [id])
+  available_time_id Int?
+  created_at        DateTime        @default(now())
+  updated_at        DateTime        @updatedAt
 }
