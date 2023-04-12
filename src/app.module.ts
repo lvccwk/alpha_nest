@@ -24,6 +24,7 @@ import { FollowedTeachersModule } from './followedTeachers/followedTeachers.modu
 import { AuthModule } from './auth/auth.module';
 import { StripeModule } from 'nestjs-stripe';
 import { ChatGateway } from './chat/chat.gateway';
+import { AvailableTimesModule } from './availableTimes.ts/availableTimes.module';
 
 @Module({
 	imports: [
@@ -43,7 +44,8 @@ import { ChatGateway } from './chat/chat.gateway';
 		PrivateMessagesModule,
 		AuthModule,
 		PrismaModule.forRoot(),
-		StripeModule
+		StripeModule,
+		AvailableTimesModule
 	],
 	controllers: [AppController],
 	providers: [AppService, ChatGateway]
