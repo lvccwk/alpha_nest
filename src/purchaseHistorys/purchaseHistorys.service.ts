@@ -29,6 +29,8 @@ export class PurchaseHistorysService {
   }
 
   async findOne(student_id: number) {
+		if (isNaN(student_id)) throw new NotFoundException('Number should not be NaN!');
+
     let foundCartDetail = await this.prisma.purchaseHistorys.findMany({
       where: { student_id },
 			include: {

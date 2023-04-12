@@ -65,6 +65,11 @@ export class CartDetailsController {
 		return this.cartDetailsService.remove(id);
 	}
 
+	@Delete('/drop/:id')
+	drop(@Param('id', ParseIntPipe) id: any) {
+		return this.cartDetailsService.drop(id);
+	}
+
 	@UseGuards(AuthGuard)
 	@Get('/stripe/:id')
 	async redirectToCheckout(@Param('id', ParseIntPipe) cart_id: number, @Res() res: Response) {

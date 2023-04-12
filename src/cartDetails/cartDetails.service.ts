@@ -94,6 +94,14 @@ export class CartDetailsService {
 		return deletedCartDetail;
 	}
 
+	async drop(id: number) {
+		let deletedCartDetail = await this.prisma.cartDetails.delete({
+			where: { id }
+		});
+		if (!deletedCartDetail) throw new NotFoundException('Cart not found!');
+		return deletedCartDetail;
+	}
+
 	async createCheckoutSession(lineItems: any[], successUrl: string, cancelUrl: string) {
 		const session = await this.stripe.checkout.sessions.create({
 			payment_method_types: ['card'],
