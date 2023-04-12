@@ -13,11 +13,11 @@ export class ChatGateway {
 	@WebSocketServer()
 	server;
 
-	@SubscribeMessage('message')
-	handleMessage(@MessageBody() message: string, @ConnectedSocket() client: WebSocket): void {
-		console.log(message);
-		this.server.to('message', message);
-	}
+	// @SubscribeMessage('message')
+	// handleMessage(@MessageBody() message: string, @ConnectedSocket() client: WebSocket): void {
+	// 	console.log(message);
+	// 	this.server.to('message', message);
+	// }
 
 	@SubscribeMessage('joinRoom')
 	joinRoom(@MessageBody() message: string, @ConnectedSocket() client: WebSocket): void {
