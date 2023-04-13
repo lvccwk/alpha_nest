@@ -15,7 +15,7 @@ export class FollowedTeachersService {
 			}
 		});
 		console.log(bookmarkDetail);
-		return 'ok';
+		return JSON.stringify(bookmarkDetail);
 	}
 
 	async findAll(): Promise<FollowedTeacher[]> {

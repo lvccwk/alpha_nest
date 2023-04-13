@@ -10,7 +10,7 @@ import {
 	Put,
 	UseGuards,
 	Logger,
-	Request,
+	Request
 } from '@nestjs/common';
 import { FollowedTeachersService } from './followedTeachers.service';
 import { CreateFollowedTeacherDto } from './dto/create-followedTeachers.dto';
@@ -25,15 +25,13 @@ import { AuthGuard } from '../users/auth.guard';
 @Controller('followedTeachers')
 export class FollowedTeachersController {
 	logger = new Logger('HTTP');
-	constructor(
-		private readonly followedTeachersService: FollowedTeachersService	
-	) {}
-	
-	//@UseGuards(AuthGuard)
+	constructor(private readonly followedTeachersService: FollowedTeachersService) {}
+
+	// @UseGuards(AuthGuard)
 	@Post()
 	async create(@Body() createFollowedTeacherDto: CreateFollowedTeacherDto) {
 		return await this.followedTeachersService.create(createFollowedTeacherDto);
-	} 
+	}
 
 	@Get()
 	async findAll(): Promise<FollowedTeacher[]> {
@@ -53,7 +51,8 @@ export class FollowedTeachersController {
 		return this.followedTeachersService.update(id, updateFollowedTeacherDto);
 	}
 
-	@Delete(':id')
+	// @UseGuards(AuthGuard)
+	@Delete()
 	remove(@Param('id', ParseIntPipe) id: number) {
 		return this.followedTeachersService.remove(id);
 	}
