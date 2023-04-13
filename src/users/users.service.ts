@@ -38,7 +38,7 @@ export class UsersService {
 				followed_teachers: true,
 				product: true,
 				purchase_history: true,
-				cart: true,
+				cart: { include: { cart_detail: { include: { product: true } } } },
 				timetable: true,
 				product_rating: true,
 				chatroom: true,
