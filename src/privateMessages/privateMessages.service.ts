@@ -34,8 +34,15 @@ export class PrivateMessagesService {
 		return JSON.stringify({ cartDetail });
 	}
 
-	async findAll(): Promise<PrivateMessage[]> {
-		return await this.prisma.privateMessages.findMany();
+	async findAll(receipt: number, sender: number): Promise<PrivateMessage[]> {
+		return await this.prisma.privateMessages.findMany({
+			where: {
+				OR: [
+					{ from_id: receipt, to_id: sender },
+					{ from_id: sender, to_id: receipt }
+				]
+			}
+		});
 	}
 
 	async findOne(id: number) {

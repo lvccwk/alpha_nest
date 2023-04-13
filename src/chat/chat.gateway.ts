@@ -46,10 +46,13 @@ export class ChatGateway {
 		const room2 = `${receiver}_${sender}`;
 		client.server.to(room1).emit('message', message);
 
+		console.log(`sender : ${message[1]} :  ${message[0]} `);
+		console.log(`receiver : ${message[2]} :  ${message[0]} `);
+
 		// client.server.to(room2).emit('message', message[0]);
-		console.log('message: ', message);
-		console.log('room1: ', room1);
-		console.log('room2: ', room2);
+		// console.log('message: ', message);
+		// console.log('room1: ', room1);
+		// console.log('room2: ', room2);
 		// console.log(`Received private message: ${message}`);
 		// console.log(`private message: ${message[0]}`);
 		// console.log(`sender_id: ${message[1]}`);
