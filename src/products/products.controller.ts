@@ -26,7 +26,6 @@ import { Response } from 'express';
 import { uploadToS3 } from '../../upload/aws-s3-upload';
 import { FileFieldsInterceptor, FileInterceptor } from '@nestjs/platform-express/multer';
 import { AuthGuard } from 'src/users/auth.guard';
-import * as fs from 'fs';
 
 @ApiTags('products')
 @Controller('products')
