@@ -13,7 +13,8 @@ import {
 	Logger,
 	Request,
 	UseInterceptors,
-	UploadedFile
+	UploadedFile,
+	UploadedFiles
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-products.dto';
@@ -23,8 +24,9 @@ import { ApiTags } from '@nestjs/swagger';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
 import { uploadToS3 } from '../../upload/aws-s3-upload';
-import { FileInterceptor } from '@nestjs/platform-express/multer';
+import { FileFieldsInterceptor, FileInterceptor } from '@nestjs/platform-express/multer';
 import { AuthGuard } from 'src/users/auth.guard';
+import * as fs from 'fs';
 
 @ApiTags('products')
 @Controller('products')
@@ -38,26 +40,37 @@ export class ProductsController {
 
 	@UseGuards(AuthGuard)
 	@Post('/')
-	@UseInterceptors(FileInterceptor('file'))
+	@UseInterceptors(
+		FileFieldsInterceptor([
+			{ name: 'file', maxCount: 1 },
+			{ name: 'image', maxCount: 1 }
+		])
+	)
 	async uploadFile(
-		@UploadedFile() file: Express.Multer.File,
+		@UploadedFiles() files: { file?: Express.Multer.File; image?: Express.Multer.File },
 		@Body() body,
 		@Res() res: Response
 	) {
-		const fileName = file.originalname;
-		console.log('file.buffer', file.buffer);
-		console.log(`body`, body);
+		console.log(files);
 
-		console.log(`file`, file);
+		const fileName = files.file[0].originalname;
+		const imageName = files.image[0].originalname;
+
 		try {
 			const accessPath = await uploadToS3({
 				Bucket: 'alphafile',
 				Key: `${fileName}`,
-				ContentType: `${file.mimetype}`,
-				Body: file.buffer
+				ContentType: `${files.file[0].mimetype}`,
+				Body: files.file[0].buffer
 			});
 
-			console.log(accessPath);
+			const imagePath = await uploadToS3({
+				Bucket: 'alphafile',
+				Key: `${imageName}`,
+				ContentType: `${files.image.mimetype}`,
+				Body: files.image[0].buffer
+			});
+
 			const obj: CreateProductDto = {
 				name: body.name,
 				price: body.price,
@@ -66,10 +79,11 @@ export class ProductsController {
 				subject_id: body.subject_id,
 				teacher_id: body.teacher_id,
 				file_url: accessPath,
-				image: accessPath
+				image: imagePath
 			};
+			// console.log('obj', obj);
 			await this.productsService.create(obj);
-			res.json({ accessPath: accessPath });
+			res.json({ accessPath: accessPath, imagePath: imagePath });
 		} catch (e) {
 			return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
 		}
