@@ -18,8 +18,11 @@ export class FollowedTeachersService {
 		return JSON.stringify(bookmarkDetail);
 	}
 
-	async findAll(): Promise<FollowedTeacher[]> {
+	async findAll(user_id): Promise<FollowedTeacher[]> {
 		return await this.prisma.followedTeachers.findMany({
+			where: {
+				user_id: user_id
+			},
 			include: {
 				teacher: true,
 				user: true

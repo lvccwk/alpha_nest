@@ -10,7 +10,8 @@ import {
 	Put,
 	UseGuards,
 	Logger,
-	Request
+	Request,
+	Query
 } from '@nestjs/common';
 import { FollowedTeachersService } from './followedTeachers.service';
 import { CreateFollowedTeacherDto } from './dto/create-followedTeachers.dto';
@@ -25,20 +26,24 @@ import { AuthGuard } from '../users/auth.guard';
 @Controller('followedTeachers')
 export class FollowedTeachersController {
 	logger = new Logger('HTTP');
-	constructor(private readonly followedTeachersService: FollowedTeachersService) {}
+	constructor(
+		private readonly followedTeachersService: FollowedTeachersService,
+		private readonly jwtService: JwtService
+	) {}
 
-	// @UseGuards(AuthGuard)
+	@UseGuards(AuthGuard)
 	@Post()
 	async create(@Body() createFollowedTeacherDto: CreateFollowedTeacherDto) {
 		return await this.followedTeachersService.create(createFollowedTeacherDto);
 	}
 
-	@Get()
-	async findAll(): Promise<FollowedTeacher[]> {
-		return await this.followedTeachersService.findAll();
+	@Get('/all')
+	async findAll(@Body() user_id: number): Promise<FollowedTeacher[]> {
+		return await this.followedTeachersService.findAll(user_id);
 	}
 
-	@Get(':id')
+	// @UseGuards(AuthGuard)
+	@Get('/:id')
 	findOne(@Param('id') id: string) {
 		return this.followedTeachersService.findOne(+id);
 	}
@@ -51,8 +56,7 @@ export class FollowedTeachersController {
 		return this.followedTeachersService.update(id, updateFollowedTeacherDto);
 	}
 
-	// @UseGuards(AuthGuard)
-	@Delete()
+	@Delete(':id')
 	remove(@Param('id', ParseIntPipe) id: number) {
 		return this.followedTeachersService.remove(id);
 	}

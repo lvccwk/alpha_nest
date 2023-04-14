@@ -24,28 +24,22 @@ export class Product {
 	product_type: string;
 
 	@ApiProperty({ default: 10 })
-	@IsInt()
-	@IsNotEmpty()
-	avg_rating: number;
+	// @IsInt()
+	avg_rating?: number;
 
 	@ApiProperty({ default: 'http://download.pdf' })
 	@IsString()
 	@IsNotEmpty()
-	file_url: string;
+	file_url?: string;
 
 	@ApiProperty({ default: 'http://download.jpg' })
 	@IsString()
 	@IsNotEmpty()
-	image: string;
+	image?: string;
 
 	@ApiProperty({ default: 1 })
-	@IsInt()
-	@IsNotEmpty()
-	user_id: number;
-
-	@ApiProperty({ default: 1 })
-	@IsInt()
-	@IsNotEmpty()
+	// @IsInt()
+	// @IsNotEmpty()
 	subject_id: number;
 
 	@ApiProperty({ default: 1 })

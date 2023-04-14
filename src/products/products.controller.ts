@@ -20,20 +20,23 @@ import { CreateProductDto } from './dto/create-products.dto';
 import { UpdateProductDto } from './dto/update-products.dto';
 import { Product } from './entities/products.entity';
 import { ApiTags } from '@nestjs/swagger';
-
+import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
 import { uploadToS3 } from '../../upload/aws-s3-upload';
 import { FileInterceptor } from '@nestjs/platform-express/multer';
-
-
+import { AuthGuard } from 'src/users/auth.guard';
 
 @ApiTags('products')
 @Controller('products')
 export class ProductsController {
-	constructor(private readonly productsService: ProductsService) {}
+	constructor(
+		private readonly productsService: ProductsService,
+		private readonly jwtService: JwtService
+	) {}
 
 	logger = new Logger('HTTP');
 
+	@UseGuards(AuthGuard)
 	@Post('/')
 	@UseInterceptors(FileInterceptor('file'))
 	async uploadFile(
@@ -43,6 +46,9 @@ export class ProductsController {
 	) {
 		const fileName = file.originalname;
 		console.log('file.buffer', file.buffer);
+		console.log(`body`, body);
+
+		console.log(`file`, file);
 		try {
 			const accessPath = await uploadToS3({
 				Bucket: 'alphafile',
@@ -52,15 +58,27 @@ export class ProductsController {
 			});
 
 			console.log(accessPath);
+			const obj: CreateProductDto = {
+				name: body.name,
+				price: body.price,
+				info: body.info,
+				product_type: body.product_type,
+				subject_id: body.subject_id,
+				teacher_id: body.teacher_id,
+				file_url: accessPath,
+				image: accessPath
+			};
+			await this.productsService.create(obj);
 			res.json({ accessPath: accessPath });
-			// 	});
 		} catch (e) {
 			return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
 		}
 	}
-	// async create(@Body() createProductDto: CreateProductDto) {
-	// 	return await this.productsService.create(createProductDto);
-	// }
+
+	@Post('/:id')
+	async create(@Body() createProductDto: CreateProductDto) {
+		return await this.productsService.create(createProductDto);
+	}
 
 	@Get()
 	async findAll(): Promise<Product[]> {
@@ -69,12 +87,12 @@ export class ProductsController {
 
 	@Get('/Course')
 	async findCourse(): Promise<Product[]> {
-		return await this.productsService.findCourse("course");
+		return await this.productsService.findCourse('course');
 	}
 
 	@Get('/Note')
 	async findNote(): Promise<Product[]> {
-		return await this.productsService.findNote("note");
+		return await this.productsService.findNote('note');
 	}
 
 	@Get(':id')

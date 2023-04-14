@@ -20,7 +20,6 @@ model Users {
   created_at                DateTime               @default(now())
   updated_at                DateTime               @updatedAt
   is_deleted                Boolean                @default(false)
-  product                   Products[]
   purchase_history          PurchaseHistorys[]
   cart                      Carts[]
   teacher                   Teachers[]
@@ -82,12 +81,10 @@ model Products {
   name             String?            @db.VarChar(255)
   price            Int                @db.Integer
   product_type     String             @db.VarChar(255)
-  avg_rating       Int                @db.Integer
+  avg_rating       Int?               @db.Integer
   file_url         String             @db.Text
-  image            String             @db.Text
+  image            String?            @db.Text
   info             String             @db.Text
-  user             Users?             @relation(fields: [user_id], references: [id])
-  user_id          Int?
   subject          Subjects?          @relation(fields: [subject_id], references: [id])
   subject_id       Int?
   teacher          Teachers?          @relation(fields: [teacher_id], references: [id])
