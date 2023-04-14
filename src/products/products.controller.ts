@@ -50,11 +50,8 @@ export class ProductsController {
 		@Body() body,
 		@Res() res: Response
 	) {
-		console.log(files);
-
 		const fileName = files.file[0].originalname;
 		const imageName = files.image[0].originalname;
-
 		try {
 			const accessPath = await uploadToS3({
 				Bucket: 'alphafile',
@@ -80,7 +77,7 @@ export class ProductsController {
 				file_url: accessPath,
 				image: imagePath
 			};
-			// console.log('obj', obj);
+
 			await this.productsService.create(obj);
 			res.json({ accessPath: accessPath, imagePath: imagePath });
 		} catch (e) {

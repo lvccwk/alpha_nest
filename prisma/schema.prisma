@@ -85,6 +85,7 @@ model Products {
   file_url         String             @db.Text
   image            String?            @db.Text
   info             String             @db.Text
+  is_onsale        Boolean?           @default(true) @db.Boolean
   subject          Subjects?          @relation(fields: [subject_id], references: [id])
   subject_id       Int?
   teacher          Teachers?          @relation(fields: [teacher_id], references: [id])
