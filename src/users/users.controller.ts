@@ -155,30 +155,32 @@ export class UsersController {
 		}
 	}
 
-	@Post('/file')
-	@UseInterceptors(FileInterceptor('file'))
-	async uploadFile(
-		@UploadedFile() file: Express.Multer.File,
-		@Body() body,
-		@Res() res: Response
-	) {
-		const fileName = file.originalname;
-		console.log('file.buffer', file.buffer);
-		try {
-			const accessPath = await uploadToS3({
-				Bucket: 'alphafile',
-				Key: `${fileName}`,
-				ContentType: `${file.mimetype}`,
-				Body: file.buffer
-			});
+	// @UseGuards(AuthGuard)
+	// @Post('/file')
+	// @UseInterceptors(FileInterceptor('file'))
+	// async uploadFile(
+	// 	@UploadedFile() file: Express.Multer.File,
+	// 	@Body() body,
+	// 	@Res() res: Response
+	// ) {
+	// 	console.log(`file`, file);
 
-			console.log(accessPath);
-			res.json({ accessPath: accessPath });
-			// 	});
-		} catch (e) {
-			return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
-		}
-	}
+	// 	const fileName = file.originalname;
+	// 	console.log('file.buffer', file.buffer);
+	// 	try {
+	// 		const accessPath = await uploadToS3({
+	// 			Bucket: 'alphafile',
+	// 			Key: `${fileName}`,
+	// 			ContentType: `${file.mimetype}`,
+	// 			Body: file.buffer
+	// 		});
+
+	// 		console.log(accessPath);
+	// 		res.json({ accessPath: accessPath });
+	// 	} catch (e) {
+	// 		return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
+	// 	}
+	// }
 
 	// @Post('/file')
 	// @UseInterceptors(FileInterceptor('image'))

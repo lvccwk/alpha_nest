@@ -84,7 +84,8 @@ export class TeachersService {
 	async remove(id: number) {
 		let deletedUser = await this.prisma.teachers.delete({ where: { id } });
 		if (!deletedUser) throw new NotFoundException('User not found!');
-		return `subject:#${id} has been deleted`;
+		// return `subject:#${id} has been deleted`;
+		return JSON.stringify(deletedUser);
 		// return deletedUser;
 	}
 }
