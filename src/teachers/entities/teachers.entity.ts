@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Products, TeacherSubjects } from '@prisma/client';
-import { IsInt, IsNotEmpty, IsPhoneNumber, IsString, MinLength } from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional, IsPhoneNumber, IsString, MinLength } from 'class-validator';
 
 export class Teacher {
 	@ApiProperty({ default: 1 })
@@ -19,10 +19,11 @@ export class Teacher {
 	@IsNotEmpty()
 	info: string;
 
-	@ApiProperty({ default: 10 })
+	@ApiProperty({ default: null })
 	@IsInt()
-	// @IsNotEmpty()
-	rating: number;
+	@IsOptional()
+	//@IsNotEmpty()
+	rating: number|null;
 	teacher_subject: TeacherSubjects[];
 	product: Products[];
 }

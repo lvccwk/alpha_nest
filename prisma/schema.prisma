@@ -49,9 +49,9 @@ model Subjects {
 model Teachers {
   id                Int                @id @default(autoincrement())
   user              Users?             @relation(fields: [user_id], references: [id])
-  user_id           Int?
+  user_id           Int?               @unique
   info              String             @db.Text
-  rating            Int                @db.Integer
+  rating            Int?               @db.Integer
   created_at        DateTime           @default(now())
   updated_at        DateTime           @updatedAt
   teacher_subject   TeacherSubjects[]
