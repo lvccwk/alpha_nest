@@ -68,6 +68,7 @@ model FollowedTeachers {
   user_id    Int
   teacher    Teachers? @relation(fields: [teacher_id], references: [id])
   teacher_id Int
+  @@unique([user_id, teacher_id])
 }
 
 model TeacherSubjects {

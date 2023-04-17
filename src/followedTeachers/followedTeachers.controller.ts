@@ -34,6 +34,7 @@ export class FollowedTeachersController {
 	@UseGuards(AuthGuard)
 	@Post()
 	async create(@Body() createFollowedTeacherDto: CreateFollowedTeacherDto) {
+		console.log("line37",createFollowedTeacherDto);
 		return await this.followedTeachersService.create(createFollowedTeacherDto);
 	}
 
@@ -56,8 +57,8 @@ export class FollowedTeachersController {
 		return this.followedTeachersService.update(id, updateFollowedTeacherDto);
 	}
 
-	@Delete(':id')
-	remove(@Param('id', ParseIntPipe) id: number) {
-		return this.followedTeachersService.remove(id);
+	@Delete()
+	remove(@Body() obj) {
+		return this.followedTeachersService.remove(obj.user_id, obj.teacher_id);
 	}
 }
