@@ -50,6 +50,7 @@ async function main() {
 			}
 		]
 	});
+	console.log(fixedSubject);
 }
 main()
 	.then(async () => {
