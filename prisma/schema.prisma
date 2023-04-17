@@ -16,7 +16,7 @@ model Users {
   username                  String?                @db.VarChar(255)
   email                     String                 @unique @db.VarChar(255)
   password                  String
-  image                     String?                @default("image.jpg")
+  image                     String?                
   created_at                DateTime               @default(now())
   updated_at                DateTime               @updatedAt
   is_deleted                Boolean                @default(false)
