@@ -110,6 +110,11 @@ export class ProductsController {
 		return this.productsService.findOne(+id);
 	}
 
+	@Get('/teacher/:id')
+	findTeacherProduct(@Param('id') id: string) {
+		return this.productsService.findTeacherProduct(+id);
+	}
+
 	@Put(':id')
 	update(@Param('id', ParseIntPipe) id: number, @Body() updateProductDto: UpdateProductDto) {
 		return this.productsService.update(id, updateProductDto);
