@@ -99,6 +99,24 @@ export class ProductsService {
 		return foundProduct;
 	}
 
+	async findTeacherProduct(teacher_id: number) {
+		let foundProduct = await this.prisma.products.findMany({
+			where: { teacher_id }
+			// include: {
+			// 	product_rating: true,
+			// 	purchase_history: true,
+			// 	cart_detail: true,
+			// 	teacher: {
+			// 		include: {
+			// 			user: true
+			// 		}
+			// 	}
+			// }
+		});
+		if (!foundProduct) throw new NotFoundException('Product not found!');
+		return foundProduct;
+	}
+
 	async update(id: number, updateProductDto: UpdateProductDto) {
 		let foundProduct = await this.prisma.products.update({
 			where: { id },
