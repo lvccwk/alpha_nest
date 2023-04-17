@@ -14,6 +14,7 @@ import { CreateTeacherDto } from './dto/create-teachers.dto';
 import { UpdateTeacherDto } from './dto/update-teachers.dto';
 import { Teacher } from './entities/teachers.entity';
 import { ApiTags } from '@nestjs/swagger';
+import { Teachers } from '@prisma/client';
 
 @ApiTags('teachers')
 @Controller('teachers')
@@ -22,11 +23,13 @@ export class TeachersController {
 
 	@Post()
 	async create(@Body() createTeacherDto: CreateTeacherDto) {
+		console.log('on9?', createTeacherDto);
+		//return { message: 'ok'}
 		return await this.teachersService.create(createTeacherDto);
 	}
 
 	@Get()
-	async findAll(): Promise<Teacher[]> {
+	async findAll(): Promise<Teachers[]> {
 		return await this.teachersService.findAll();
 	}
 

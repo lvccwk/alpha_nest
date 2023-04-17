@@ -18,7 +18,9 @@ export class TeachersService {
 					data: {
 						// rating: null,
 						user_id: createTeacherDto.user_id,
-						info: createTeacherDto.info
+						info: createTeacherDto.info,
+						school: createTeacherDto.school,
+						experience:	createTeacherDto.experience,
 					}
 				});
 	
@@ -44,7 +46,7 @@ export class TeachersService {
 		return foundTeacher;
 	}
 
-	async findAll(): Promise<Teacher[]> {
+	async findAll(): Promise<Teachers[]> {
 		// const user = await this.prisma.users.findMany();
 		// return user;
 		return await this.prisma.teachers.findMany({

@@ -24,6 +24,16 @@ export class Teacher {
 	@IsOptional()
 	//@IsNotEmpty()
 	rating: number|null;
+
+	@ApiProperty({ default: null })
+	@IsString()
+	@IsNotEmpty()
+	school: string;
+
+	@ApiProperty({ default: 0 })
+	@IsInt()
+	experience: number;
+
 	teacher_subject: TeacherSubjects[];
 	product: Products[];
 }
