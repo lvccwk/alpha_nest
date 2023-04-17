@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ChatroomHistorys } from '@prisma/client';
+import { ChatroomHistorys, Subjects } from '@prisma/client';
 import {
 	IsEmail,
 	isEmail,
@@ -20,6 +20,7 @@ import { PurchaseHistory } from 'src/purchaseHistorys/entities/purchaseHistorys.
 import { Subject } from 'src/subjects/entities/subjects.entity';
 import { Teacher } from 'src/teachers/entities/teachers.entity';
 import { Timetable } from 'src/timetable/entities/timetable.entity';
+import { Unique } from 'typeorm';
 
 export class User {
 	@ApiProperty({ default: 1 })
@@ -48,20 +49,23 @@ export class User {
 	password: string;
 
 	@ApiProperty({ default: 'admin.png' })
-	@IsString()
-	@IsNotEmpty()
+	// @IsString()
+	// @IsNotEmpty()
 	image: string;
 
-	subject: Subject[];
-	product: Product[];
-	purchase_history: PurchaseHistory[];
-	cart: Cart[];
-	teacher: Teacher[];
-	timetable: Timetable[];
-	product_rating: ProductRating[];
-	chatroom: Chatroom[];
-	chatroom_history: ChatroomHistorys[];
-	chatroom_participant: ChatroomParticipant[];
-	private_message_from_user: PrivateMessage[];
-	private_message_to_user: PrivateMessage[];
+	@ApiProperty({ default: false })
+	// @IsNotEmpty()
+	is_deleted: boolean;
+
+	product?: Product[];
+	purchase_history?: PurchaseHistory[];
+	cart?: Cart[];
+	// teacher?: Teacher[];
+	timetable?: Timetable[];
+	product_rating?: ProductRating[];
+	chatroom?: Chatroom[];
+	chatroom_history?: ChatroomHistorys[];
+	chatroom_participant?: ChatroomParticipant[];
+	private_message_from_user?: PrivateMessage[];
+	private_message_to_user?: PrivateMessage[];
 }

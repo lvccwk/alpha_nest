@@ -17,23 +17,34 @@ export class CartsService {
 		return 'ok';
 	}
 
-	async findAll(): Promise<Cart[]> {
-		return await this.prisma.carts.findMany({
+	async findIsBuying(student_id: number) {
+		let foundCart = await this.prisma.carts.findUnique({
+			where: { student_id },
 			include: {
-				cart_detail: true
+				cart_detail: {
+					where: { is_buying: true },
+					include: { product: true },
+					orderBy: { created_at: 'asc' } // order by created_at in descending order
+				}
 			}
 		});
+		if (!foundCart) throw new NotFoundException('Cart not found!');
+		return foundCart;
 	}
 
-	async findOne(id: number) {
-		let foundChatroom = await this.prisma.carts.findUnique({
-			where: { id },
+	async findOne(student_id: number) {
+		if (isNaN(student_id)) throw new NotFoundException('Number should not be NaN!');
+		let foundCart = await this.prisma.carts.findUnique({
+			where: { student_id },
 			include: {
-				cart_detail: true
+				cart_detail: {
+					include: { product: true },
+					orderBy: { created_at: 'desc' } // order by created_at in descending order
+				}
 			}
 		});
-		if (!foundChatroom) throw new NotFoundException('Cart not found!');
-		return foundChatroom;
+		if (!foundCart) throw new NotFoundException('Cart not found!');
+		return foundCart;
 	}
 
 	async update(id: number, updateCartDto: UpdateCartDto) {
@@ -44,14 +55,14 @@ export class CartsService {
 			}
 		});
 		if (!foundChatroom) throw new NotFoundException('Cart not found!');
-		return ` Cart: #${id} info has been updated`;
-		// return foundUser;
+		// return ` Cart: #${id} info has been updated`;
+		return foundChatroom;
 	}
 
 	async remove(id: number) {
 		let deletedChatroom = await this.prisma.carts.delete({ where: { id } });
 		if (!deletedChatroom) throw new NotFoundException('Cart not found!');
-		return `Cart:#${id} has been deleted`;
-		// return deletedUser;
+		// return `Cart:#${id} has been deleted`;
+		return deletedChatroom;
 	}
 }

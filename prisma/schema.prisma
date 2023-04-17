@@ -16,11 +16,10 @@ model Users {
   username                  String?                @db.VarChar(255)
   email                     String                 @unique @db.VarChar(255)
   password                  String
-  image                     String                 @db.Text
+  image                     String?
   created_at                DateTime               @default(now())
   updated_at                DateTime               @updatedAt
-  subject                   Subjects[]
-  product                   Products[]
+  is_deleted                Boolean                @default(false)
   purchase_history          PurchaseHistorys[]
   cart                      Carts[]
   teacher                   Teachers[]
@@ -31,28 +30,54 @@ model Users {
   chatroom_participant      ChatroomParticipants[]
   private_message_from_user PrivateMessages[]      @relation("from_user")
   private_message_to_user   PrivateMessages[]      @relation("to_user")
+  followed_teachers         FollowedTeachers[]
+  request                   Requests[]
 }
 
 model Subjects {
-  id           Int          @id @default(autoincrement())
-  name         String       @db.VarChar(255)
-  chinese_name String       @db.VarChar(255)
-  user         Users?       @relation(fields: [user_id], references: [id])
-  user_id      Int?
-  created_at   DateTime     @default(now())
-  updated_at   DateTime     @updatedAt
-  product      Products[]
-  timetable    Timetables[]
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar(255)
+  chinese_name    String            @db.VarChar(255)
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+  product         Products[]
+  timetable       Timetables[]
+  teacher_subject TeacherSubjects[]
 }
 
 model Teachers {
-  id         Int      @id @default(autoincrement())
-  user       Users?   @relation(fields: [user_id], references: [id])
-  user_id    Int?
-  info       String   @db.Text
-  rating     Int      @db.Integer
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id                Int                @id @default(autoincrement())
+  user              Users?             @relation(fields: [user_id], references: [id])
+  user_id           Int?               @unique
+  info              String             @db.Text
+  rating            Int?               @db.Integer
+  school            String             @db.Text
+  experience        Int?               @db.Integer
+  created_at        DateTime           @default(now())
+  updated_at        DateTime           @updatedAt
+  teacher_subject   TeacherSubjects[]
+  followed_teachers FollowedTeachers[]
+  product           Products[]
+  available_time    AvailableTimes[]
+  request           Requests[]
+}
+
+model FollowedTeachers {
+  id         Int       @id @default(autoincrement())
+  user       Users?    @relation(fields: [user_id], references: [id])
+  user_id    Int
+  teacher    Teachers? @relation(fields: [teacher_id], references: [id])
+  teacher_id Int
+
+  @@unique([user_id, teacher_id])
+}
+
+model TeacherSubjects {
+  id         Int       @id @default(autoincrement())
+  teacher    Teachers? @relation(fields: [teacher_id], references: [id])
+  teacher_id Int
+  subject    Subjects? @relation(fields: [subject_id], references: [id])
+  subject_id Int
 }
 
 model Products {
@@ -60,12 +85,15 @@ model Products {
   name             String?            @db.VarChar(255)
   price            Int                @db.Integer
   product_type     String             @db.VarChar(255)
-  avg_rating       Int                @db.Integer
+  avg_rating       Int?               @db.Integer
   file_url         String             @db.Text
-  user             Users?             @relation(fields: [user_id], references: [id])
-  user_id          Int?
+  image            String?            @db.Text
+  info             String             @db.Text
+  is_onsale        Boolean?           @default(true) @db.Boolean
   subject          Subjects?          @relation(fields: [subject_id], references: [id])
   subject_id       Int?
+  teacher          Teachers?          @relation(fields: [teacher_id], references: [id])
+  teacher_id       Int?
   created_at       DateTime           @default(now())
   updated_at       DateTime           @updatedAt
   product_rating   ProductRatings[]
@@ -87,7 +115,8 @@ model CartDetails {
   product    Products? @relation(fields: [product_id], references: [id])
   product_id Int?
   cart       Carts?    @relation(fields: [cart_id], references: [id])
-  cart_id    Int?      @unique
+  cart_id    Int?
+  is_buying  Boolean   @default(false)
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
 }
@@ -165,4 +194,28 @@ model PrivateMessages {
   content    String   @db.Text
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+}
+
+model AvailableTimes {
+  id          Int        @id @default(autoincrement())
+  time_slot   String     @db.Text
+  time_during Int
+  teacher     Teachers?  @relation(fields: [teacher_id], references: [id])
+  teacher_id  Int?
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+  reqest      Requests[]
+}
+
+model Requests {
+  id                Int             @id @default(autoincrement())
+  status            String          @db.VarChar()
+  user              Users?          @relation(fields: [user_id], references: [id])
+  user_id           Int?
+  teacher           Teachers?       @relation(fields: [teacher_id], references: [id])
+  teacher_id        Int?
+  available_time    AvailableTimes? @relation(fields: [available_time_id], references: [id])
+  available_time_id Int?
+  created_at        DateTime        @default(now())
+  updated_at        DateTime        @updatedAt
 }

@@ -7,13 +7,16 @@ import {
 	Param,
 	Delete,
 	ParseIntPipe,
-	Put
+	Put,
+	UseGuards
 } from '@nestjs/common';
 import { CartsService } from './carts.service';
 import { CreateCartDto } from './dto/create-carts.dto';
 import { UpdateCartDto } from './dto/update-carts.dto';
 import { Cart } from './entities/carts.entity';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/users/auth.guard';
+import { JwtService } from '@nestjs/jwt';
 
 @ApiTags('carts')
 @Controller('carts')
@@ -25,14 +28,16 @@ export class CartsController {
 		return await this.cartsService.create(createCartDto);
 	}
 
-	@Get()
-	async findAll(): Promise<Cart[]> {
-		return await this.cartsService.findAll();
+	@UseGuards(AuthGuard)
+	@Get('/isBuying/:id')
+	findIsBuying(@Param('id') student_id: string) {
+		return this.cartsService.findIsBuying(+student_id);
 	}
 
+	@UseGuards(AuthGuard)
 	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return this.cartsService.findOne(+id);
+	findOne(@Param('id') student_id: string) {
+		return this.cartsService.findOne(+student_id);
 	}
 
 	@Put(':id')

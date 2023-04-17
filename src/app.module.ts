@@ -19,13 +19,20 @@ import { ChatroomParticipantsModule } from './chatoomParticipants/chatoomPartici
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from 'utils/jwt-auth.guard';
 import { JwtModule } from '@nestjs/jwt';
-import jwt from 'utils/jwt';
+import { FollowedTeacher } from './followedTeachers/entities/followedTeachers.entity';
+import { FollowedTeachersModule } from './followedTeachers/followedTeachers.module';
+import { AuthModule } from './auth/auth.module';
+import { StripeModule } from 'nestjs-stripe';
+import { ChatGateway } from './chat/chat.gateway';
+import { AvailableTimesModule } from './availableTimes/availableTimes.module';
+import { RequestModule } from './requests/requests.module';
 
 @Module({
 	imports: [
 		UsersModule,
 		SubjectsModule,
 		TeachersModule,
+		FollowedTeachersModule,
 		ProductsModule,
 		CartsModule,
 		CartDetailsModule,
@@ -36,20 +43,14 @@ import jwt from 'utils/jwt';
 		ChatroomHistorysModule,
 		ChatroomParticipantsModule,
 		PrivateMessagesModule,
-		PrismaModule.forRoot()
-		// JwtModule.register({
-		// 	secret: jwt.jwtSecret,
-		// 	signOptions: { expiresIn: '60s' }
-		// })
+		AuthModule,
+		PrismaModule.forRoot(),
+		StripeModule,
+		AvailableTimesModule,
+		RequestModule
 	],
 	controllers: [AppController],
-	providers: [
-		AppService
-		// {
-		// 	provide: APP_GUARD,
-		// 	useClass: JwtAuthGuard
-		// }
-	]
+	providers: [AppService, ChatGateway]
 })
 export class AppModule implements NestModule {
 	configure(consumer: MiddlewareConsumer) {

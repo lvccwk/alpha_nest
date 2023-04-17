@@ -3,29 +3,57 @@ import { PrismaService } from 'nestjs-prisma';
 import { CreateTeacherDto } from './dto/create-teachers.dto';
 import { UpdateTeacherDto } from './dto/update-teachers.dto';
 import { Teacher } from './entities/teachers.entity';
-
+import { Teachers, Prisma } from '@prisma/client';
+let a: Prisma.TeachersCreateInput
 @Injectable()
 export class TeachersService {
 	constructor(private prisma: PrismaService) {}
-	async create(createTeacherDto: CreateTeacherDto): Promise<string> {
-		let teacher = await this.prisma.teachers.create({
-			data: {
-				user_id: createTeacherDto.user_id,
-				info: createTeacherDto.info,
-				rating: createTeacherDto.rating
+	async create(createTeacherDto: CreateTeacherDto): Promise<Teachers> {
+		console.log(createTeacherDto);
+		let teacher = await this.findByUserId(createTeacherDto.user_id);
+		
+		try{
+			if (!teacher){
+				let teacher = await this.prisma.teachers.create({
+					data: {
+						// rating: null,
+						user_id: createTeacherDto.user_id,
+						info: createTeacherDto.info,
+						school: createTeacherDto.school,
+						experience:	createTeacherDto.experience,
+					}
+				});
+	
+				console.log(teacher);
 			}
-		});
-		console.log(teacher);
 
-		return 'ok';
+	
+			return teacher;
+		} catch (e) {
+			console.log(e);
+		}
+		
 	}
 
-	async findAll(): Promise<Teacher[]> {
+	async findByUserId(user_id: number) {
+		let foundTeacher = await this.prisma.teachers.findUnique({
+			where: { user_id },
+			include: {
+				user: true
+			}
+		});
+		//if (!foundTeacher) throw new NotFoundException('Subject not found!');
+		return foundTeacher;
+	}
+
+	async findAll(): Promise<Teachers[]> {
 		// const user = await this.prisma.users.findMany();
 		// return user;
 		return await this.prisma.teachers.findMany({
 			include: {
-				user: true
+				user: true,
+				teacher_subject: true,
+				product: true
 			}
 		});
 	}
@@ -58,7 +86,8 @@ export class TeachersService {
 	async remove(id: number) {
 		let deletedUser = await this.prisma.teachers.delete({ where: { id } });
 		if (!deletedUser) throw new NotFoundException('User not found!');
-		return `subject:#${id} has been deleted`;
+		// return `subject:#${id} has been deleted`;
+		return JSON.stringify(deletedUser);
 		// return deletedUser;
 	}
 }

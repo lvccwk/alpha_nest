@@ -15,9 +15,4 @@ export class Subject {
 	@IsString()
 	@IsNotEmpty()
 	chinese_name: string;
-
-	@ApiProperty({ default: 1 })
-	@IsInt()
-	@IsNotEmpty()
-	user_id: number;
 }
