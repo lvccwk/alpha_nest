@@ -56,7 +56,7 @@ export class FollowedTeachersController {
 	) {
 		return this.followedTeachersService.update(id, updateFollowedTeacherDto);
 	}
-
+	
 	@Delete()
 	remove(@Body() obj) {
 		return this.followedTeachersService.remove(obj.user_id, obj.teacher_id);
