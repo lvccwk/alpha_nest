@@ -3,6 +3,10 @@ import { PrismaService } from 'nestjs-prisma';
 import { CreateFollowedTeacherDto } from './dto/create-followedTeachers.dto';
 import { UpdateFollowedTeacherDto } from './dto/update-followedTeachers.dto';
 import { FollowedTeacher } from './entities/followedTeachers.entity';
+import { Prisma } from '@prisma/client';
+let a: Prisma.FollowedTeachersCreateInput;
+let b: Prisma.FollowedTeachersUpdateInput;
+let c: Prisma.FollowedTeachersWhereUniqueInput
 
 @Injectable()
 export class FollowedTeachersService {
@@ -55,12 +59,12 @@ export class FollowedTeachersService {
 		// return foundUser;
 	}
 
-	async remove(id: number) {
-		let deletedCartDetail = await this.prisma.followedTeachers.delete({
-			where: { id }
+	async remove(user_id: number, teacher_id: number) {
+		let deleteBookmark = await this.prisma.followedTeachers.delete({
+			where: { user_id_teacher_id: { user_id: user_id, teacher_id: teacher_id }}
 		});
-		if (!deletedCartDetail) throw new NotFoundException('Cart not found!');
-		return `Cart:#${id} has been deleted`;
+		if (!deleteBookmark) throw new NotFoundException('Teacher not found!');
+		return `Teacher has been unfollowed`;
 		// return deletedUser;
 	}
 }
