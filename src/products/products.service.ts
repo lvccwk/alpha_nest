@@ -49,7 +49,7 @@ export class ProductsService {
 		// const user = await this.prisma.users.findMany();
 		// return user
 		return await this.prisma.products.findMany({
-			where: { product_type },
+			where: { product_type, is_onsale: true },
 			include: {
 				product_rating: true,
 				purchase_history: true,
@@ -67,7 +67,7 @@ export class ProductsService {
 		// const user = await this.prisma.users.findMany();
 		// return user;
 		return await this.prisma.products.findMany({
-			where: { product_type },
+			where: { product_type, is_onsale: true },
 			include: {
 				product_rating: true,
 				purchase_history: true,
@@ -122,14 +122,15 @@ export class ProductsService {
 			where: { id },
 			data: {
 				name: updateProductDto.name,
-				price: updateProductDto.price,
+				price: Number(updateProductDto.price),
 				product_type: updateProductDto.product_type,
 				avg_rating: updateProductDto.avg_rating,
 				file_url: updateProductDto.file_url,
 				image: updateProductDto.image,
 				subject_id: updateProductDto.subject_id,
 				teacher_id: updateProductDto.teacher_id,
-				info: updateProductDto.info
+				info: updateProductDto.info,
+				is_onsale: updateProductDto.is_onsale
 			}
 		});
 		if (!foundProduct) throw new NotFoundException('Product not found!');
