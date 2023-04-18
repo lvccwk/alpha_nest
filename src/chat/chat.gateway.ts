@@ -8,7 +8,7 @@ import {
 import { WebSocket } from 'ws';
 import * as url from 'url';
 
-@WebSocketGateway(3001, { cors: '*' })
+@WebSocketGateway({ cors: '*' })
 export class ChatGateway {
 	@WebSocketServer()
 	server;
