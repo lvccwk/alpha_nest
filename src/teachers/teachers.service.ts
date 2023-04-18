@@ -35,9 +35,9 @@ export class TeachersService {
 		
 	}
 
-	async findByUserId(user_id: number) {
+	async findByUserId(id: number) {
 		let foundTeacher = await this.prisma.teachers.findUnique({
-			where: { user_id },
+			where: { id },
 			include: {
 				user: true
 			}
@@ -59,14 +59,15 @@ export class TeachersService {
 	}
 
 	async findOne(id: number) {
-		let foundSubject = await this.prisma.teachers.findUnique({
+		let foundTeacher = await this.prisma.teachers.findUnique({
 			where: { id },
 			include: {
 				user: true
 			}
 		});
-		if (!foundSubject) throw new NotFoundException('Subject not found!');
-		return foundSubject;
+		console.log(foundTeacher);
+		if (!foundTeacher) throw new NotFoundException('Subject not found!');
+		return foundTeacher;
 	}
 
 	async update(id: number, updateTeacherDto: UpdateTeacherDto) {

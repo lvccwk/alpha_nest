@@ -40,6 +40,7 @@ export class FollowedTeachersController {
 
 	@Get('/all')
 	async findAll(@Body() user_id: number): Promise<FollowedTeacher[]> {
+		console.log("followedteachercontrollerline43",user_id);
 		return await this.followedTeachersService.findAll(user_id);
 	}
 
