@@ -5,7 +5,8 @@ COPY . .
 ENV DATABASE_URL="postgresql://postgres:postgres@postgres:5432/alpha"
 
 EXPOSE 3000
-CMD yarn install && \
+CMD psql -h postgres -p 5432 -U postgres -W alpha && \
+    yarn install && \
     # yarn prisma migrate reset -f --skip-generate --skip-seed &&\
     yarn prisma migrate dev &&\
     init &&\
