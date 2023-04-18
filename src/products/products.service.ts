@@ -133,7 +133,7 @@ export class ProductsService {
 			}
 		});
 		if (!foundProduct) throw new NotFoundException('Product not found!');
-		return ` Product: #${id} info has been updated`;
+		return foundProduct;
 		// return foundUser;
 	}
 
