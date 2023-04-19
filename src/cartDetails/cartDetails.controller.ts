@@ -85,7 +85,7 @@ export class CartDetailsController {
 							product_data: {
 								name: item.product.name
 							},
-							unit_amount: item.product.price * 100
+							unit_amount: item.product.price * 1000
 						},
 						quantity: 1
 					};
@@ -97,10 +97,11 @@ export class CartDetailsController {
 				payment_method_types: ['card'],
 				mode: 'payment',
 				line_items: lineItems,
-				success_url: `${process.env.REACT_PUBLIC_HOSTNAME}/success.html`,
-				cancel_url: `${process.env.REACT_PUBLIC_HOSTNAME}/fail.html`
+				success_url: `${process.env.REACT_PUBLIC_HOSTNAME}/success`,
+				cancel_url: `${process.env.REACT_PUBLIC_HOSTNAME}/fail`
 			});
 
+			console.log(session);
 			return res.status(HttpStatus.OK).json({
 				url: session.url
 			});
