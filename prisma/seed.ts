@@ -77,9 +77,9 @@ async function main() {
 
 								file_url:
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
-								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/001-002.png',
+								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 1,
-								info: ''
+								info: 'DSE中文卷一和卷二通常被同學視為死敵，其實只要對症下藥，取得5級並不是難事。考評局資料顯示，2021DSE同學只要獲得58%分數便有4級，而65%分數更能考獲5級成績！ '
 							},
 							{
 								name: '中文精讀筆記',
@@ -88,9 +88,9 @@ async function main() {
 
 								file_url:
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
-								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/001-002.png',
+								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 1,
-								info: '中大大爆炸'
+								info: 'DSE中文卷一和卷二通常被同學視為死敵，其實只要對症下藥，取得5級並不是難事。考評局資料顯示，2021DSE同學只要獲得58%分數便有4級，而65%分數更能考獲5級成績！ '
 							}
 						]
 					}
@@ -125,7 +125,7 @@ async function main() {
 
 								file_url:
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
-								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/001-002.png',
+								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 2,
 								info: '中大大爆炸'
 							},
@@ -136,7 +136,7 @@ async function main() {
 
 								file_url:
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
-								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/001-002.png',
+								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 2,
 								info: '中大大爆炸'
 							}
@@ -152,7 +152,7 @@ async function main() {
 		update: {},
 		create: {
 			user_type: 'teacher',
-			username: '牙花',
+			username: 'Jennie',
 			email: 'arfar3@gmail.com',
 			password: 'adminadmin',
 			image: 'https://frdproject.s3.ap-southeast-1.amazonaws.com/collage-1614141135.jpg',
@@ -173,7 +173,7 @@ async function main() {
 
 								file_url:
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
-								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/001-002.png',
+								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 3,
 								info: '中大大爆炸'
 							},
@@ -184,7 +184,7 @@ async function main() {
 
 								file_url:
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
-								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/001-002.png',
+								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 3,
 								info: '中大大爆炸'
 							}
@@ -200,7 +200,7 @@ async function main() {
 		update: {},
 		create: {
 			user_type: 'teacher',
-			username: '牙花',
+			username: 'Rose',
 			email: 'arfar4@gmail.com',
 			password: 'adminadmin',
 			image: 'https://frdproject.s3.ap-southeast-1.amazonaws.com/GettyImages-1027688840-e1679602025642.webp',
@@ -221,7 +221,7 @@ async function main() {
 
 								file_url:
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
-								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/001-002.png',
+								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 4,
 								info: '中大大爆炸'
 							},
@@ -232,56 +232,8 @@ async function main() {
 
 								file_url:
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
-								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/001-002.png',
+								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 4,
-								info: '中大大爆炸'
-							}
-						]
-					}
-				}
-			}
-		}
-	});
-
-	const arfarteacher5 = await prisma.users.upsert({
-		where: { email: 'arfar5@gmail.com' },
-		update: {},
-		create: {
-			user_type: 'teacher',
-			username: '牙花',
-			email: 'arfar5@gmail.com',
-			password: 'adminadmin',
-			image: 'https://frdproject.s3.ap-southeast-1.amazonaws.com/Screenshot+2023-04-19+at+2.14.39+PM.png',
-			cart: {
-				create: {}
-			},
-			teacher: {
-				create: {
-					info: '畢業於香港科技大學市場及管理系，曾於DSE英文考獲5*佳績並擁有5年的教學經驗，清楚了解不同程度的學生會面對的英文難題。',
-					school: '香港大學',
-					experience: 5,
-					product: {
-						create: [
-							{
-								name: '中文班',
-								price: 40,
-								product_type: 'course',
-
-								file_url:
-									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
-								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/001-002.png',
-								subject_id: 1,
-								info: '中大大爆炸'
-							},
-							{
-								name: '中文筆記',
-								price: 30,
-								product_type: 'note',
-
-								file_url:
-									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
-								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/001-002.png',
-								subject_id: 1,
 								info: '中大大爆炸'
 							}
 						]
@@ -296,7 +248,7 @@ async function main() {
 		update: {},
 		create: {
 			user_type: 'teacher',
-			username: '牙花',
+			username: 'James',
 			email: 'arfar6@gmail.com',
 			password: 'adminadmin',
 			image: 'https://lh4.googleusercontent.com/uPXNiqYJ1miaretuCH69s_BTDg6doAAXjFxLS-0ABjheMoSoPM8jD-LPaFswJvmVgqvWlucSkqfibRip7WPBZrp70DlEhDxtIk9srOgBfj-jbXvYgMRvIXm2iO8mFZnrDbm6ItrKdtsZxbFL84qt89PomQ=s2048',
@@ -317,7 +269,7 @@ async function main() {
 
 								file_url:
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
-								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/001-002.png',
+								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 1,
 								info: '中大大爆炸'
 							},
@@ -328,7 +280,7 @@ async function main() {
 
 								file_url:
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
-								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/001-002.png',
+								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 1,
 								info: '中大大爆炸'
 							}
@@ -344,7 +296,7 @@ async function main() {
 		update: {},
 		create: {
 			user_type: 'teacher',
-			username: '牙花',
+			username: 'Dennis',
 			email: 'arfar6@gmail.com',
 			password: 'adminadmin',
 			image: 'https://lh5.googleusercontent.com/vG-w1WjrYnoBHv3HgiOueCdXGVdexCGlBFwblUVyQlbv_3Ln3W0pUQslf78nDWrMab_zlWets--ag90NWtnmBzIM8W8YklUVPcFANHf0zPfsljCapi2xhceIuhUwmtq2-LaPTSHXjyikawJGacPQoVNr7A=s2048',
@@ -365,7 +317,7 @@ async function main() {
 
 								file_url:
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
-								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/001-002.png',
+								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 1,
 								info: '中大大爆炸'
 							},
@@ -376,7 +328,7 @@ async function main() {
 
 								file_url:
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
-								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/001-002.png',
+								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 1,
 								info: '中大大爆炸'
 							}
@@ -395,7 +347,7 @@ async function main() {
 			username: '牙丸',
 			email: 'arfar11@gmail.com',
 			password: 'adminadmin',
-			image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/001-002.png',
+			image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 			cart: {
 				create: {}
 			},
@@ -415,7 +367,7 @@ async function main() {
 			username: '學生',
 			email: 'arfar12@gmail.com',
 			password: 'adminadmin',
-			image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/001-002.png',
+			image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/Jisoo_20220329_2.jpg',
 			cart: {
 				create: {}
 			},
@@ -436,10 +388,10 @@ async function main() {
 		update: {},
 		create: {
 			user_type: 'student',
-			username: '花花',
+			username: '牙花',
 			email: 'arfar13@gmail.com',
 			password: 'adminadmin',
-			image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/001-002.png',
+			image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/Jisoo_20220329_2.jpg',
 			cart: {
 				create: {}
 			},
