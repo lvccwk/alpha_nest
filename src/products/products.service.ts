@@ -101,7 +101,8 @@ export class ProductsService {
 
 	async findTeacherProduct(teacher_id: number) {
 		let foundProduct = await this.prisma.products.findMany({
-			where: { teacher_id }
+			where: { teacher_id },
+			orderBy: { created_at: 'desc' }
 			// include: {
 			// 	product_rating: true,
 			// 	purchase_history: true,

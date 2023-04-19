@@ -53,7 +53,11 @@ export class TeachersService {
 			include: {
 				user: true,
 				teacher_subject: true,
-				product: true
+				product: {
+					include: {
+						subject: true
+					}
+				}
 			}
 		});
 	}
