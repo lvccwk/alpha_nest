@@ -24,7 +24,7 @@ export class CartsService {
 				cart_detail: {
 					where: { is_buying: true },
 					include: { product: true },
-					orderBy: { created_at: 'asc' } // order by created_at in descending order
+					orderBy: { created_at: 'asc' } // order by created_at in ascending order
 				}
 			}
 		});
