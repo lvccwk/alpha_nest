@@ -59,7 +59,9 @@ export class ProductsService {
 						user: true
 					}
 				}
-			}
+			},
+			orderBy: { updated_at: 'desc' } // order by created_at in descending order
+
 		});
 	}
 
@@ -77,7 +79,8 @@ export class ProductsService {
 						user: true
 					}
 				}
-			}
+			},
+			orderBy: { updated_at: 'desc' } // order by created_at in descending order
 		});
 	}
 
