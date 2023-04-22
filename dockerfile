@@ -5,7 +5,8 @@ COPY . .
 ENV DATABASE_URL="postgresql://postgres:postgres@postgres:5432/alpha"
 
 EXPOSE 3000
-CMD yarn install && \
+CMD export NODE_OPTIONS="--max-old-space-size=4096" &&\
+    yarn install && \
     # yarn prisma migrate reset -f --skip-generate --skip-seed &&\
     # yarn prisma migrate deploy && \
     yarn prisma migrate reset -f &&\
