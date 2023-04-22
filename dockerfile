@@ -8,7 +8,7 @@ EXPOSE 3000
 CMD yarn install && \
     # yarn prisma migrate reset -f --skip-generate --skip-seed &&\
     # yarn prisma migrate deploy && \
-    yarn prisma migrate reset &&\
+    yarn prisma migrate reset -f &&\
     # init &&\
     # yarn prisma db seed &&\
     yarn run start
