@@ -127,7 +127,7 @@ async function main() {
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
 								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 2,
-								info: '中大大爆炸'
+								info: 'DSE中文卷一和卷二通常被同學視為死敵，其實只要對症下藥，取得5級並不是難事。考評局資料顯示，2021DSE同學只要獲得58%分數便有4級，而65%分數更能考獲5級成績！炸'
 							},
 							{
 								name: '英文精讀筆記',
@@ -138,7 +138,7 @@ async function main() {
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
 								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 2,
-								info: '中大大爆炸'
+								info: 'DSE中文卷一和卷二通常被同學視為死敵，其實只要對症下藥，取得5級並不是難事。考評局資料顯示，2021DSE同學只要獲得58%分數便有4級，而65%分數更能考獲5級成績！炸'
 							}
 						]
 					}
@@ -175,7 +175,7 @@ async function main() {
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
 								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 3,
-								info: '中大大爆炸'
+								info: 'DSE中文卷一和卷二通常被同學視為死敵，其實只要對症下藥，取得5級並不是難事。考評局資料顯示，2021DSE同學只要獲得58%分數便有4級，而65%分數更能考獲5級成績！炸'
 							},
 							{
 								name: '數學精讀筆記',
@@ -186,7 +186,7 @@ async function main() {
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
 								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 3,
-								info: '中大大爆炸'
+								info: 'DSE中文卷一和卷二通常被同學視為死敵，其實只要對症下藥，取得5級並不是難事。考評局資料顯示，2021DSE同學只要獲得58%分數便有4級，而65%分數更能考獲5級成績！炸'
 							}
 						]
 					}
@@ -223,7 +223,7 @@ async function main() {
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
 								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 4,
-								info: '中大大爆炸'
+								info: 'DSE中文卷一和卷二通常被同學視為死敵，其實只要對症下藥，取得5級並不是難事。考評局資料顯示，2021DSE同學只要獲得58%分數便有4級，而65%分數更能考獲5級成績！炸'
 							},
 							{
 								name: '通識精讀筆記',
@@ -234,7 +234,7 @@ async function main() {
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
 								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 4,
-								info: '中大大爆炸'
+								info: 'DSE中文卷一和卷二通常被同學視為死敵，其實只要對症下藥，取得5級並不是難事。考評局資料顯示，2021DSE同學只要獲得58%分數便有4級，而65%分數更能考獲5級成績！炸'
 							}
 						]
 					}
@@ -271,7 +271,7 @@ async function main() {
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
 								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 1,
-								info: '中大大爆炸'
+								info: 'DSE中文卷一和卷二通常被同學視為死敵，其實只要對症下藥，取得5級並不是難事。考評局資料顯示，2021DSE同學只要獲得58%分數便有4級，而65%分數更能考獲5級成績！炸'
 							},
 							{
 								name: '中文精讀筆記',
@@ -282,7 +282,7 @@ async function main() {
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
 								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 1,
-								info: '中大大爆炸'
+								info: 'DSE中文卷一和卷二通常被同學視為死敵，其實只要對症下藥，取得5級並不是難事。考評局資料顯示，2021DSE同學只要獲得58%分數便有4級，而65%分數更能考獲5級成績！炸'
 							}
 						]
 					}
@@ -292,12 +292,12 @@ async function main() {
 	});
 
 	const arfarteacher7 = await prisma.users.upsert({
-		where: { email: 'arfar6@gmail.com' },
+		where: { email: 'arfar7@gmail.com' },
 		update: {},
 		create: {
 			user_type: 'teacher',
 			username: 'Dennis',
-			email: 'arfar6@gmail.com',
+			email: 'arfar7@gmail.com',
 			password: 'adminadmin',
 			image: 'https://lh5.googleusercontent.com/vG-w1WjrYnoBHv3HgiOueCdXGVdexCGlBFwblUVyQlbv_3Ln3W0pUQslf78nDWrMab_zlWets--ag90NWtnmBzIM8W8YklUVPcFANHf0zPfsljCapi2xhceIuhUwmtq2-LaPTSHXjyikawJGacPQoVNr7A=s2048',
 			cart: {
@@ -319,7 +319,7 @@ async function main() {
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
 								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 1,
-								info: '中大大爆炸'
+								info: 'DSE中文卷一和卷二通常被同學視為死敵，其實只要對症下藥，取得5級並不是難事。考評局資料顯示，2021DSE同學只要獲得58%分數便有4級，而65%分數更能考獲5級成績！炸'
 							},
 							{
 								name: '中文精讀筆記',
@@ -330,7 +330,7 @@ async function main() {
 									'https://alphafile.s3.ap-southeast-1.amazonaws.com/Crowell+and+Slesnick+Calculus.pdf',
 								image: 'https://alphafile.s3.ap-southeast-1.amazonaws.com/note.jpg',
 								subject_id: 1,
-								info: '中大大爆炸'
+								info: 'DSE中文卷一和卷二通常被同學視為死敵，其實只要對症下藥，取得5級並不是難事。考評局資料顯示，2021DSE同學只要獲得58%分數便有4級，而65%分數更能考獲5級成績！炸'
 							}
 						]
 					}
@@ -402,7 +402,14 @@ async function main() {
 			}
 		}
 	});
-	console.log(fixedSubject, arfarteacher2, arfarstudent3);
+	console.log(
+		fixedSubject,
+		arfarteacher1,
+		arfarteacher2,
+		arfarteacher3,
+		arfarteacher4,
+		arfarteacher6
+	);
 }
 main()
 	.then(async () => {

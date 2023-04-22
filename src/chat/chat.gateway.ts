@@ -23,7 +23,6 @@ export class ChatGateway {
 	joinRoom(@MessageBody() message: string, @ConnectedSocket() client: WebSocket): void {
 		const sender = Number(message[0]); // replace with actual sender ID
 		const receiver = Number(message[1]); // replace with actual receiver ID
-		// var roomid = url.parse(client.request.url, true).query.roomid; /*获取房间号 获取桌号*/
 		const room1 = `${sender}_${receiver}`;
 		const room2 = `${receiver}_${sender}`;
 
