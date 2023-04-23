@@ -15,9 +15,8 @@ async function bootstrap() {
 		.build();
 	const document = SwaggerModule.createDocument(app, config);
 	app.enableCors();
-
-	app.use(bodyParser.json({ limit: '50000mb' }));
-	app.use(bodyParser.urlencoded({ extended: true, limit: '50000mb' }));
+	app.use(bodyParser.json({ limit: '20mb' }));
+	app.use(bodyParser.urlencoded({ extended: true, limit: '20mb' }));
 	app.useGlobalPipes(
 		new ValidationPipe({
 			whitelist: true,
