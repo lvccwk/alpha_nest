@@ -13,54 +13,28 @@ export class ChatGateway {
 	@WebSocketServer()
 	server;
 
-	// @SubscribeMessage('message')
-	// handleMessage(@MessageBody() message: string, @ConnectedSocket() client: WebSocket): void {
-	// 	console.log(message);
-	// 	this.server.to('message', message);
-	// }
-
 	@SubscribeMessage('joinRoom')
 	joinRoom(@MessageBody() message: string, @ConnectedSocket() client: WebSocket): void {
-		const sender = Number(message[0]); // replace with actual sender ID
-		const receiver = Number(message[1]); // replace with actual receiver ID
+		const sender = Number(message[0]);
+		const receiver = Number(message[1]);
 		const room1 = `${sender}_${receiver}`;
 		const room2 = `${receiver}_${sender}`;
 
-		console.log({
-			room1,
-			room2
-		});
 		client.join(room1);
 		client.join(room2);
-		// this.server.emit('message', message);
 	}
 	@SubscribeMessage('privateMessage')
 	handlePrivateMessage(
 		@MessageBody() message: string,
 		@ConnectedSocket() client: WebSocket
 	): void {
-		const sender = Number(message[1]); // replace with actual sender ID
-		const receiver = Number(message[2]); // replace with actual receiver ID
+		const sender = Number(message[1]);
+		const receiver = Number(message[2]);
 		const room1 = `${sender}_${receiver}`;
 		const room2 = `${receiver}_${sender}`;
 		client.server.to(room1).emit('message', message);
 
 		console.log(`sender : ${message[1]} :  ${message[0]} `);
 		console.log(`receiver : ${message[2]} :  ${message[0]} `);
-
-		// client.server.to(room2).emit('message', message[0]);
-		// console.log('message: ', message);
-		// console.log('room1: ', room1);
-		// console.log('room2: ', room2);
-		// console.log(`Received private message: ${message}`);
-		// console.log(`private message: ${message[0]}`);
-		// console.log(`sender_id: ${message[1]}`);
-		// console.log(`receiver_id: ${message[2]}`);
-		// const sender = Number(message[1]); // replace with actual sender ID
-		// const receiver = Number(message[2]); // replace with actual receiver ID
-		// const room = `${sender}_${receiver}`;
-		// console.log(`room`, room);
-		// client.join(room);
-		// this.server.to(room).emit('privateMessage', { message, sender, receiver });
 	}
 }

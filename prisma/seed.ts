@@ -306,7 +306,6 @@ async function main() {
 			}
 		}
 	});
-	console.log(fixedSubject, arfarteacher1, arfarteacher2, arfarteacher3, arfarteacher4);
 }
 main()
 	.then(async () => {

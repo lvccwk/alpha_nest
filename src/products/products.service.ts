@@ -9,7 +9,6 @@ import { json } from 'body-parser';
 export class ProductsService {
 	constructor(private prisma: PrismaService) {}
 	async create(createProductDto: CreateProductDto): Promise<string> {
-		console.log({ createProductDto });
 		let teacher = await this.prisma.products.create({
 			data: {
 				name: createProductDto.name,
@@ -29,8 +28,6 @@ export class ProductsService {
 	}
 
 	async findAll(): Promise<Product[]> {
-		// const user = await this.prisma.users.findMany();
-		// return user;
 		return await this.prisma.products.findMany({
 			include: {
 				product_rating: true,
@@ -46,8 +43,6 @@ export class ProductsService {
 	}
 
 	async findCourse(product_type: string): Promise<Product[]> {
-		// const user = await this.prisma.users.findMany();
-		// return user
 		return await this.prisma.products.findMany({
 			where: { product_type, is_onsale: true },
 			include: {
@@ -60,14 +55,11 @@ export class ProductsService {
 					}
 				}
 			},
-			orderBy: { updated_at: 'desc' } // order by created_at in descending order
-
+			orderBy: { updated_at: 'desc' }
 		});
 	}
 
 	async findNote(product_type: string): Promise<Product[]> {
-		// const user = await this.prisma.users.findMany();
-		// return user;
 		return await this.prisma.products.findMany({
 			where: { product_type, is_onsale: true },
 			include: {
@@ -80,7 +72,7 @@ export class ProductsService {
 					}
 				}
 			},
-			orderBy: { updated_at: 'desc' } // order by created_at in descending order
+			orderBy: { updated_at: 'desc' }
 		});
 	}
 
@@ -106,16 +98,6 @@ export class ProductsService {
 		let foundProduct = await this.prisma.products.findMany({
 			where: { teacher_id },
 			orderBy: { created_at: 'desc' }
-			// include: {
-			// 	product_rating: true,
-			// 	purchase_history: true,
-			// 	cart_detail: true,
-			// 	teacher: {
-			// 		include: {
-			// 			user: true
-			// 		}
-			// 	}
-			// }
 		});
 		if (!foundProduct) throw new NotFoundException('Product not found!');
 		return foundProduct;
@@ -139,13 +121,11 @@ export class ProductsService {
 		});
 		if (!foundProduct) throw new NotFoundException('Product not found!');
 		return foundProduct;
-		// return foundUser;
 	}
 
 	async remove(id: number) {
 		let deletedProduct = await this.prisma.products.delete({ where: { id } });
 		if (!deletedProduct) throw new NotFoundException('Product not found!');
 		return `Product:#${id} has been deleted`;
-		// return deletedUser;
 	}
 }

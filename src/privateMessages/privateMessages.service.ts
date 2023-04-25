@@ -63,7 +63,6 @@ export class PrivateMessagesService {
 		});
 		if (!foundCartDetail) throw new NotFoundException('Cart not found!');
 		return ` Cart: #${id} info has been updated`;
-		// return foundUser;
 	}
 
 	async remove(id: number) {
@@ -72,6 +71,5 @@ export class PrivateMessagesService {
 		});
 		if (!deletedCartDetail) throw new NotFoundException('Cart not found!');
 		return `Cart:#${id} has been deleted`;
-		// return deletedUser;
 	}
 }

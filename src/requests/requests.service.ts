@@ -54,7 +54,6 @@ export class RequestService {
 			}
 		});
 		if (!foundCartDetail) throw new NotFoundException('Cart not found!');
-		// return ` Cart: #${id} info has been updated`;
 		return foundCartDetail;
 	}
 
@@ -63,7 +62,6 @@ export class RequestService {
 			where: { id }
 		});
 		if (!deletedCartDetail) throw new NotFoundException('Cart not found!');
-		// return `Cart:#${id} has been deleted`;
 		return deletedCartDetail;
 	}
 }

@@ -28,8 +28,6 @@ import { InjectStripe } from 'nestjs-stripe';
 @ApiTags('cartDetails')
 @Controller('cartDetails')
 export class CartDetailsController {
-	// private stripe: Stripe;
-
 	constructor(
 		private readonly cartDetailsService: CartDetailsService,
 		private readonly jwtService: JwtService,
@@ -46,11 +44,6 @@ export class CartDetailsController {
 	async findAll(@Param('id') id: string): Promise<CartDetail[]> {
 		return await this.cartDetailsService.findAll(+id);
 	}
-
-	// @Get(':id')
-	// findOne(@Param('id') id: string) {
-	// 	return this.cartDetailsService.findOne(+id);
-	// }
 
 	@Put(':id')
 	update(
@@ -90,8 +83,6 @@ export class CartDetailsController {
 						quantity: 1
 					};
 				});
-			console.log(`lineItems`, lineItems);
-			console.log(cartDetails);
 
 			const session = await this.stripe.checkout.sessions.create({
 				payment_method_types: ['card'],
@@ -101,7 +92,6 @@ export class CartDetailsController {
 				cancel_url: `${process.env.REACT_PUBLIC_HOSTNAME}/fail`
 			});
 
-			console.log(session);
 			return res.status(HttpStatus.OK).json({
 				url: session.url
 			});

@@ -49,18 +49,14 @@ export class User {
 	password: string;
 
 	@ApiProperty({ default: 'admin.png' })
-	// @IsString()
-	// @IsNotEmpty()
 	image: string;
 
 	@ApiProperty({ default: false })
-	// @IsNotEmpty()
 	is_deleted: boolean;
 
 	product?: Product[];
 	purchase_history?: PurchaseHistory[];
 	cart?: Cart[];
-	// teacher?: Teacher[];
 	timetable?: Timetable[];
 	product_rating?: ProductRating[];
 	chatroom?: Chatroom[];

@@ -20,8 +20,6 @@ export class SubjectsService {
 	}
 
 	async findAll(): Promise<Subject[]> {
-		// const user = await this.prisma.users.findMany();
-		// return user;
 		return await this.prisma.subjects.findMany({
 			include: {
 				product: true,
@@ -52,13 +50,11 @@ export class SubjectsService {
 		});
 		if (!foundSubject) throw new NotFoundException('User not found!');
 		return ` subject: #${id} info has been updated`;
-		// return foundUser;
 	}
 
 	async remove(id: number) {
 		let deletedSubject = await this.prisma.subjects.delete({ where: { id } });
 		if (!deletedSubject) throw new NotFoundException('User not found!');
 		return `subject:#${id} has been deleted`;
-		// return deletedUser;
 	}
 }

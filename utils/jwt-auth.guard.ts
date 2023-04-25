@@ -4,28 +4,4 @@ import { AuthGuard } from '@nestjs/passport';
 export const IS_PUBLIC_KEY = 'isPublic';
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
 @Injectable()
-export class JwtAuthGuard extends AuthGuard('jwt') {
-	// constructor(private authService: AuthService) {
-	//     super({
-	//       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-	//       ignoreExpiration: false,
-	//       secretOrKey: jwtConstants.secret,
-	//     });
-	//   }
-	//   async validate(payload: any) {
-	//     return { userId: payload.sub, username: payload.username };
-	//   }
-	// constructor(private reflector: Reflector) {
-	// 	super();
-	// }
-	// canActivate(context: ExecutionContext) {
-	// 	const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
-	// 		context.getHandler(),
-	// 		context.getClass()
-	// 	]);
-	// 	if (isPublic) {
-	// 		return true;
-	// 	}
-	// 	return super.canActivate(context);
-	// }
-}
+export class JwtAuthGuard extends AuthGuard('jwt') {}

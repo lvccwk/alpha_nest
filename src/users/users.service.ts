@@ -25,7 +25,6 @@ export class UsersService {
 					}
 				}
 			});
-			console.log(foundUser);
 			return foundUser;
 		} catch (e) {
 			console.log(e);
@@ -52,7 +51,6 @@ export class UsersService {
 		let foundUser = await this.prisma.users.findUnique({
 			where: { email }
 		});
-		// if (!foundUser) throw new NotFoundException('User not found!');
 		return foundUser;
 	}
 
@@ -99,11 +97,7 @@ export class UsersService {
 				is_deleted: updateUserDto.is_deleted
 			}
 		});
-		if (foundUser) {
-			console.log('yesUSER', foundUser);
-		} else {
-			console.log('noUSER');
-		}
+
 		if (!foundUser) throw new NotFoundException('User not found!');
 		return `#${id} user info has been updated`;
 	}
@@ -119,7 +113,6 @@ export class UsersService {
 			where: data
 		});
 
-		console.log('login: ', user);
 		if (user) {
 			const payLoad = {
 				id: user.id,

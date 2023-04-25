@@ -39,8 +39,6 @@ export class PrivateMessagesController {
 		@Query('receipt', ParseIntPipe) receipt: number,
 		@Req() req: any
 	): Promise<PrivateMessage[]> {
-		console.log(req.user);
-
 		return await this.privateMessagesService.findAll(receipt, req.user.id);
 	}
 
