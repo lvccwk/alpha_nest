@@ -4,7 +4,6 @@ import express from 'express';
 import IncomingForm from 'formidable/Formidable';
 
 export const initFormidable = (): IncomingForm => {
-	console.log(formidable);
 	let param: Partial<Options> = {
 		keepExtensions: true,
 		maxFiles: 1,
@@ -15,6 +14,5 @@ export const initFormidable = (): IncomingForm => {
 		}
 	};
 	const form = new formidable.IncomingForm(param);
-	console.log(form);
 	return form;
 };

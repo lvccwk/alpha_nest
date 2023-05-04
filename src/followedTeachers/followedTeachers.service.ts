@@ -6,7 +6,7 @@ import { FollowedTeacher } from './entities/followedTeachers.entity';
 import { Prisma } from '@prisma/client';
 let a: Prisma.FollowedTeachersCreateInput;
 let b: Prisma.FollowedTeachersUpdateInput;
-let c: Prisma.FollowedTeachersWhereUniqueInput
+let c: Prisma.FollowedTeachersWhereUniqueInput;
 
 @Injectable()
 export class FollowedTeachersService {
@@ -18,7 +18,6 @@ export class FollowedTeachersService {
 				teacher_id: createFollowedTeacherDto.teacher_id
 			}
 		});
-		console.log(bookmarkDetail);
 		return JSON.stringify(bookmarkDetail);
 	}
 
@@ -56,15 +55,13 @@ export class FollowedTeachersService {
 		});
 		if (!foundCartDetail) throw new NotFoundException('Cart not found!');
 		return ` Cart: #${id} info has been updated`;
-		// return foundUser;
 	}
 
 	async remove(user_id: number, teacher_id: number) {
 		let deleteBookmark = await this.prisma.followedTeachers.delete({
-			where: { user_id_teacher_id: { user_id: user_id, teacher_id: teacher_id }}
+			where: { user_id_teacher_id: { user_id: user_id, teacher_id: teacher_id } }
 		});
 		if (!deleteBookmark) throw new NotFoundException('Teacher not found!');
 		return `Teacher has been unfollowed`;
-		// return deletedUser;
 	}
 }

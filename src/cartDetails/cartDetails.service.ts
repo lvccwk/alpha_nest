@@ -10,15 +10,9 @@ import { CartDetailsController } from './cartDetails.controller';
 
 @Injectable()
 export class CartDetailsService {
-	// cartDetailsController = new CartDetailsController()
 	constructor(private prisma: PrismaService, @InjectStripe() private readonly stripe: Stripe) {}
 
 	async create(createCartDetailDto: CreateCartDetailDto): Promise<CartDetails> {
-		console.log({
-			cart_id: createCartDetailDto.cart_id,
-			product_id: createCartDetailDto.product_id,
-			is_buying: createCartDetailDto.is_buying
-		});
 		try {
 			let cartDetail = await this.prisma.cartDetails.create({
 				data: {
@@ -27,7 +21,7 @@ export class CartDetailsService {
 					is_buying: createCartDetailDto.is_buying
 				}
 			});
-			console.log(cartDetail);
+
 			return cartDetail;
 		} catch (e) {
 			console.log(e);
@@ -88,7 +82,7 @@ export class CartDetailsService {
 
 	async remove(cart_id: number) {
 		let deletedCartDetail = await this.prisma.cartDetails.deleteMany({
-			where: { cart_id , is_buying: true }
+			where: { cart_id, is_buying: true }
 		});
 		if (!deletedCartDetail) throw new NotFoundException('Cart not found!');
 		return deletedCartDetail;

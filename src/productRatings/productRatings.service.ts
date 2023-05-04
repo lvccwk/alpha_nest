@@ -42,7 +42,6 @@ export class ProductRatingsService {
 		});
 		if (!foundCartDetail) throw new NotFoundException('Cart not found!');
 		return ` Cart: #${id} info has been updated`;
-		// return foundUser;
 	}
 
 	async remove(id: number) {
@@ -51,6 +50,5 @@ export class ProductRatingsService {
 		});
 		if (!deletedCartDetail) throw new NotFoundException('Cart not found!');
 		return `Cart:#${id} has been deleted`;
-		// return deletedUser;
 	}
 }

@@ -24,7 +24,7 @@ export class CartsService {
 				cart_detail: {
 					where: { is_buying: true },
 					include: { product: true },
-					orderBy: { created_at: 'asc' } // order by created_at in ascending order
+					orderBy: { created_at: 'asc' }
 				}
 			}
 		});
@@ -39,7 +39,7 @@ export class CartsService {
 			include: {
 				cart_detail: {
 					include: { product: true },
-					orderBy: { created_at: 'desc' } // order by created_at in descending order
+					orderBy: { created_at: 'desc' }
 				}
 			}
 		});
@@ -55,14 +55,12 @@ export class CartsService {
 			}
 		});
 		if (!foundChatroom) throw new NotFoundException('Cart not found!');
-		// return ` Cart: #${id} info has been updated`;
 		return foundChatroom;
 	}
 
 	async remove(id: number) {
 		let deletedChatroom = await this.prisma.carts.delete({ where: { id } });
 		if (!deletedChatroom) throw new NotFoundException('Cart not found!');
-		// return `Cart:#${id} has been deleted`;
 		return deletedChatroom;
 	}
 }

@@ -32,7 +32,6 @@ export class Product {
 	product_type: string;
 
 	@ApiProperty({ default: 10 })
-	// @IsInt()
 	avg_rating?: number;
 
 	@ApiProperty({ default: 'http://download.pdf' })
@@ -46,8 +45,6 @@ export class Product {
 	image?: string;
 
 	@ApiProperty({ default: 1 })
-	// @IsInt()
-	// @IsNotEmpty()
 	subject_id: number;
 
 	@ApiProperty({ default: 1 })

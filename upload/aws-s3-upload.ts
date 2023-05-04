@@ -13,8 +13,6 @@ export const uploadToS3 = async (params: {
 	});
 
 	const s3Url = await putObjectPromise(s3, params);
-
-	// return JSON.stringify(s3Url);
 	return s3Url;
 };
 

@@ -22,8 +22,7 @@ export class Teacher {
 	@ApiProperty({ default: null })
 	@IsInt()
 	@IsOptional()
-	//@IsNotEmpty()
-	rating: number|null;
+	rating: number | null;
 
 	@ApiProperty({ default: null })
 	@IsString()

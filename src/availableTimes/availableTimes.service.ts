@@ -24,7 +24,6 @@ export class AvailableTimeService {
 			include: {
 				teacher: true,
 				reqest: true
-				// chatroom_participant: true
 			}
 		});
 	}
@@ -51,7 +50,6 @@ export class AvailableTimeService {
 			}
 		});
 		if (!foundCartDetail) throw new NotFoundException('Cart not found!');
-		// return ` Cart: #${id} info has been updated`;
 		return foundCartDetail;
 	}
 
@@ -60,7 +58,6 @@ export class AvailableTimeService {
 			where: { id }
 		});
 		if (!deletedCartDetail) throw new NotFoundException('Cart not found!');
-		// return `Cart:#${id} has been deleted`;
 		return deletedCartDetail;
 	}
 }

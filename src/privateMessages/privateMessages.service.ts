@@ -7,20 +7,7 @@ import * as Pusher from 'pusher';
 
 @Injectable()
 export class PrivateMessagesService {
-	pusher: Pusher;
-	constructor(private prisma: PrismaService) {
-		this.pusher = new Pusher({
-			appId: '1581303',
-			key: '65bf1de8c33b8354835a',
-			secret: '606ce6c6b60f4f895b48',
-			cluster: 'ap1',
-			useTLS: true
-		});
-	}
-
-	async trigger(channel: string, event: string, data: any) {
-		await this.pusher.trigger(channel, event, data);
-	}
+	constructor(private prisma: PrismaService) {}
 
 	async create(createPrivateMessageDto: CreatePrivateMessageDto): Promise<string> {
 		let cartDetail = await this.prisma.privateMessages.create({
@@ -63,7 +50,6 @@ export class PrivateMessagesService {
 		});
 		if (!foundCartDetail) throw new NotFoundException('Cart not found!');
 		return ` Cart: #${id} info has been updated`;
-		// return foundUser;
 	}
 
 	async remove(id: number) {
@@ -72,6 +58,5 @@ export class PrivateMessagesService {
 		});
 		if (!deletedCartDetail) throw new NotFoundException('Cart not found!');
 		return `Cart:#${id} has been deleted`;
-		// return deletedUser;
 	}
 }

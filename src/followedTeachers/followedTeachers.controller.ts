@@ -34,17 +34,14 @@ export class FollowedTeachersController {
 	@UseGuards(AuthGuard)
 	@Post()
 	async create(@Body() createFollowedTeacherDto: CreateFollowedTeacherDto) {
-		console.log("line37",createFollowedTeacherDto);
 		return await this.followedTeachersService.create(createFollowedTeacherDto);
 	}
 
 	@Get('/all')
 	async findAll(@Body() user_id: number): Promise<FollowedTeacher[]> {
-		console.log("followedteachercontrollerline43",user_id);
 		return await this.followedTeachersService.findAll(user_id);
 	}
 
-	// @UseGuards(AuthGuard)
 	@Get('/:id')
 	findOne(@Param('id') id: string) {
 		return this.followedTeachersService.findOne(+id);
@@ -57,7 +54,7 @@ export class FollowedTeachersController {
 	) {
 		return this.followedTeachersService.update(id, updateFollowedTeacherDto);
 	}
-	
+
 	@Delete()
 	remove(@Body() obj) {
 		return this.followedTeachersService.remove(obj.user_id, obj.teacher_id);

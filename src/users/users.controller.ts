@@ -21,11 +21,9 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { ApiTags } from '@nestjs/swagger';
 import { CookieSerializeOptions, serialize } from 'cookie';
-// import * as cookieParser from 'cookie-parser';
 import { Response } from 'express';
 import * as jwtSimple from 'jwt-simple';
 import { JwtService } from '@nestjs/jwt';
-// import { request } from 'http';
 
 // AWS S3 Upload
 import { uploadToS3 } from '../../upload/aws-s3-upload';
@@ -80,15 +78,12 @@ export class UsersController {
 
 	@Get('/all')
 	async findAll(@Request() req): Promise<User[]> {
-		// const x = req.user.id;
 		return await this.usersService.findAll();
 	}
 
-	// @UseGuards(AuthGuard('jwt'))
 	@UseGuards(AuthGuard)
 	@Get('/')
 	findOne(@Request() req: any) {
-		// return req.user;
 		return this.usersService.findOne(req.user.id);
 	}
 
@@ -106,7 +101,6 @@ export class UsersController {
 	@Delete()
 	remove(@Request() req: any) {
 		return this.usersService.remove(req.user.id);
-		// return id;
 	}
 
 	@Post('/register')
@@ -154,56 +148,4 @@ export class UsersController {
 			return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
 		}
 	}
-
-	// @UseGuards(AuthGuard)
-	// @Post('/file')
-	// @UseInterceptors(FileInterceptor('file'))
-	// async uploadFile(
-	// 	@UploadedFile() file: Express.Multer.File,
-	// 	@Body() body,
-	// 	@Res() res: Response
-	// ) {
-	// 	console.log(`file`, file);
-
-	// 	const fileName = file.originalname;
-	// 	console.log('file.buffer', file.buffer);
-	// 	try {
-	// 		const accessPath = await uploadToS3({
-	// 			Bucket: 'alphafile',
-	// 			Key: `${fileName}`,
-	// 			ContentType: `${file.mimetype}`,
-	// 			Body: file.buffer
-	// 		});
-
-	// 		console.log(accessPath);
-	// 		res.json({ accessPath: accessPath });
-	// 	} catch (e) {
-	// 		return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
-	// 	}
-	// }
-
-	// @Post('/file')
-	// @UseInterceptors(FileInterceptor('image'))
-	// async uploadFile(
-	// 	@UploadedFile() file: Express.Multer.File,
-	// 	@Body() body,
-	// 	@Res() res: Response
-	// ) {
-	// 	const fileName = file.originalname;
-	// 	console.log('file.buffer', file.buffer);
-
-	// 	try {
-	// 		const accessPath = await uploadToS3({
-	// 			Bucket: 'alphafile',
-	// 			Key: `${fileName}`,
-	// 			ContentType: `${file.mimetype}`,
-	// 			Body: file.buffer
-	// 		});
-
-	// 		console.log(accessPath);
-	// 		res.json({ accessPath: accessPath });
-	// 	} catch (e) {
-	// 		return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ msg: e.toString() });
-	// 	}
-	// }
 }

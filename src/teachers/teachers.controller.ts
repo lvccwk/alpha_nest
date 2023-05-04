@@ -23,8 +23,6 @@ export class TeachersController {
 
 	@Post()
 	async create(@Body() createTeacherDto: CreateTeacherDto) {
-		console.log(createTeacherDto);
-		//return { message: 'ok'}
 		return await this.teachersService.create(createTeacherDto);
 	}
 
@@ -33,8 +31,8 @@ export class TeachersController {
 		return await this.teachersService.findAll();
 	}
 
-	@Get(":id")
-	findOne(@Param('id', ParseIntPipe)id: number) {
+	@Get(':id')
+	findOne(@Param('id', ParseIntPipe) id: number) {
 		return this.teachersService.findOne(id);
 	}
 
