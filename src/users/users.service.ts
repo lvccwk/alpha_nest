@@ -1,4 +1,10 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+	ConflictException,
+	Injectable,
+	InternalServerErrorException,
+	NotFoundException,
+	UnauthorizedException
+} from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -27,7 +33,11 @@ export class UsersService {
 			});
 			return foundUser;
 		} catch (e) {
-			console.log(e);
+			let message = String(e).toLowerCase();
+			if (message.includes('unique')) {
+				throw new ConflictException('duplicated record');
+			}
+			throw new InternalServerErrorException(e);
 		}
 	}
 
